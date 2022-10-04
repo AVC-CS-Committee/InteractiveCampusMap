@@ -2,7 +2,7 @@
 
 public class testing {
   public static void main(String[] args) {
-    // EVERYONE PULL FROM THE GITHUB AND PUSH YOUR OWN PRINT STATEMENT W/ YOUR NAME!!!
+    // EVERYONE PULL FROM THE GITHUB REPO AND PUSH YOUR OWN PRINT STATEMENT W/ YOUR NAME!!!
 
     System.out.println("test");
     System.out.println("test2");
