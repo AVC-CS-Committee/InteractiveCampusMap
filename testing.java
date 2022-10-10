@@ -14,12 +14,11 @@ public class testing {
 
   public static void someonePlsCommit() {
     // CHANGE ME TO FALSE
-    boolean noOneHasCommited = false;
+    boolean noOneHasCommited = true;
 
     if (noOneHasCommited) System.out.println("Why hasnt ANYONE commited yet?!?!");
     else System.out.println("WE DID IT!! wE 10x deVs nOw boIs! USA! USA! USA! USA!");
   }
-
 
 }
 
