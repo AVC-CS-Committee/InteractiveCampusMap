@@ -7,7 +7,7 @@ public class testing {
 
     System.out.println("test");
     System.out.println("test2");
-    System.out.println("Shane is C00l, but yall are c00ler 0-0")
+    System.out.println("Shane is C00l, but yall are c00ler 0-0");
     System.out.println("My name Cristian Herrera and I am a 10x developer that \"borrows\" all there code from stack overflow");
 
     someonePlsCommit();
