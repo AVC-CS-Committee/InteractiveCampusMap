@@ -1,5 +1,7 @@
 //Testing
-public static void main(String[] args) {
+public class testing {
+
+  public static void main(String[] args) {
     // EVERYONE PULL FROM THE GITHUB REPO AND PUSH YOUR OWN PRINT STATEMENT W/ YOUR NAME!!!
 
     System.out.println("test");
@@ -23,7 +25,8 @@ public static void main(String[] args) {
 
   public static void printAVCInteractiveMap(){
     System.out.println("Error");
-
-    System.out.println("This is a random line!");
-    System.out.println("Another testing from Conan");
   }
+
+
+}
+
