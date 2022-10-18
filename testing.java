@@ -25,4 +25,5 @@ public static void main(String[] args) {
     System.out.println("Error");
 
     System.out.println("This is a random line!");
+    System.out.println("Another testing from Conan");
   }
