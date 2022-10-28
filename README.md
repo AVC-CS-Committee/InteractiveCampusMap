@@ -1,10 +1,10 @@
 # AVC Interactive Map
 
-Simple overview of use/purpose.
+An interactive campus map of Antelope Valley College.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+The interactive campus map of AVC is a feature that is planned to be added to the myAVC app with a launch date set for April/May 2023. The purpose is to help AVC students, faculty, and CMS to navigate the campus in efficient ways as well as allow opportunities to explore resources available at AVC.
 
 ## Getting Started
 
