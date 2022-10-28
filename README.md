@@ -37,8 +37,8 @@ command to run if program contains helper info
 
 Contributors names and contact info
 
-ex. [Peter Kallos](https://www.linkedin.com/in/peter-kallos/)
-ex.
+[Peter Kallos](https://www.linkedin.com/in/peter-kallos/)
+
 
 ## Version History
 
