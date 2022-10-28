@@ -10,6 +10,7 @@ The interactive campus map of AVC is a feature that is planned to be added to th
 
 - [Android Studio](https://developer.android.com/studio)
 - [Google Maps SDK for Android](https://console.cloud.google.com/marketplace/product/google/maps-android-backend.googleapis.com?authuser=2&project=testing-gm-362905)
+- [Trello](https://trello.com/en)
 
 ## Authors
 
