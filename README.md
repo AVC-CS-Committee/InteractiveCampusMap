@@ -1,5 +1,7 @@
 # AVC Interactive Map
 
+![image](https://user-images.githubusercontent.com/97070073/199654750-9662d503-29fb-4030-9614-7040b20bb376.png)
+
 An interactive campus map of Antelope Valley College.
 
 ## Description
