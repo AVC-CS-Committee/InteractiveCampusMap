@@ -20,7 +20,7 @@ Contributors names and contact info
 
 - [Peter Kallos](https://www.linkedin.com/in/peter-kallos/)
 - [Cristian Herrera](https://cristianherrera.dev/)
-- [Nasif Hossain]
+- Nasif Hossain
 
 
 ## Version History
