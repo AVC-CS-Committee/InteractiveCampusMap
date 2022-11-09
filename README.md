@@ -18,7 +18,7 @@ The interactive campus map of AVC is a feature that is planned to be added to th
 
 Contributors names and contact info
 
-- [Peter Kallos](https://www.linkedin.com/in/peter-kallos/)
+- [Peter Kallos](https://kallosp.github.io/)
 - [Cristian Herrera](https://cristianherrera.dev/)
 - Nasif Hossain
 
