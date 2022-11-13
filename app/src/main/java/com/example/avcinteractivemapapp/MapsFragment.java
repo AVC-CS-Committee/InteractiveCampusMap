@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
@@ -32,25 +36,29 @@ public class MapsFragment extends Fragment {
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+
+                //Focus AVC
+                LatLng avc = new LatLng(34.6773, -118.1866);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(avc, 20f));
+
+                //Apply custom map style
+                /*try {
+                    googleMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle( getActivity(), R.raw.custom_avc_map)
+                    );
+                } catch(Resources.NotFoundException e){
+                    Log.e("JSON", "Can't find style. Error: ", e);
+                }*/
+
+
+
                 // When map is loaded
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+               /* googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
-                        // When clicked on map
-                        // Initialize marker options
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        // Set position of marker
-                        markerOptions.position(latLng);
-                        // Set title of marker
-                        markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                        // Remove all marker
-                        googleMap.clear();
-                        // Animating to zoom the marker
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        // Add marker on map
-                        googleMap.addMarker(markerOptions);
+                        //When something on the map is clicked
                     }
-                });
+                });*/
             }
         });
         // Return view

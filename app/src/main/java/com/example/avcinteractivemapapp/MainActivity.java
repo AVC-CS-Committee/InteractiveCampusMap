@@ -39,7 +39,6 @@ import com.google.android.gms.maps.SupportMapFragment;
         -Display a Google Map using a MapView; customize (make it look like the final design)
         -**Try to create a fragment activity and implement the google map view through that fragment**
         -...
-
  */
 
 
