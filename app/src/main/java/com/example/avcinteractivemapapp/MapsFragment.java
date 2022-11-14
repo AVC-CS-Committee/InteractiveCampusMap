@@ -26,6 +26,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+/*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
+        Tutorial being followed: https://youtu.be/lBW58tPLn-A?list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi
+        -Restrict API Key; get done before deployment
+        -Polish Google Services, GPS, and location permissions
+        -Add custom markers to each location (buildings, parking lots, stadium, etc.)
+        -Set boundaries (DONE)
+        -On marker click open a popup menu with info. about that location
+ */
+
 /**
  * DESCRIPTION:
     This class (fragment) is for managing the Google Maps API. All the features that need to be
@@ -58,8 +68,17 @@ public class MapsFragment extends Fragment {
 
                 //Focus AVC and place default marker (uses custom marker)
                 LatLng avc = new LatLng(34.6773, -118.1866);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(avc, 20f));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(avc, 17.5f));
                 googleMap.addMarker(new MarkerOptions().position(avc).title("Antelope Valley College").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+
+                //Markers for campus locations. TODO: Add markers to all significant locations
+                //UH
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6787345742857, -118.18635845710243)).title("UH").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //YH
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67899187744454, -118.18548358738202)).title("YH").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //TE1
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.678189124166714, -118.18664388328442)).title("TE1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+
 
                 try {
                     googleMap.setMapStyle(
