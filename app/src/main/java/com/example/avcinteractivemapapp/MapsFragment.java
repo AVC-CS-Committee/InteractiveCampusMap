@@ -26,7 +26,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+/**
+ * DESCRIPTION:
+    This class (fragment) is for managing the Google Maps API. All the features to add to the map goes here.
+    Whenever MainActivity executes, it automatically calls on getSupportFragmentManager() which
+    loads the code in this fragment as well as the fragment_maps.xml file. When this class is
+    instantiated and the method previously mentioned is called, onCreateView() is called in
+    this class. Inside this method, onMapReady() is called which is where most of the logic
+    goes and where you'd want to write the code to implement a new feature for anything related
+    to the map.
+ */
 public class MapsFragment extends Fragment {
 
     @Override

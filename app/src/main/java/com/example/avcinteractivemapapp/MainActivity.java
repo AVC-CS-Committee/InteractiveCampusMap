@@ -37,6 +37,11 @@ import com.google.android.gms.maps.SupportMapFragment;
         -On marker click open a popup menu with info. about that location
  */
 
+/**
+ * DESCRIPTION:
+ *  This class is where the entire program starts, more specifically
+ *  in the onCreate() function which sort of acts as the main method.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //A new fragment object is created to reference the MapsFragment.java class
         Fragment fragment = new MapsFragment();
 
         //Loads the Google Maps fragment to display the map
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //START of copy/pasted code from tutorial
+    //START of code from tutorial (https://youtu.be/lBW58tPLn-A?list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi)
     @Override
     protected void onResume(){
         super.onResume();
@@ -181,5 +187,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    //END of copy/pasted code from tutorial
+    //END of code from tutorial
 }
