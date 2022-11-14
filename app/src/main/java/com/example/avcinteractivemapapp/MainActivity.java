@@ -33,7 +33,7 @@ import com.google.android.gms.maps.SupportMapFragment;
         -Restrict API Key; get done before deployment
         -Polish Google Services, GPS, and location permissions
         -Add custom markers to each location (buildings, parking lots, stadium, etc.)
-        -Set boundaries
+        -Set boundaries (DONE)
         -On marker click open a popup menu with info. about that location
  */
 
