@@ -28,13 +28,12 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * DESCRIPTION:
-    This class (fragment) is for managing the Google Maps API. All the features to add to the map goes here.
-    Whenever MainActivity executes, it automatically calls on getSupportFragmentManager() which
-    loads the code in this fragment as well as the fragment_maps.xml file. When this class is
-    instantiated and the method previously mentioned is called, onCreateView() is called in
-    this class. Inside this method, onMapReady() is called which is where most of the logic
-    goes and where you'd want to write the code to implement a new feature for anything related
-    to the map.
+    This class (fragment) is for managing the Google Maps API. All the features that need to be
+    added to the map go here. Whenever MainActivity executes, it automatically calls on
+    getSupportFragmentManager() which loads the code in this fragment.
+    When this class is instantiated, onCreateView() (which is in this class) is called.
+    Inside this method, onMapReady() is called. This is where most of the logic for the map goes and
+    where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment {
 
@@ -85,7 +84,7 @@ public class MapsFragment extends Fragment {
         return view;
     }
 
-    //Adds custom marker (https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/#:~:text=For%20adding%20a%20custom%20marker,this%20marker%20to%20our%20Map.)
+    //Logic for adding a custom marker (https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/#:~:text=For%20adding%20a%20custom%20marker,this%20marker%20to%20our%20Map.)
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
         // below line is use to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
