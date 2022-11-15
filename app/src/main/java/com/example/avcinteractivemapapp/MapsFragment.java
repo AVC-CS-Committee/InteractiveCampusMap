@@ -136,18 +136,26 @@ public class MapsFragment extends Fragment {
         return view;
     }
 
+    // Gets the width of the screen of current device
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+    // Gets the height of the screen of current device
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
     //General code needed to create a new popup. Code used: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
     private void popupViewCreator(View popupView, View view){
         // create the popup window
-        //FIXME: the values for the height and width probably have to be changed
-        //      to dynamic values so the size of the popup looks the same on any screen size
-        int width = 1000;
-        int height = 1750;
+        // Set the width and height slightly smaller than device display screen.
+        int width = (getScreenWidth() - 250);
+        int height = (getScreenHeight() - 500);
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
+        // which view you pass in doesn't matter, it is only used for the window token
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
