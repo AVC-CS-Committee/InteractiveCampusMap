@@ -73,11 +73,11 @@ public class MapsFragment extends Fragment {
 
                 //Markers for campus locations. TODO: Add markers to all significant locations
                 //UH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6787345742857, -118.18635845710243)).title("UH").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6787345742857, -118.18635845710243)).title("Uhazy Hall").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //YH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67899187744454, -118.18548358738202)).title("YH").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67899187744454, -118.18548358738202)).title("Yoshida Hall").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //TE1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.678189124166714, -118.18664388328442)).title("TE1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.678189124166714, -118.18664388328442)).title("Tech Ed: Welding/Fire Technology").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
 
 
                 try {
