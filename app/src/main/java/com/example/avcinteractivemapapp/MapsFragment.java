@@ -12,9 +12,13 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
@@ -79,6 +84,34 @@ public class MapsFragment extends Fragment {
                 //TE1
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.678189124166714, -118.18664388328442)).title("Tech Ed: Welding/Fire Technology").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
 
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(@NonNull Marker marker) {
+
+                        String clickedMarker = marker.getTitle();
+
+                        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View popupView;
+
+                        //Depending on which marker is clicked, a popup view of the corresponding location is opened.
+                        //NOTE: The code used in the "Uhazy Hall" elseif statement is the same code used for all popups
+                        //TODO: Add an elseif condition for each marker and create a popup for that location
+                        if(clickedMarker.equals("Antelope Valley College")){
+                            //Center of campus marker (should this have a popup??)
+                        }
+                        else if(clickedMarker.equals("Uhazy Hall")){
+                            //Instantiates the corresponding location's xml file
+                            popupView = inflater.inflate(R.layout.uh_popup, null);
+
+                            //Creates the popup for that location
+                            popupViewCreator(popupView, view);
+
+                        }
+
+                        return false;
+                    }
+                });
+
 
                 try {
                     googleMap.setMapStyle(
@@ -101,6 +134,21 @@ public class MapsFragment extends Fragment {
         });
         // Return view
         return view;
+    }
+
+    //General code needed to create a new popup. Code used: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+    private void popupViewCreator(View popupView, View view){
+        // create the popup window
+        //FIXME: the values for the height and width probably have to be changed
+        //      to dynamic values so the size of the popup looks the same on any screen size
+        int width = 1000;
+        int height = 1750;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
     //Logic for adding a custom marker (https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/#:~:text=For%20adding%20a%20custom%20marker,this%20marker%20to%20our%20Map.)
