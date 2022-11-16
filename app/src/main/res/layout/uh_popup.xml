@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:text="Picture"
         android:textColor="@color/black"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.95"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView3"
@@ -27,13 +28,14 @@
         android:layout_height="wrap_content"
         android:text="Info"
         android:textColor="@color/black"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.23" />
+        app:layout_constraintVertical_bias="0.23"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView2"
@@ -41,12 +43,13 @@
         android:layout_height="wrap_content"
         android:text="Uhazy Hall"
         android:textColor="@color/black"
-        android:textSize="32dp"
+        android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.071"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
