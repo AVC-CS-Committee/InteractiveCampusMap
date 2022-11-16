@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">AVCInteractiveMapApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="picture">Picture</string>
     <string name="info">Info</string>
     <string name="administration_building">Administration Building</string>

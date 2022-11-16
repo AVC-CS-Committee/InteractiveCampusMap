@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <!-- Sets so you can only select one menu item from group -->
+    <group android:checkableBehavior="single">
+
+        <!-- Creating items for menu-->
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/map_icon"
+            android:title="Map" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_back"
+            android:icon="@drawable/back_icon"
+            android:title="Back" />
+    </group>
+
+    <item android:title="Is mayonaise an instrument?">
+        <menu>
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_baseline_info_24"
+                android:title="Info" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_baseline_help_24"
+                android:title="Help" />
+
+        </menu>
+    </item>
+
+</menu>
