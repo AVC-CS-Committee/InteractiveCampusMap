@@ -355,6 +355,7 @@ public class MapsFragment extends Fragment {
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
+
     // Gets the height of the screen of current device
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;

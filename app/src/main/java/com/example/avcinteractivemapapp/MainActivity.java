@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 if (count == 0) Toast.makeText(MainActivity.this, "Hey", Toast.LENGTH_SHORT).show();
                 if (count == 1) Toast.makeText(MainActivity.this, "Peter", Toast.LENGTH_SHORT).show();
                 if (count == 2) Toast.makeText(MainActivity.this, "...", Toast.LENGTH_SHORT).show();
-                if (count == 3) Toast.makeText(MainActivity.this, "Fuck you", Toast.LENGTH_SHORT).show();
+                if (count == 3) Toast.makeText(MainActivity.this, "You Rock", Toast.LENGTH_SHORT).show();
                 if (count == 4) {
                     Toast.makeText(MainActivity.this, "This message will now repeat.", Toast.LENGTH_SHORT).show();
                     count = -1;
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
-            //getChatrooms();
+            //getMap
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
