@@ -20,6 +20,5 @@
     </style>
 
     <style name="Theme.AVCInteractiveMapApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.AVCInteractiveMapApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
