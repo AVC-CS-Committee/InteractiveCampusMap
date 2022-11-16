@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -85,6 +86,7 @@ public class MapsFragment extends Fragment {
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.678189124166714, -118.18664388328442)).title("Tech Ed: Welding/Fire Technology").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
 
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @SuppressLint("InflateParams")
                     @Override
                     public boolean onMarkerClick(@NonNull Marker marker) {
 
@@ -96,7 +98,7 @@ public class MapsFragment extends Fragment {
                         //Depending on which marker is clicked, a popup view of the corresponding location is opened.
                         //NOTE: The code used in the "Uhazy Hall" elseif statement is the same code used for all popups
                         //TODO: Add an elseif condition for each marker and create a popup for that location
-                        if(clickedMarker.equals("Antelope Valley College")){
+                        /*if(clickedMarker.equals("Antelope Valley College")){
                             //Center of campus marker (should this have a popup??)
                         }
                         else if(clickedMarker.equals("Uhazy Hall")){
@@ -106,6 +108,43 @@ public class MapsFragment extends Fragment {
                             //Creates the popup for that location
                             popupViewCreator(popupView, view);
 
+                        }*/
+
+                        // A switch statement to check the name of the marker clicked. Add new case with marker name for future additions.
+                        // Create a new popup layout in re\layout folder for each new location.
+                        if (clickedMarker != null) {
+                            switch(clickedMarker){
+                                case "Antelope Valley College":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.avc_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Yoshida Hall":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.yh_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Tech Ed: Welding/Fire Technology":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.tewft_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Uhazy Hall":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.uh_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
 
                         return false;
