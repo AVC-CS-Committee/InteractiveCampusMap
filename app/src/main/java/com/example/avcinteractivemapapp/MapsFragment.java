@@ -149,8 +149,8 @@ public class MapsFragment extends Fragment {
     private void popupViewCreator(View popupView, View view){
         // create the popup window
         // Set the width and height slightly smaller than device display screen.
-        int width = (getScreenWidth() - 250);
-        int height = (getScreenHeight() - 500);
+        int width = (getScreenWidth() - 150);
+        int height = (getScreenHeight() - 450);
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
