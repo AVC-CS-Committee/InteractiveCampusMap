@@ -5,6 +5,12 @@
     android:background="@color/purple_500"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    
+    <Button
+        android:id="@+id/hamburger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hamburger" />
 
 
 
