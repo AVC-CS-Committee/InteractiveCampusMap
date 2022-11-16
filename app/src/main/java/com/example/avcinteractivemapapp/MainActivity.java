@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
 
-    private int count = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
+
+
 
         // Creating hamburger button and rotating animation when clicked
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
 
     }
+
 
     //Closes drawer instead of closing activity
     @Override
