@@ -8,6 +8,7 @@ import static com.example.avcinteractivemapapp.Constants.PERMISSIONS_REQUEST_ENA
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,9 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,10 +43,36 @@ public class MainActivity extends AppCompatActivity {
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
 
+    private int count = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Telling app to use custom toolbar as actionbar replacement
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //Grab hamburger ID from tool_bar.xml
+        ImageView hamburger = findViewById(R.id.hamburger);
+
+        //Clicked on the hamburger? Do this. (LOGIC SHOULD EVENTUALLY OPEN A NAV MENU FOR LEGEND)
+        hamburger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count == 0) Toast.makeText(MainActivity.this, "Hey", Toast.LENGTH_SHORT).show();
+                if (count == 1) Toast.makeText(MainActivity.this, "Peter", Toast.LENGTH_SHORT).show();
+                if (count == 2) Toast.makeText(MainActivity.this, "...", Toast.LENGTH_SHORT).show();
+                if (count == 3) Toast.makeText(MainActivity.this, "Fuck you", Toast.LENGTH_SHORT).show();
+                if (count == 4) {
+                    Toast.makeText(MainActivity.this, "This message will now repeat.", Toast.LENGTH_SHORT).show();
+                    count = -1;
+                }
+                count++;
+            }
+        });
 
         //A new fragment object is created to reference the MapsFragment.java class
         Fragment fragment = new MapsFragment();
