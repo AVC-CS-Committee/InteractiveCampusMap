@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -57,11 +58,17 @@ public class MainActivity extends AppCompatActivity {
         //Telling app to use custom toolbar as actionbar replacement
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ImageView ic_help = findViewById(R.id.ic_help);
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
 
-
+        ic_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity .this,"HALP!",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Creating hamburger button and rotating animation when clicked
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,

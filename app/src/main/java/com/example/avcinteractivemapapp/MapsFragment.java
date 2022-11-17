@@ -49,7 +49,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
     where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
