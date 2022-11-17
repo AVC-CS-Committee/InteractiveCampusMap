@@ -130,20 +130,6 @@ public class MapsFragment extends Fragment {
                         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View popupView;
 
-                        /*
-                        //NOTE: The code used in the "Uhazy Hall" elseif statement is the same code used for all popups
-                        //TODO: Add an elseif condition for each marker and create a popup for that location
-                        if(clickedMarker.equals("Antelope Valley College")){
-                            //Center of campus marker (should this have a popup??)
-                          }
-                        else if(clickedMarker.equals("Uhazy Hall")){
-                            //Instantiates the corresponding location's xml file
-                            popupView = inflater.inflate(R.layout.uh_popup, null);
-
-                            //Creates the popup for that location
-                            popupViewCreator(popupView, view);
-
-                        }*/
                         //Depending on which marker is clicked, a popup view of the corresponding location is opened.
                         // A switch statement to check the name of the marker clicked. Add new case with marker name for future additions.
                         // Create a new popup layout in re\layout folder for each new location.
