@@ -12,7 +12,7 @@
         android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AVCInteractiveMapApp"
+        android:theme="@style/Theme.AVCInteractiveMapApp.NoActionBar"
         tools:targetApi="31">
 
         <!--
