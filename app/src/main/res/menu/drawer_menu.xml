@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -22,18 +23,41 @@
             android:title="Back" />
     </group>
 
-    <item android:title="Is mayonaise an instrument?">
-        <menu>
-            <item
-                android:id="@+id/nav_info"
-                android:icon="@drawable/ic_baseline_info_24"
-                android:title="Info" />
-            <item
-                android:id="@+id/nav_help"
-                android:icon="@drawable/ic_baseline_help_24"
-                android:title="Help" />
+    <group android:checkableBehavior="all">
+        <item android:title="Is mayonaise an instrument?">
 
-        </menu>
-    </item>
+            <menu>
+                <item
+                    android:id="@+id/markers"
+                    android:icon="@drawable/marker_icon"
+                    android:title="Places of Interest"
+                    app:actionViewClass="android.widget.CheckBox" />
+                <item
+                    android:id="@+id/doors"
+                    android:icon="@drawable/ic_baseline_door_sliding_24"
+                    android:title="Entrences and Exits"
+                    app:actionViewClass="android.widget.CheckBox" />
+                <item
+                    android:id="@+id/food"
+                    android:icon="@drawable/ic_baseline_fastfood_24"
+                    android:title="Food"
+                    app:actionViewClass="android.widget.CheckBox"
+                    />
+                <item
+                    android:id="@+id/bathrooms"
+                    android:icon="@drawable/ic_baseline_bathtub_24"
+                    android:title="Doodoo Centers"
+                    app:actionViewClass="android.widget.CheckBox"
+                    />
+                <item
+                    android:id="@+id/stuff"
+                    android:icon="@drawable/ic_baseline_electric_scooter_24"
+                    android:title="Other Cool Stuff"
+                    app:actionViewClass="android.widget.CheckBox"
+                />
+            </menu>
+        </item>
+    </group>
+
 
 </menu>
