@@ -12,18 +12,18 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@drawable/avc_logo" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="HAhHa itS A girrafe!"
+        android:text="Antelope Valley College"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All hale the magic konsh" />
+        android:text="3041 W Ave K, Lancaster, CA 93536" />
 
 </LinearLayout>

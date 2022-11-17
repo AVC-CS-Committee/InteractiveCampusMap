@@ -24,7 +24,7 @@
     </group>
 
     <group android:checkableBehavior="all">
-        <item android:title="Is mayonaise an instrument?">
+        <item android:title="Map Legend">
 
             <menu>
                 <item
