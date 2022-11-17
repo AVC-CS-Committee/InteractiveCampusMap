@@ -5,9 +5,11 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/red_500"
+    android:background="@color/avc_menu"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <!--LINE 8 WAS CHANGED DUE TO CONFLICT-->
 
     <!--    <Button-->
     <!--        android:id="@+id/hamburger"-->
@@ -16,6 +18,7 @@
     <!--        android:text=""-->
     <!--        />-->
 
+    <!--COMMENTED OUT DUE TO CONFLICT
     <ImageView
         android:id="@+id/hamburger"
         android:layout_width="wrap_content"
@@ -23,7 +26,21 @@
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
         android:src="@drawable/ic_baseline_menu_24"
-        />
+        />-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/hamburger"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:src="@drawable/ic_baseline_menu_24"-->
+<!--        />-->
+
 
     <TextView
         android:id="@+id/title"

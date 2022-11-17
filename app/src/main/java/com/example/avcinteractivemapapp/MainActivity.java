@@ -7,10 +7,13 @@ import static com.example.avcinteractivemapapp.Constants.PERMISSIONS_REQUEST_ACC
 import static com.example.avcinteractivemapapp.Constants.PERMISSIONS_REQUEST_ENABLE_GPS;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
@@ -22,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,11 +43,10 @@ import com.google.android.gms.maps.SupportMapFragment;
  */
 
 public class MainActivity extends AppCompatActivity {
+    private DrawerLayout drawer;
 
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
-
-    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Grab hamburger ID from tool_bar.xml
-        ImageView hamburger = findViewById(R.id.hamburger);
+        //Grabbing custom drawer layout from activity_main
+        drawer = findViewById(R.id.drawer_layout);
 
+
+
+        // Creating hamburger button and rotating animation when clicked
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+/*
+COMMENTED OUT DUE TO CONFLICT
         //Clicked on the hamburger? Do this. (LOGIC SHOULD EVENTUALLY OPEN A NAV MENU FOR LEGEND)
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,12 +86,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+*/
         //A new fragment object is created to reference the MapsFragment.java class
         Fragment fragment = new MapsFragment();
 
         //Loads the Google Maps fragment to display the map
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
 
+    }
+
+
+    //Closes drawer instead of closing activity
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     //START of code from tutorial (https://youtu.be/lBW58tPLn-A?list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi)
