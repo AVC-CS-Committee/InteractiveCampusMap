@@ -87,7 +87,7 @@ public class MapsFragment extends Fragment {
                 //Stadium
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67634068573699, -118.19008554556989)).title("Marauder Stadium").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //PAT
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.675599536158934, -118.18722094657464)).title("Performing Arts Theatre").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6754613377245, -118.18723230937766)).title("Performing Arts Theatre").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Art Gal
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67633186256671, -118.18678106433192)).title("Art Gallery").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Administration
@@ -113,6 +113,8 @@ public class MapsFragment extends Fragment {
                 //FAMO
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67626532974614, -118.18770778514867)).title("Fine Arts Music and Offices").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //TEAL
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67973186506707, -118.18654794631942)).title("Technical Education Technology").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //TEAFT
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.679898891625314, -118.1870825677824)).title("Technical Education: Agriculture Lab").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //GH
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67988988181543, -118.18754492181769)).title("Greenhouse").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
@@ -148,9 +150,9 @@ public class MapsFragment extends Fragment {
                                     //Creates the popup for that location
                                     popupViewCreator(popupView, view);
                                     break;
-                                case "Tech Ed: Welding/Fire Technology":
+                                case "Technical Education Technology":
                                     //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.tewft_popup, null);
+                                    popupView = inflater.inflate(R.layout.tet_popup, null);
 
                                     //Creates the popup for that location
                                     popupViewCreator(popupView, view);

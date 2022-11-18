@@ -24,15 +24,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Uhazy Hall"
+        android:text="Technical Education Technology"
         android:textColor="@color/gold"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintVertical_bias="0.5"
         tools:ignore="HardcodedText" />
 
     <ImageView
@@ -52,25 +52,25 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/uh_general"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0"
-        android:contentDescription="@string/uh_general">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:text="@string/uh_general"
+                android:text="@string/tet_general"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -81,7 +81,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/uh_resources"
+                android:text="@string/tet_resources"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"

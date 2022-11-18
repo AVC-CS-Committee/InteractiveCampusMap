@@ -12,4 +12,71 @@
     <string name="uhazy_hall_picture">Uhazy Hall Picture</string>
     <string name="uh_general"><b>General:</b>\n\tDr. Uhazy has been at the college more than 29 years.\nBefore becoming a dean in 1998, he taught\nmicrobiology.</string>
     <string name="uh_resources"><b>Resources:</b>\nCOMPUTER LAB\nUH 272: Lab contains a WEPA printer.\n\nWinter Break and Summer Session\nMon. - Thurs: 7:30am - 4:30pm\nFri: 7:30am - 11:30am\n\nFall and Spring Semesters\nMon - Thurs: 8am - 8:00pm\nFri: 8am - 2:30pm\n\nRestaurants:\nSUBWAY\n</string>
+
+    <string name="avc_general"><b>General:</b>\n</string>
+    <string name="avc_resources"><b>Resources:</b>\n</string>
+
+    <string name="admin_general"><b>General:</b>\n</string>
+    <string name="admin_resources"><b>Resources:</b>\n</string>
+
+    <string name="admissions_general"><b>General:</b>\n</string>
+    <string name="admissions_resources"><b>Resources:</b>\n</string>
+
+    <string name="me_general"><b>General:</b>\n</string>
+    <string name="me_resources"><b>Resources:</b>\n</string>
+
+    <string name="yh_general"><b>General:</b>\n</string>
+    <string name="yh_resources"><b>Resources:</b>\n</string>
+
+    <string name="lh_general"><b>General:</b>\n</string>
+    <string name="lh_resources"><b>Resources:</b>\n</string>
+
+    <string name="mh_general"><b>General:</b>\n</string>
+    <string name="mh_resources"><b>Resources:</b>\n</string>
+
+    <string name="pat_general"><b>General:</b>\n</string>
+    <string name="pat_resources"><b>Resources:</b>\n</string>
+
+    <string name="osd_general"><b>General:</b>\n</string>
+    <string name="osd_resources"><b>Resources:</b>\n</string>
+
+    <string name="tet_general"><b>General:</b>\n</string>
+    <string name="tet_resources"><b>Resources:</b>\n</string>
+
+    <string name="teal_general"><b>General:</b>\n</string>
+    <string name="teal_resources"><b>Resources:</b>\n</string>
+
+    <string name="subway_general"><b>General:</b>\n</string>
+    <string name="subway_resources"><b>Resources:</b>\n</string>
+
+    <string name="stadium_general"><b>General:</b>\n</string>
+    <string name="stadium_resources"><b>Resources:</b>\n</string>
+
+    <string name="soar_general"><b>General:</b>\n</string>
+    <string name="soar_resources"><b>Resources:</b>\n</string>
+
+    <string name="lib_general"><b>General:</b>\n</string>
+    <string name="lib_resources"><b>Resources:</b>\n</string>
+
+    <string name="lc_general"><b>General:</b>\n</string>
+    <string name="lc_resources"><b>Resources:</b>\n</string>
+
+    <string name="gym_general"><b>General:</b>\n</string>
+    <string name="gym_resources"><b>Resources:</b>\n</string>
+
+    <string name="gh_general"><b>General:</b>\n</string>
+    <string name="gh_resources"><b>Resources:</b>\n</string>
+
+    <string name="gallery_general"><b>General:</b>\n</string>
+    <string name="gallery_resources"><b>Resources:</b>\n</string>
+
+    <string name="famo_general"><b>General:</b>\n</string>
+    <string name="famo_resources"><b>Resources:</b>\n</string>
+
+    <string name="fa_general"><b>General:</b>\n</string>
+    <string name="fa_resources"><b>Resources:</b>\n</string>
+
+    <string name="bookstore_general"><b>General:</b>\n</string>
+    <string name="bookstore_resources"><b>Resources:</b>\n</string>
+
 </resources>
