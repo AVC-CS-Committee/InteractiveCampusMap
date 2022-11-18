@@ -126,6 +126,26 @@ public class MapsFragment extends Fragment {
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68145251714801, -118.18554110652022)).title("Lot A3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot A4
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68137532735808, -118.18434291777308)).title("Lot A4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot B1
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.680290592554464, -118.18435262827403)).title("Lot B1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot B2
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67893436565732, -118.1843313226645)).title("Lot B2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot C1
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67795565478103, -118.18434219529921)).title("Lot C1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot C2
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67715814518791, -118.18433596797071)).title("Lot C2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot C3
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67636064783748, -118.18422669590109)).title("Lot C3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot D1
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6753859837446, -118.18541367472605)).title("Lot D1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot D2
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67549627456488, -118.18617005769254)).title("Lot D2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot E1
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67581345503335, -118.18892817158141)).title("Lot E1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot E2
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6769166812582, -118.18915190113239)).title("Lot E2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+
+
 
 
             /*    //
@@ -331,6 +351,69 @@ public class MapsFragment extends Fragment {
                                 case "Lot A4":
                                     //Instantiates the corresponding location's xml file
                                     popupView = inflater.inflate(R.layout.lot_a4_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot B1":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_b1_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot B2":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_b2_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot C1":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_c1_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot C2":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_c2_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot C3":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_c3_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot D1":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_d1_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot D2":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_d2_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot E1":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_e1_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot E2":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_e2_popup, null);
 
                                     //Creates the popup for that location
                                     popupViewCreator(popupView, view);
