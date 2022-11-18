@@ -26,6 +26,7 @@
     <group android:checkableBehavior="all">
         <item android:title="Map Legend">
 
+            <!-- CheckBox Items -->
             <menu>
                 <item
                     android:id="@+id/markers"
