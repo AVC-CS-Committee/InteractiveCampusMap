@@ -144,6 +144,16 @@ public class MapsFragment extends Fragment {
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67581345503335, -118.18892817158141)).title("Lot E1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot E2
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6769166812582, -118.18915190113239)).title("Lot E2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot E3
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67675828726229, -118.18841680858253)).title("Lot E3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot E4
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67751746225447, -118.18911823651975)).title("Lot E4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot E5
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67919774054158, -118.18916950001093)).title("Lot E5").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot F1
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67613026710341, -118.19203306356845)).title("Lot F1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                //Lot F2
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67793654636213, -118.19232252356142)).title("Lot F2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
 
 
 
@@ -414,6 +424,41 @@ public class MapsFragment extends Fragment {
                                 case "Lot E2":
                                     //Instantiates the corresponding location's xml file
                                     popupView = inflater.inflate(R.layout.lot_e2_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot E3":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_e3_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot E4":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_e4_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot E5":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_e5_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot F1":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_f1_popup, null);
+
+                                    //Creates the popup for that location
+                                    popupViewCreator(popupView, view);
+                                    break;
+                                case "Lot F2":
+                                    //Instantiates the corresponding location's xml file
+                                    popupView = inflater.inflate(R.layout.lot_f2_popup, null);
 
                                     //Creates the popup for that location
                                     popupViewCreator(popupView, view);
