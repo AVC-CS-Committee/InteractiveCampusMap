@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/uhazyhall" />
+        app:srcCompat="@drawable/mh" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:text="@string/uh_general"
+                android:text="@string/mh_general"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -81,7 +81,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/uh_resources"
+                android:text="@string/mh_resources"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"

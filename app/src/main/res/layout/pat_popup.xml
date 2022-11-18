@@ -39,14 +39,14 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/uhazy_hall_picture"
+        android:contentDescription="@string/pat_image"
         app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/uhazyhall" />
+        app:srcCompat="@drawable/pat" />
 
     <ScrollView
         android:id="@+id/scrollView"

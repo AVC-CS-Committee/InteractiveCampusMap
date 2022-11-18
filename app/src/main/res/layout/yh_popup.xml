@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/uhazyhall" />
+        app:srcCompat="@drawable/yh" />
 
     <ScrollView
         android:id="@+id/scrollView"

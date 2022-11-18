@@ -9,10 +9,12 @@
     <string name="administration_building">Administration Building</string>
     <string name="Admissions_and_Records_Office" />
     <string name="avcImap">AVC Interactive Map</string>
+
     <string name="uhazy_hall_picture">Uhazy Hall Picture</string>
     <string name="uh_general"><b>General:</b>\n\tDr. Uhazy has been at the college more than 29 years.\nBefore becoming a dean in 1998, he taught\nmicrobiology.</string>
     <string name="uh_resources"><b>Resources:</b>\nCOMPUTER LAB\nUH 272: Lab contains a WEPA printer.\n\nWinter Break and Summer Session\nMon. - Thurs: 7:30am - 4:30pm\nFri: 7:30am - 11:30am\n\nFall and Spring Semesters\nMon - Thurs: 8am - 8:00pm\nFri: 8am - 2:30pm\n\nRestaurants:\nSUBWAY\n</string>
 
+    <string name="college">College</string>
     <string name="avc_general"><b>General:</b>\n</string>
     <string name="avc_resources"><b>Resources:</b>\n</string>
 
@@ -22,6 +24,7 @@
     <string name="admissions_general"><b>General:</b>\n</string>
     <string name="admissions_resources"><b>Resources:</b>\n</string>
 
+    <string name="me_image">Math and Engineering</string>
     <string name="me_general"><b>General:</b>\n</string>
     <string name="me_resources"><b>Resources:</b>\n</string>
 
@@ -34,6 +37,7 @@
     <string name="mh_general"><b>General:</b>\n</string>
     <string name="mh_resources"><b>Resources:</b>\n</string>
 
+    <string name="pat_image">Performing Art Theatre</string>
     <string name="pat_general"><b>General:</b>\n</string>
     <string name="pat_resources"><b>Resources:</b>\n</string>
 
