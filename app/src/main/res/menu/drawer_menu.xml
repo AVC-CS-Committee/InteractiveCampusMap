@@ -47,7 +47,7 @@
                 <item
                     android:id="@+id/bathrooms"
                     android:icon="@drawable/ic_baseline_bathtub_24"
-                    android:title="Doodoo Centers"
+                    android:title="Bathrooms"
                     app:actionViewClass="android.widget.CheckBox"
                     />
                 <item
