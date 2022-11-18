@@ -39,6 +39,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
         -On marker click open a popup menu with info about that location
  */
 
+/*TODO: Implement the functionality of the maps legend. Create an event listener that listens to current checks in
+        the drawer menu so that it will hide or remove all markers associated with the checklists description.
+*/
+
 /**
  * DESCRIPTION:
     This class (fragment) is for managing the Google Maps API. All the features that need to be
