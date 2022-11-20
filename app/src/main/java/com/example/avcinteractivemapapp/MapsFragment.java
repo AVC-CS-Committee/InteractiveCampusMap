@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,6 +44,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
         the drawer menu so that it will hide or remove all markers associated with the checklists description.
 */
 
+/*
+    TODO: Nearest Parking calculator
+            -the user taps anywhere on avc and the nearest parking lot is shown (don't need the markers on every building)
+            -we'd only need the parking lot markers
+            -calculates the distance between the place the user tapped on the map and all the parking lot markers
+            -the marker that is the closest is displayed (and a path is revealed to it?)
+ */
+
 /**
  * DESCRIPTION:
     This class (fragment) is for managing the Google Maps API. All the features that need to be
@@ -63,6 +72,8 @@ public class MapsFragment extends Fragment {
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
 
+
+
         // Async map
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -76,6 +87,7 @@ public class MapsFragment extends Fragment {
                 LatLng avc = new LatLng(34.6773, -118.1866);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(avc, 17.5f));
                 googleMap.addMarker(new MarkerOptions().position(avc).title("Antelope Valley College").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+
 
                 //Markers for campus locations. TODO: Add markers to all significant locations
                 //UH
@@ -158,7 +170,6 @@ public class MapsFragment extends Fragment {
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67613026710341, -118.19203306356845)).title("Lot F1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot F2
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67793654636213, -118.19232252356142)).title("Lot F2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
-
 
 
 
@@ -481,6 +492,16 @@ public class MapsFragment extends Fragment {
                         }
 
                         return false;
+                    }
+                });
+
+                //FIXME: needs to clear previously placed marker, but not clear existing markers. Currently clears all markers.
+                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(@NonNull LatLng latLng) {
+                        googleMap.clear(); //Need to fix so that it doesn't clear all markers, just the one previously placed
+                        googleMap.addMarker(new MarkerOptions().position(latLng));
+
                     }
                 });
 
