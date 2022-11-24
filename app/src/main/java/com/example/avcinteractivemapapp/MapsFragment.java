@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -30,6 +31,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -52,6 +55,14 @@ import java.util.ArrayList;
             -we'd only need the parking lot markers
             -calculates the distance between the place the user tapped on the map and all the parking lot markers
             -the marker that is the closest is displayed (and a path is revealed to it?)
+ */
+
+/*
+    TODO: Code to eventually refactor
+        -Adding markers for each location
+        -Adding popups on each marker click?
+        -Parking Calculator
+
  */
 
 /**
@@ -138,41 +149,41 @@ public class MapsFragment extends Fragment {
                 //GH
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67988988181543, -118.18754492181769)).title("Greenhouse").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot A1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.681530052571766, -118.1873813729704)).title("Lot A1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.681530052571766, -118.1873813729704)).title("Lot A1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot A2
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6815160851563, -118.18654051741896)).title("Lot A2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6815160851563, -118.18654051741896)).title("Lot A2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot A3
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68145251714801, -118.18554110652022)).title("Lot A3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68145251714801, -118.18554110652022)).title("Lot A3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot A4
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68137532735808, -118.18434291777308)).title("Lot A4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA4 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68137532735808, -118.18434291777308)).title("Lot A4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot B1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.680290592554464, -118.18435262827403)).title("Lot B1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotB1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.680290592554464, -118.18435262827403)).title("Lot B1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot B2
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67893436565732, -118.1843313226645)).title("Lot B2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotB2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67893436565732, -118.1843313226645)).title("Lot B2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot C1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67795565478103, -118.18434219529921)).title("Lot C1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotC1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67795565478103, -118.18434219529921)).title("Lot C1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot C2
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67715814518791, -118.18433596797071)).title("Lot C2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotC2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67715814518791, -118.18433596797071)).title("Lot C2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot C3
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67636064783748, -118.18422669590109)).title("Lot C3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotC3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67636064783748, -118.18422669590109)).title("Lot C3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot D1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6753859837446, -118.18541367472605)).title("Lot D1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotD1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6753859837446, -118.18541367472605)).title("Lot D1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot D2
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67549627456488, -118.18617005769254)).title("Lot D2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotD2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67549627456488, -118.18617005769254)).title("Lot D2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot E1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67581345503335, -118.18892817158141)).title("Lot E1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67581345503335, -118.18892817158141)).title("Lot E1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot E2
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6769166812582, -118.18915190113239)).title("Lot E2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6769166812582, -118.18915190113239)).title("Lot E2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot E3
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67675828726229, -118.18841680858253)).title("Lot E3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67675828726229, -118.18841680858253)).title("Lot E3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot E4
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67751746225447, -118.18911823651975)).title("Lot E4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE4 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67751746225447, -118.18911823651975)).title("Lot E4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot E5
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67919774054158, -118.18916950001093)).title("Lot E5").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE5 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67919774054158, -118.18916950001093)).title("Lot E5").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot F1
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67613026710341, -118.19203306356845)).title("Lot F1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotF1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67613026710341, -118.19203306356845)).title("Lot F1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
                 //Lot F2
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67793654636213, -118.19232252356142)).title("Lot F2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotF2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67793654636213, -118.19232252356142)).title("Lot F2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
 
 
 
@@ -512,11 +523,70 @@ public class MapsFragment extends Fragment {
                             userMarker.remove(userMarker.get(0));
 
                         }
-                        //Creates a new Marker object and places it at the selected latitude and longitude
-                        Marker newUserMarker = googleMap.addMarker(new MarkerOptions().position(latLng));
+                        // Creates a new Marker object and places it at the selected latitude and longitude
+                        Marker newUserMarker = googleMap.addMarker(new MarkerOptions().position(latLng).title("User Marker"));
 
-                        //Adds the new Marker object to the userMarker ArrayList
+                        // Adds the new Marker object to the userMarker ArrayList
                         userMarker.add(newUserMarker);
+
+                        // Adds all parking lot markers to an ArrayList
+                        // NOTE: The logic for the code below is as follows: index 0 = lotA1, index 1 = lotA2, ..., index 17 = lotF2
+                        // TODO: Maybe consider adding all locations to an ArrayList to clean up code?
+                        ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+                        parkingLotMarkers.add(lotA1);
+                        parkingLotMarkers.add(lotA2);
+                        parkingLotMarkers.add(lotA3);
+                        parkingLotMarkers.add(lotA4);
+                        parkingLotMarkers.add(lotB1);
+                        parkingLotMarkers.add(lotB2);
+                        parkingLotMarkers.add(lotC1);
+                        parkingLotMarkers.add(lotC2);
+                        parkingLotMarkers.add(lotC3);
+                        parkingLotMarkers.add(lotD1);
+                        parkingLotMarkers.add(lotD2);
+                        parkingLotMarkers.add(lotE1);
+                        parkingLotMarkers.add(lotE2);
+                        parkingLotMarkers.add(lotE3);
+                        parkingLotMarkers.add(lotE4);
+                        parkingLotMarkers.add(lotE5);
+                        parkingLotMarkers.add(lotF1);
+                        parkingLotMarkers.add(lotF2);
+
+                        // Total number of parking lots
+                        final int NUMBER_OF_PARKING_LOTS = 18;
+
+                        //  An array to store the distances to each lot marker from the user's marker.
+                        //  (Index 0 = LotA1's distance to the marker, Index 1 = LotA2's distance, Index 2 = LotA3's distance, ..., Index 17 = Lot F2's distance.
+                        float[] lotDistancesToMarker = new float[NUMBER_OF_PARKING_LOTS];
+
+                        // Calculates and stores the distance of each marker into the lotDistancesToMarker array
+                        for(int i = 0; i < lotDistancesToMarker.length; ++i){
+                            // Store the distance in lotDistancesToMarker
+                            lotDistancesToMarker[i] = calculateMarkerDistance(newUserMarker, parkingLotMarkers.get(i));
+                        }
+
+                        // Finds the smallest value in the lotDistanceToMarker array (this represents the nearest lot marker)
+                        // The nearest parking lot's index is stored in nearestLotIndex
+                        float smallestDistance = lotDistancesToMarker[0];
+                        int nearestLotIndex = 0;
+                        for(int i = 0; i < lotDistancesToMarker.length; ++i){
+                            if(lotDistancesToMarker[i] < smallestDistance) {
+                                smallestDistance = lotDistancesToMarker[i];
+                                nearestLotIndex = i;
+                            }
+                        }
+
+                        // DEBUG PURPOSES
+                        // Log.d("RESULTS", "Lot " + parkingLotMarkers.get(nearestLotIndex).getTitle() + " is closest by " + lotDistancesToMarker[nearestLotIndex] + " meters.");
+
+                        //TEMPORARY CODE? (just being used to display that the parking calculator actually works)
+                        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View userMarkerView = inflater.inflate(R.layout.user_marker_popup, null);
+                        TextView nearestLotView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.lotView);
+                        TextView distanceView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.distanceView);
+                        nearestLotView.setText(parkingLotMarkers.get(nearestLotIndex).getTitle());
+                        distanceView.setText(Float.toString(lotDistancesToMarker[nearestLotIndex]) + distanceView.getText());
+                        popupViewCreator(userMarkerView, view);
 
                     }
                 });
@@ -543,6 +613,22 @@ public class MapsFragment extends Fragment {
         });
         // Return view
         return view;
+    }
+
+    /**
+     * Calculates distance between two given markers; uses Locations.distanceBetween()
+     *
+     * @param marker1
+     * @param marker2
+     * @return The float value in meters of the distance between the two provided markers
+     */
+    public float calculateMarkerDistance(Marker marker1, Marker marker2){
+        // The computed distance is stored in results[0]. (https://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2)
+        //If results has length 2 or greater, the initial bearing is stored in results[1].
+        //If results has length 3 or greater, the final bearing is stored in results[2].
+        float[] results = new float[1];
+        Location.distanceBetween(marker1.getPosition().latitude, marker1.getPosition().longitude, marker2.getPosition().latitude, marker2.getPosition().longitude, results);
+        return results[0];
     }
 
     // Gets the width of the screen of current device
