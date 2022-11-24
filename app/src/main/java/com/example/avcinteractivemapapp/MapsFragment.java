@@ -31,6 +31,8 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 /*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
         Tutorial being followed: https://youtu.be/lBW58tPLn-A?list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi
         -Restrict API Key; get done before deployment
@@ -72,7 +74,8 @@ public class MapsFragment extends Fragment {
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
 
-
+        //ArrayList used for the logic of removing previously placed user marker
+        ArrayList<Marker> userMarker = new ArrayList<>();
 
         // Async map
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -495,12 +498,25 @@ public class MapsFragment extends Fragment {
                     }
                 });
 
-                //FIXME: needs to clear previously placed marker, but not clear existing markers. Currently clears all markers.
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(@NonNull LatLng latLng) {
-                        googleMap.clear(); //Need to fix so that it doesn't clear all markers, just the one previously placed
-                        googleMap.addMarker(new MarkerOptions().position(latLng));
+
+                        //Checks if the userMarker ArrayList has an existing marker
+                        if(userMarker.size() > 0){
+
+                            //Removes the existing marker from the map
+                            userMarker.get(0).remove();
+
+                            //Removes the existing Marker object from the userMarker ArrayList
+                            userMarker.remove(userMarker.get(0));
+
+                        }
+                        //Creates a new Marker object and places it at the selected latitude and longitude
+                        Marker newUserMarker = googleMap.addMarker(new MarkerOptions().position(latLng));
+
+                        //Adds the new Marker object to the userMarker ArrayList
+                        userMarker.add(newUserMarker);
 
                     }
                 });
