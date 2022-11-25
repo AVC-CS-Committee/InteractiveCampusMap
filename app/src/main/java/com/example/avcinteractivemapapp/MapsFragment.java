@@ -592,6 +592,7 @@ public class MapsFragment extends Fragment {
                 });
 
 
+                // Adds custom JSON file which uses AVC colors for Google Maps
                 try {
                     googleMap.setMapStyle(
                             MapStyleOptions.loadRawResourceStyle( getActivity(), R.raw.custom_avc_map)
