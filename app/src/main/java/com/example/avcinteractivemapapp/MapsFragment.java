@@ -678,5 +678,6 @@ public class MapsFragment extends Fragment {
         // after generating our bitmap we are returning our bitmap.
         return BitmapDescriptorFactory.fromBitmap(bitmap);
         //tyler was here
+        //tyler is trying his best
     }
 }
