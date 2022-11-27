@@ -75,25 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-/*
-COMMENTED OUT DUE TO CONFLICT
-        //Clicked on the hamburger? Do this. (LOGIC SHOULD EVENTUALLY OPEN A NAV MENU FOR LEGEND)
-        hamburger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (count == 0) Toast.makeText(MainActivity.this, "Hey", Toast.LENGTH_SHORT).show();
-                if (count == 1) Toast.makeText(MainActivity.this, "Peter", Toast.LENGTH_SHORT).show();
-                if (count == 2) Toast.makeText(MainActivity.this, "...", Toast.LENGTH_SHORT).show();
-                if (count == 3) Toast.makeText(MainActivity.this, "You Rock", Toast.LENGTH_SHORT).show();
-                if (count == 4) {
-                    Toast.makeText(MainActivity.this, "This message will now repeat.", Toast.LENGTH_SHORT).show();
-                    count = -1;
-                }
-                count++;
-            }
-        });
 
-*/
         //A new fragment object is created to reference the MapsFragment.java class
         Fragment fragment = new MapsFragment();
 
