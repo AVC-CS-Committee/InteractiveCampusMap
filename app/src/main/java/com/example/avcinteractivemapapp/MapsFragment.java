@@ -50,7 +50,7 @@ import java.util.ArrayList;
 */
 
 /*
-    TODO: Nearest Parking calculator
+    DONE: Nearest Parking calculator
             -the user taps anywhere on avc and the nearest parking lot is shown (don't need the markers on every building)
             -we'd only need the parking lot markers
             -calculates the distance between the place the user tapped on the map and all the parking lot markers
@@ -623,7 +623,7 @@ public class MapsFragment extends Fragment {
      * @param marker2
      * @return The float value in meters of the distance between the two provided markers
      */
-    public float calculateMarkerDistance(Marker marker1, Marker marker2){
+    private float calculateMarkerDistance(Marker marker1, Marker marker2){
         // The computed distance is stored in results[0]. (https://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2)
         //If results has length 2 or greater, the initial bearing is stored in results[1].
         //If results has length 3 or greater, the final bearing is stored in results[2].
