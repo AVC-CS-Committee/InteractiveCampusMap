@@ -27,8 +27,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.material.navigation.NavigationView;
 
 /**
  * DESCRIPTION:
@@ -45,6 +49,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
+    private CheckBox check;
 
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
@@ -59,6 +64,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView ic_help = findViewById(R.id.ic_help);
+
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem switchItem = nav.getMenu().findItem(R.id.markers);
+        switchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                    Toast.makeText(MainActivity .this,"HALP!",Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
+
+
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
