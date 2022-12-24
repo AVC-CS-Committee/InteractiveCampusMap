@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openHelpActivity(){
-        Intent intent = new Intent(this, HelpActivity.class);
+        Intent intent = new Intent(MainActivity.this, HelpActivity.class);
         startActivity(intent);
     }
 

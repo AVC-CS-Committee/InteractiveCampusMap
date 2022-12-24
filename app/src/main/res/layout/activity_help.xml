@@ -6,21 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
 
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/tool_bar" />
-
-        <FrameLayout
-
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
 </LinearLayout>
