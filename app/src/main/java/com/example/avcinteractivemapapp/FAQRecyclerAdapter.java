@@ -1,5 +1,7 @@
 package com.example.avcinteractivemapapp;
 
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +33,21 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
         return viewHolder;
     }
 
+    //Sets the value of the title and description textViews to whatever values the current position in faqList holds
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Question question = faqList.get(position);
         holder.titleTextView.setText(question.getTitle());
-        holder.descriptionTextView.setText(question.getDescription());
+
+        // If there is a hyperlink, then make the description textView a link
+        if(question.hasLink()) {
+            holder.descriptionTextView.setText(Html.fromHtml(question.getDescription()));
+            holder.descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        else {
+            holder.descriptionTextView.setText(question.getDescription());
+        }
 
         boolean isExpanded = faqList.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);

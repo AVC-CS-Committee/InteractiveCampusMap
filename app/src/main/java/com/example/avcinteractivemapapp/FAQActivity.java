@@ -51,8 +51,13 @@ public class FAQActivity extends AppCompatActivity {
         });
     }
 
+    // Adds questions with titles and descriptions.
     private void addQuestionItem(){
-       // Resources res = getResources();
-        faqList.add(new Question("Where are the open labs and what are their hours?", "Link to website"));
+        // Use the following format when adding hyperlinks
+        String openLabsDescriptionText = "See the " + String.format("<a href=\"%s\">AVC website</a>", "https://www.avc.edu/administration/its/labs") + ".";
+
+        // Provide a title, description, and true or false depending on whether or not you need a link
+        faqList.add(new Question("Where are the open labs and what are their hours?", openLabsDescriptionText, true));
+        faqList.add(new Question("test", "Test", false));
     }
 }
