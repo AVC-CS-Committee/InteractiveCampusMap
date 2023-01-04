@@ -65,22 +65,21 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 if(position == 0){
-                    //About Us activity
-                }
-                else if(position == 1){
                     Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
                     startActivity(intent);
+                }
+                else if(position == 1){
+                    //Support Activity
                 }
             }
         };
     }
 
-
+    // Adds items to the help activity
+    // NOTE: If the position of an item in the helpItems ArrayList changes, it's position must be updated above in the setOnClickListener()
     private void addHelpItem(){
-        helpItems.add(new HelpItems("About Us"));
         helpItems.add(new HelpItems("Frequently Asked Questions"));
         helpItems.add(new HelpItems("Support"));
-        helpItems.add(new HelpItems("Terms of Service"));
 
         //Adds dividers between help items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
