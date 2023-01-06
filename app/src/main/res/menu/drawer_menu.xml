@@ -34,9 +34,12 @@
             <menu>
                 <item
                     android:id="@+id/markers"
-                    android:icon="@drawable/marker_icon"
+                    android:icon="@drawable/checkbox_state_selector"
                     android:title="Places of Interest"
-                    app:actionViewClass="android.widget.CheckBox" />
+                    android:checkable="true"
+                    android:checkableBehavior="single"
+                    android:actionLayout="@layout/menu_checkbox"/>
+                />
                 <item
                     android:id="@+id/doors"
                     android:icon="@drawable/ic_baseline_door_sliding_24"

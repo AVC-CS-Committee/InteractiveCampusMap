@@ -47,7 +47,7 @@ import com.google.android.material.navigation.NavigationView;
  *  in the onCreate() function which sort of acts as the main method.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
     private CheckBox check;
 
@@ -65,15 +65,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem switchItem = nav.getMenu().findItem(R.id.markers);
-        switchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        nav.setNavigationItemSelectedListener(this);
+        check = (CheckBox) nav.getMenu().findItem(R.id.markers).getActionView();
+        //MenuItem switchItem = nav.getMenu().findItem(R.id.markers);
+        /*switchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                     Toast.makeText(MainActivity .this,"HALP!",Toast.LENGTH_SHORT).show();
 
                 return true;
             }
-        });
+        });*/
 
         //Opens HelpActivity when button is clicked
         MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
@@ -101,6 +103,24 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
 
     }
+
+    //Whenever an item is selected in the Map Legend
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.markers:
+                //All checkbox items should follow this template
+                item.setChecked(!item.isChecked());
+                if(item.isChecked()){
+                    //When the item is clicked (or when the "check box is checked") any action can be performed here
+                    Toast.makeText(MainActivity .this,"HALP!",Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return false;
+        }
+    }
+
 
     public void openHelpActivity(){
         Intent intent = new Intent(MainActivity.this, HelpActivity.class);
