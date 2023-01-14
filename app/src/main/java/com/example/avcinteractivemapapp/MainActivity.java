@@ -46,7 +46,7 @@ import com.google.android.material.navigation.NavigationView;
  *  This class is where the entire program starts, more specifically
  *  in the onCreate() function which sort of acts as the main method.
  */
-
+// comment
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
     private CheckBox check;
