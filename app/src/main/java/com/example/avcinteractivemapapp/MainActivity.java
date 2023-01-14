@@ -48,7 +48,7 @@ import com.google.android.material.navigation.NavigationView;
  */
 
 //test
-
+//test2
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
     private CheckBox check;
