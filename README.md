@@ -21,6 +21,7 @@ Contributors names and contact info
 - [Peter Kallos](https://kallosp.github.io/)
 - [Cristian Herrera](https://cristianherrera.dev/)
 - Nasif Hossain
+- [Sebastian Ala Torre](https://github.com/stardustgd)
 
 
 ## Version History
