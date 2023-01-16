@@ -32,9 +32,8 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
         Tutorial being followed: https://youtu.be/lBW58tPLn-A?list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi
@@ -88,10 +87,14 @@ public class MapsFragment extends Fragment {
         //ArrayList used for the logic of removing previously placed user marker
         ArrayList<Marker> userMarker = new ArrayList<>();
 
+        // HashMap used to lookup a location's xml file
+        HashMap<Marker, String> locations = new HashMap<>();
+
         // Async map
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+                BitmapDescriptor markerIcon = BitmapFromVector(getActivity(), R.drawable.marker_icon);
 
                 //Set boundary for the map
                 final LatLngBounds avcBounds = new LatLngBounds(new LatLng(34.674910, -118.192287), new LatLng(34.682133, -118.183807));
@@ -100,410 +103,128 @@ public class MapsFragment extends Fragment {
                 //Focus AVC and place default marker (uses custom marker)
                 LatLng avc = new LatLng(34.6773, -118.1866);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(avc, 17.5f));
-                googleMap.addMarker(new MarkerOptions().position(avc).title("Antelope Valley College").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(avc).title("Antelope Valley College").icon(markerIcon)), "avc_popup");
 
 
                 //Markers for campus locations. TODO: Add markers to all significant locations
                 //UH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6787345742857, -118.18635845710243)).title("Uhazy Hall").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6787345742857, -118.18635845710243)).title("Uhazy Hall").icon(markerIcon)), "uh_popup");
                 //YH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67899187744454, -118.18548358738202)).title("Yoshida Hall").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67899187744454, -118.18548358738202)).title("Yoshida Hall").icon(markerIcon)), "yh_popup");
                 //SUBWAY
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67918530937743, -118.18672504028271)).title("Subway Sandwich").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67918530937743, -118.18672504028271)).title("Subway Sandwich").icon(markerIcon)), "subway_popup");
                 //SOAR
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67877310935158, -118.18800679457378)).title("SOAR (Students on the Academic Rise) High School").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67877310935158, -118.18800679457378)).title("SOAR (Students on the Academic Rise) High School").icon(markerIcon)), "soar_popup");
                 //Gym
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67804292141216, -118.18734085519353)).title("Gymnasium").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67804292141216, -118.18734085519353)).title("Gymnasium").icon(markerIcon)), "gym_popup");
                 //Stadium
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67634068573699, -118.19008554556989)).title("Marauder Stadium").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67634068573699, -118.19008554556989)).title("Marauder Stadium").icon(markerIcon)), "stadium_popup");
                 //PAT
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6754613377245, -118.18723230937766)).title("Performing Arts Theatre").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6754613377245, -118.18723230937766)).title("Performing Arts Theatre").icon(markerIcon)), "pat_popup");
                 //Art Gal
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67633186256671, -118.18678106433192)).title("Art Gallery").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67633186256671, -118.18678106433192)).title("Art Gallery").icon(markerIcon)), "gallery_popup");
                 //Administration
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6755201268822, -118.18459238195355)).title("Administration Building").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6755201268822, -118.18459238195355)).title("Administration Building").icon(markerIcon)), "admin_popup");
                 //Admissions and Records
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67638480157416, -118.18531121391118)).title("Admissions and Records Office").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67638480157416, -118.18531121391118)).title("Admissions and Records Office").icon(markerIcon)), "admissions_popup");
                 //MH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67687342944362, -118.18512883579885)).title("Mesquite Hall").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67687342944362, -118.18512883579885)).title("Mesquite Hall").icon(markerIcon)), "mh_popup");
                 //LC
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67725682725537, -118.18531269317117)).title("Learning Center").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67725682725537, -118.18531269317117)).title("Learning Center").icon(markerIcon)), "lc_popup");
                 //Bookstore
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.676153144936336, -118.1860004428573)).title("Marauder Bookstore").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.676153144936336, -118.1860004428573)).title("Marauder Bookstore").icon(markerIcon)), "bookstore_popup");
                 //library
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67705751700522, -118.18623111282814)).title("Library").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67705751700522, -118.18623111282814)).title("Library").icon(markerIcon)), "lib_popup");
                 //LH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67709130468547, -118.18756250227011)).title("Lecture Hall").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67709130468547, -118.18756250227011)).title("Lecture Hall").icon(markerIcon)), "lh_popup");
                 //ME
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67775573632852, -118.18589961736947)).title("Math and Engineering").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67775573632852, -118.18589961736947)).title("Math and Engineering").icon(markerIcon)), "me_popup");
                 //OSD
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67672471757968, -118.18439631632184)).title("Office for Students with Disabilities").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67672471757968, -118.18439631632184)).title("Office for Students with Disabilities").icon(markerIcon)), "osd_popup");
                 //FA
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67648676160919, -118.18738628333938)).title("Fine Arts").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67648676160919, -118.18738628333938)).title("Fine Arts").icon(markerIcon)), "fa_popup");
                 //FAMO
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67626532974614, -118.18770778514867)).title("Fine Arts Music and Offices").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67626532974614, -118.18770778514867)).title("Fine Arts Music and Offices").icon(markerIcon)), "famo_popup");
                 //TEAL
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67973186506707, -118.18654794631942)).title("Technical Education Technology").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67973186506707, -118.18654794631942)).title("Technical Education Technology").icon(markerIcon)), "tet_popup");
                 //TEAFT
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.679898891625314, -118.1870825677824)).title("Technical Education: Agriculture Lab").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.679898891625314, -118.1870825677824)).title("Technical Education: Agriculture Lab").icon(markerIcon)), "teal_popup");
                 //GH
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67988988181543, -118.18754492181769)).title("Greenhouse").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                locations.put(googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67988988181543, -118.18754492181769)).title("Greenhouse").icon(markerIcon)), "gh_popup");
                 //Lot A1
-                Marker lotA1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.681530052571766, -118.1873813729704)).title("Lot A1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.681530052571766, -118.1873813729704)).title("Lot A1").icon(markerIcon));
                 //Lot A2
-                Marker lotA2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6815160851563, -118.18654051741896)).title("Lot A2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6815160851563, -118.18654051741896)).title("Lot A2").icon(markerIcon));
                 //Lot A3
-                Marker lotA3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68145251714801, -118.18554110652022)).title("Lot A3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68145251714801, -118.18554110652022)).title("Lot A3").icon(markerIcon));
                 //Lot A4
-                Marker lotA4 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68137532735808, -118.18434291777308)).title("Lot A4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotA4 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.68137532735808, -118.18434291777308)).title("Lot A4").icon(markerIcon));
                 //Lot B1
-                Marker lotB1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.680290592554464, -118.18435262827403)).title("Lot B1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotB1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.680290592554464, -118.18435262827403)).title("Lot B1").icon(markerIcon));
                 //Lot B2
-                Marker lotB2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67893436565732, -118.1843313226645)).title("Lot B2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotB2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67893436565732, -118.1843313226645)).title("Lot B2").icon(markerIcon));
                 //Lot C1
-                Marker lotC1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67795565478103, -118.18434219529921)).title("Lot C1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotC1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67795565478103, -118.18434219529921)).title("Lot C1").icon(markerIcon));
                 //Lot C2
-                Marker lotC2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67715814518791, -118.18433596797071)).title("Lot C2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotC2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67715814518791, -118.18433596797071)).title("Lot C2").icon(markerIcon));
                 //Lot C3
-                Marker lotC3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67636064783748, -118.18422669590109)).title("Lot C3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotC3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67636064783748, -118.18422669590109)).title("Lot C3").icon(markerIcon));
                 //Lot D1
-                Marker lotD1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6753859837446, -118.18541367472605)).title("Lot D1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotD1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6753859837446, -118.18541367472605)).title("Lot D1").icon(markerIcon));
                 //Lot D2
-                Marker lotD2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67549627456488, -118.18617005769254)).title("Lot D2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotD2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67549627456488, -118.18617005769254)).title("Lot D2").icon(markerIcon));
                 //Lot E1
-                Marker lotE1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67581345503335, -118.18892817158141)).title("Lot E1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67581345503335, -118.18892817158141)).title("Lot E1").icon(markerIcon));
                 //Lot E2
-                Marker lotE2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6769166812582, -118.18915190113239)).title("Lot E2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.6769166812582, -118.18915190113239)).title("Lot E2").icon(markerIcon));
                 //Lot E3
-                Marker lotE3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67675828726229, -118.18841680858253)).title("Lot E3").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE3 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67675828726229, -118.18841680858253)).title("Lot E3").icon(markerIcon));
                 //Lot E4
-                Marker lotE4 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67751746225447, -118.18911823651975)).title("Lot E4").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE4 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67751746225447, -118.18911823651975)).title("Lot E4").icon(markerIcon));
                 //Lot E5
-                Marker lotE5 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67919774054158, -118.18916950001093)).title("Lot E5").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotE5 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67919774054158, -118.18916950001093)).title("Lot E5").icon(markerIcon));
                 //Lot F1
-                Marker lotF1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67613026710341, -118.19203306356845)).title("Lot F1").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotF1 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67613026710341, -118.19203306356845)).title("Lot F1").icon(markerIcon));
                 //Lot F2
-                Marker lotF2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67793654636213, -118.19232252356142)).title("Lot F2").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
+                Marker lotF2 = googleMap.addMarker(new MarkerOptions().position(new LatLng(34.67793654636213, -118.19232252356142)).title("Lot F2").icon(markerIcon));
 
+                locations.put(lotA1, "lot_a1_popup");
+                locations.put(lotA2, "lot_a2_popup");
+                locations.put(lotA3, "lot_a3_popup");
+                locations.put(lotA4, "lot_a4_popup");
+                locations.put(lotB1, "lot_b1_popup");
+                locations.put(lotB2, "lot_b2_popup");
+                locations.put(lotC1, "lot_c1_popup");
+                locations.put(lotC2, "lot_c2_popup");
+                locations.put(lotC3, "lot_c3_popup");
+                locations.put(lotD1, "lot_d1_popup");
+                locations.put(lotD2, "lot_d2_popup");
+                locations.put(lotE1, "lot_e1_popup");
+                locations.put(lotE2, "lot_e2_popup");
+                locations.put(lotE3, "lot_e3_popup");
+                locations.put(lotE4, "lot_e4_popup");
+                locations.put(lotE5, "lot_e5_popup");
+                locations.put(lotF1, "lot_f1_popup");
+                locations.put(lotF2, "lot_f2_popup");
 
-
-            /*    //
-                googleMap.addMarker(new MarkerOptions().position(new LatLng()).title("").icon(BitmapFromVector(getActivity(), R.drawable.marker_icon)));
-                 */
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @SuppressLint("InflateParams")
                     @Override
                     public boolean onMarkerClick(@NonNull Marker marker) {
-
-                        String clickedMarker = marker.getTitle();
-
                         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View popupView;
 
-                        //Depending on which marker is clicked, a popup view of the corresponding location is opened.
-                        // A switch statement to check the name of the marker clicked. Add new case with marker name for future additions.
-                        // Create a new popup layout in re\layout folder for each new location.
-                        if (clickedMarker != null) {
-                            switch(clickedMarker){
-                                case "Antelope Valley College":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.avc_popup, null);
+                        // Depending on which marker is clicked, a popup view of the corresponding location is opened.
+                        // A HashMap is used to check the name of the marker clicked.
 
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Yoshida Hall":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.yh_popup, null);
+                        String popup = locations.get(marker);
+                        if (popup == null) return false;
 
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Technical Education Technology":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.tet_popup, null);
+                        // resId stores the id of the corresponding xml file
+                        int resId = getResources().getIdentifier(popup, "layout", getContext().getPackageName());
 
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Uhazy Hall":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.uh_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Subway Sandwich":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.subway_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "SOAR (Students on the Academic Rise) High School":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.soar_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Gymnasium":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.gym_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Marauder Stadium":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.stadium_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Performing Arts Theatre":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.pat_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Art Gallery":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.gallery_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Administration Building":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.admin_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Admissions and Records Office":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.admissions_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Mesquite Hall":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.mh_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Learning Center":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lc_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Marauder Bookstore":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.bookstore_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Library":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lib_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lecture Hall":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lh_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Math and Engineering":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.me_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Office for Students with Disabilities":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.osd_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Fine Arts":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.fa_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Fine Arts Music and Offices":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.famo_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Technical Education: Agriculture Lab":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.teal_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Greenhouse":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.gh_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot A1":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_a1_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot A2":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_a2_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot A3":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_a3_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot A4":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_a4_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot B1":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_b1_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot B2":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_b2_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot C1":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_c1_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot C2":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_c2_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot C3":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_c3_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot D1":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_d1_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot D2":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_d2_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot E1":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_e1_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot E2":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_e2_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot E3":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_e3_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot E4":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_e4_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot E5":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_e5_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot F1":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_f1_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                                case "Lot F2":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout.lot_f2_popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                            /*    case "":
-                                    //Instantiates the corresponding location's xml file
-                                    popupView = inflater.inflate(R.layout._popup, null);
-
-                                    //Creates the popup for that location
-                                    popupViewCreator(popupView, view);
-                                    break;
-                            */
-                                default:
-                                    break;
-                            }
-                        }
+                        popupView = inflater.inflate(resId, null);
+                        popupViewCreator(popupView, view);
 
                         return false;
                     }
