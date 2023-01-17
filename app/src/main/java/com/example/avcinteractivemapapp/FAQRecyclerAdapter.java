@@ -49,8 +49,20 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
             holder.descriptionTextView.setText(question.getDescription());
         }
 
-        boolean isExpanded = faqList.get(position).isExpanded();
-        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        // Animates the dropdown arrow and expands the CardView when clicked
+        holder.expandIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // handle expand/collapse functionality
+                if(holder.descriptionTextView.getVisibility() == View.GONE){
+                    holder.descriptionTextView.setVisibility(View.VISIBLE);
+                    holder.expandIcon.animate().rotation(180);
+                } else {
+                    holder.descriptionTextView.setVisibility(View.GONE);
+                    holder.expandIcon.animate().rotation(0);
+                }
+            }
+        });
     }
 
     @Override
@@ -61,25 +73,15 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleTextView, descriptionTextView;
-        ConstraintLayout expandableLayout;
+        private ImageView expandIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titleTextView = itemView.findViewById(R.id.textView);
             descriptionTextView = itemView.findViewById(R.id.textView4);
-            expandableLayout = itemView.findViewById(R.id.ExpandableLayout);
+            expandIcon = itemView.findViewById(R.id.spinner);
 
-            titleTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Getting the position of the selected question title
-                    Question question = faqList.get(getAdapterPosition());
-                    //Inverting the current expanded property
-                    question.setExpanded(!question.isExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
         }
 
     }
