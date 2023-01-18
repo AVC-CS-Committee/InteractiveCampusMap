@@ -163,7 +163,7 @@ public class MapsFragment extends Fragment {
             CameraPosition position = googleMap.getCameraPosition();
 
             // Ensures that the user doesn't go over the max zoom amount
-            float maxZoom = 10.0f;
+            float maxZoom = 14.0f;
             if (position.zoom > maxZoom) googleMap.setMinZoomPreference(maxZoom);
         });
 
@@ -203,7 +203,7 @@ public class MapsFragment extends Fragment {
     }
 
     private void setMapBounds(@NonNull GoogleMap googleMap) {
-        LatLng southwestBound = new LatLng(34.674910, -118192287);
+        LatLng southwestBound = new LatLng(34.674910, -118.192287);
         LatLng northeastBound = new LatLng(34.682133, -118.183807);
 
         //Set boundary for the map
