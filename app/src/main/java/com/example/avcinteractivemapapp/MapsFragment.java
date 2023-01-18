@@ -28,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -155,6 +156,15 @@ public class MapsFragment extends Fragment {
             nearestLotView.setText(parkingLotMarkers.get(nearestLot.first).getTitle());
             distanceView.setText(String.format("%.2f %s", nearestLot.second, distanceView.getText()));
             popupViewCreator(userMarkerView, view);
+        });
+
+        // Handle map camera movement
+        googleMap.setOnCameraMoveListener(() -> {
+            CameraPosition position = googleMap.getCameraPosition();
+
+            // Ensures that the user doesn't go over the max zoom amount
+            float maxZoom = 10.0f;
+            if (position.zoom > maxZoom) googleMap.setMinZoomPreference(maxZoom);
         });
 
         // Handles center map button clicks
