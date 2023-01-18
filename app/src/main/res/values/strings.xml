@@ -4,6 +4,7 @@
     <string name="Q1_T">Where are the open labs and what are their hours?</string>
     <string name="Q1_D">Link to website</string>
     -->
+    <string name="center_gps_button">Center map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

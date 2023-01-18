@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -89,6 +90,10 @@ public class MapsFragment extends Fragment {
         // Initialize map fragment
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
+
+        // Get the center map button
+        ImageButton centerMapsButton = view.findViewById(R.id.center_map);
+
 
         // ArrayList used for the logic of removing previously placed user marker
         ArrayList<Marker> userMarker = new ArrayList<>();
@@ -233,6 +238,11 @@ public class MapsFragment extends Fragment {
                     }
                 });
 
+                // Handle center maps button click
+                centerMapsButton.setOnClickListener(v -> {
+                    LatLng avc1 = new LatLng(34.6773, -118.1866);
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(avc1, 17.5f));
+                });
 
                 // Adds custom JSON file which uses AVC colors for Google Maps
                 try {
@@ -242,8 +252,6 @@ public class MapsFragment extends Fragment {
                 } catch(Resources.NotFoundException e){
                     Log.e("JSON", "Can't find style. Error: ", e);
                 }
-
-
 
                 // When map is loaded
                /* googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
