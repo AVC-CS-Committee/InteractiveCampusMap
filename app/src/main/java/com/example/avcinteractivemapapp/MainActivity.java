@@ -67,25 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
         check = (CheckBox) nav.getMenu().findItem(R.id.markers).getActionView();
-        //MenuItem switchItem = nav.getMenu().findItem(R.id.markers);
-        /*switchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                    Toast.makeText(MainActivity .this,"HALP!",Toast.LENGTH_SHORT).show();
-
-                return true;
-            }
-        });*/
-
-        //Opens HelpActivity when button is clicked
-        MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
-        helpButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                openHelpActivity();
-                return true;
-            }
-        });
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
@@ -96,12 +77,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Opens HelpActivity when help button is clicked
+        MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
+        helpButton.setOnMenuItemClickListener(item -> {
+            openHelpActivity();
+            return true;
+        });
+
+        // Closes toolbar when map button is clicked
+        MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);
+        mapButton.setOnMenuItemClickListener(item -> {
+            drawer.closeDrawer(GravityCompat.START);
+            item.setChecked(false);
+            return true;
+        });
+
         //A new fragment object is created to reference the MapsFragment.java class
         Fragment fragment = new MapsFragment();
 
         //Loads the Google Maps fragment to display the map
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
-
     }
 
     //Whenever an item is selected in the Map Legend
@@ -119,12 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             default:
                 return false;
         }
-    }
-
-
-    public void openHelpActivity(){
-        Intent intent = new Intent(MainActivity.this, HelpActivity.class);
-        startActivity(intent);
     }
 
     //Closes drawer instead of closing activity
@@ -150,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getLocationPermission();
             }
         }
+    }
+
+    private void openHelpActivity(){
+        Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+        startActivity(intent);
     }
 
     private boolean checkMapServices(){
@@ -232,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
+                                           @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults); //super was required??
         mLocationPermissionGranted = false;
