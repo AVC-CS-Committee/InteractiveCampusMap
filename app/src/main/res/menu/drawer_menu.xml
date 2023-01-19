@@ -43,7 +43,7 @@
                 <item
                     android:id="@+id/doors"
                     android:icon="@drawable/ic_baseline_door_sliding_24"
-                    android:title="Entrences and Exits"
+                    android:title="Entrances and Exits"
                     app:actionViewClass="android.widget.CheckBox" />
                 <item
                     android:id="@+id/food"
@@ -54,7 +54,7 @@
                 <item
                     android:id="@+id/bathrooms"
                     android:icon="@drawable/ic_baseline_bathtub_24"
-                    android:title="Bathrooms"
+                    android:title="Restrooms"
                     app:actionViewClass="android.widget.CheckBox"
                     />
                 <item
