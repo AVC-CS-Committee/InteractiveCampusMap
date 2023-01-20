@@ -83,6 +83,9 @@ import java.util.Scanner;
     where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment {
+    final float MAX_ZOOM = 14.0f;
+    final float INITIAL_ZOOM = 17.5f;
+
     // ArrayLists used for markers
     ArrayList<Marker> userMarker = new ArrayList<>();
     ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
@@ -163,8 +166,7 @@ public class MapsFragment extends Fragment {
             CameraPosition position = googleMap.getCameraPosition();
 
             // Ensures that the user doesn't go over the max zoom amount
-            float maxZoom = 14.0f;
-            if (position.zoom > maxZoom) googleMap.setMinZoomPreference(maxZoom);
+            if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
         });
 
         // Handles center map button clicks
@@ -213,7 +215,13 @@ public class MapsFragment extends Fragment {
 
     private void centerMapCamera(@NonNull GoogleMap googleMap) {
         LatLng avcCoords = new LatLng(34.6773, -118.1866);
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(avcCoords, 17.5f));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(avcCoords)
+                .zoom(INITIAL_ZOOM)
+                .bearing(0)
+                .build();
+
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private void parseJson(GoogleMap googleMap) {
