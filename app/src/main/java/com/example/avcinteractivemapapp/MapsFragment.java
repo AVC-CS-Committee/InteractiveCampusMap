@@ -88,10 +88,14 @@ public class MapsFragment extends Fragment {
 
     // ArrayLists used for markers
     ArrayList<Marker> userMarker = new ArrayList<>();
-    ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+    public static ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+    public static ArrayList<Marker> classroomLocations = new ArrayList<>();
+    public static ArrayList<Marker> foodLocations = new ArrayList<>();
+    public static ArrayList<Marker> athleticLocations = new ArrayList<>();
+    public static ArrayList<Marker> resourceLocations = new ArrayList<>();
 
     // HashMap used to lookup a location's xml file
-    HashMap<Marker, String> locations = new HashMap<>();
+    public static HashMap<Marker, String> locations = new HashMap<>();
 
     // Icons for markers
     BitmapDescriptor markerIcon;
@@ -171,6 +175,7 @@ public class MapsFragment extends Fragment {
 
         // Handles center map button clicks
         centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
+
     };
 
     @Nullable
@@ -252,10 +257,24 @@ public class MapsFragment extends Fragment {
                         .title(title)
                         .icon(markerIcon));
 
+                // All markers are stored in the locations hashmap. This is required for displaying popups.
                 locations.put(tmpMarker, xmlFile);
 
+                // Location types are sorted into their respective ArrayLists
                 if (locationType.equals("parking")) {
                     parkingLotMarkers.add(tmpMarker);
+                }
+                if(locationType.equals("classroom")){
+                    classroomLocations.add(tmpMarker);
+                }
+                if(locationType.equals("resource")){
+                    resourceLocations.add(tmpMarker);
+                }
+                if(locationType.equals("food")){
+                    foodLocations.add(tmpMarker);
+                }
+                if(locationType.equals("athletic")){
+                    athleticLocations.add(tmpMarker);
                 }
             }
         } catch (JSONException e) {

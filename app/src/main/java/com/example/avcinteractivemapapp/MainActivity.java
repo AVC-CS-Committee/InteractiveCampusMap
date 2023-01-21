@@ -39,7 +39,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * DESCRIPTION:
@@ -66,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
-        check = (CheckBox) nav.getMenu().findItem(R.id.markers).getActionView();
+        //check = (CheckBox) nav.getMenu().findItem(R.id.markers).getActionView();*/
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
@@ -99,17 +107,152 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
     }
 
+    void hideMarkerType(ArrayList<Marker> markerType) {
+        for(int i = 0; i < markerType.size(); ++i){
+            markerType.get(i).setVisible(false);
+        }
+    }
+
+    void unhideMarkerType(ArrayList<Marker> markerType) {
+        for(int i = 0; i < markerType.size(); ++i){
+            markerType.get(i).setVisible(true);
+        }
+    }
+
     //Whenever an item is selected in the Map Legend
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        HashMap<Marker, String> allMarkers = MapsFragment.locations;
+        ArrayList<Marker> lotMarkers = MapsFragment.parkingLotMarkers;
+        ArrayList<Marker> classMarkers = MapsFragment.classroomLocations;
+        ArrayList<Marker> resourceMarkers = MapsFragment.resourceLocations;
+        ArrayList<Marker> foodMarkers = MapsFragment.foodLocations;
+        ArrayList<Marker> athleticMarkers = MapsFragment.athleticLocations;
+
         switch (item.getItemId()) {
-            case R.id.markers:
-                //All checkbox items should follow this template
+            case R.id.lots:
+
+                // Ensures the lot markers display. Accounts for the case where they're already disabled
+                unhideMarkerType(lotMarkers);
+
+                // Sets checked state of checkbox
                 item.setChecked(!item.isChecked());
-                if(item.isChecked()){
-                    //When the item is clicked (or when the "check box is checked") any action can be performed here
-                    Toast.makeText(MainActivity .this,"HALP!",Toast.LENGTH_SHORT).show();
+
+                if(item.isChecked()) {
+
+                    hideMarkerType(classMarkers);
+                    hideMarkerType(resourceMarkers);
+                    hideMarkerType(foodMarkers);
+                    hideMarkerType(athleticMarkers);
+
+                    // Close the legend view
+                    drawer.closeDrawer(GravityCompat.START);
+
                 }
+                else {
+
+                    unhideMarkerType(classMarkers);
+                    unhideMarkerType(resourceMarkers);
+                    unhideMarkerType(foodMarkers);
+                    unhideMarkerType(athleticMarkers);
+                }
+                return true;
+            case R.id.classrooms:
+
+                unhideMarkerType(classMarkers);
+
+                item.setChecked(!item.isChecked());
+
+                if(item.isChecked()) {
+                    hideMarkerType(lotMarkers);
+                    hideMarkerType(resourceMarkers);
+                    hideMarkerType(foodMarkers);
+                    hideMarkerType(athleticMarkers);
+
+                    // Close the legend view
+                    drawer.closeDrawer(GravityCompat.START);
+
+                }
+                else {
+                    unhideMarkerType(lotMarkers);
+                    unhideMarkerType(resourceMarkers);
+                    unhideMarkerType(foodMarkers);
+                    unhideMarkerType(athleticMarkers);
+                }
+
+                return true;
+            case R.id.studentResources:
+
+                unhideMarkerType(resourceMarkers);
+
+                item.setChecked(!item.isChecked());
+
+                if(item.isChecked()) {
+                    hideMarkerType(lotMarkers);
+                    hideMarkerType(classMarkers);
+                    hideMarkerType(foodMarkers);
+                    hideMarkerType(athleticMarkers);
+
+                    // Close the legend view
+                    drawer.closeDrawer(GravityCompat.START);
+
+                }
+                else {
+                    unhideMarkerType(lotMarkers);
+                    unhideMarkerType(classMarkers);
+                    unhideMarkerType(foodMarkers);
+                    unhideMarkerType(athleticMarkers);
+                }
+
+                return true;
+            case R.id.food:
+
+                unhideMarkerType(foodMarkers);
+
+                item.setChecked(!item.isChecked());
+
+                if(item.isChecked()) {
+                    hideMarkerType(lotMarkers);
+                    hideMarkerType(resourceMarkers);
+                    hideMarkerType(classMarkers);
+                    hideMarkerType(athleticMarkers);
+
+                    // Close the legend view
+                    drawer.closeDrawer(GravityCompat.START);
+
+                }
+                else {
+                    unhideMarkerType(lotMarkers);
+                    unhideMarkerType(resourceMarkers);
+                    unhideMarkerType(classMarkers);
+                    unhideMarkerType(athleticMarkers);
+                }
+
+                return true;
+            case R.id.athletics:
+
+                unhideMarkerType(athleticMarkers);
+
+                item.setChecked(!item.isChecked());
+
+                if(item.isChecked()) {
+                    hideMarkerType(lotMarkers);
+                    hideMarkerType(resourceMarkers);
+                    hideMarkerType(foodMarkers);
+                    hideMarkerType(classMarkers);
+
+                    // Close the legend view
+                    drawer.closeDrawer(GravityCompat.START);
+
+                }
+                else {
+                    unhideMarkerType(lotMarkers);
+                    unhideMarkerType(resourceMarkers);
+                    unhideMarkerType(foodMarkers);
+                    unhideMarkerType(classMarkers);
+                }
+
                 return true;
             default:
                 return false;

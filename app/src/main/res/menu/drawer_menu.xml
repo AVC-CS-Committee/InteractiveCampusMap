@@ -33,36 +33,41 @@
             <!-- CheckBox Items -->
             <menu>
                 <item
-                    android:id="@+id/markers"
+                    android:id="@+id/lots"
                     android:icon="@drawable/checkbox_state_selector"
-                    android:title="Places of Interest"
+                    android:title="Parking Lots"
                     android:checkable="true"
                     android:checkableBehavior="single"
                     android:actionLayout="@layout/menu_checkbox"/>
-                />
+
                 <item
-                    android:id="@+id/doors"
-                    android:icon="@drawable/ic_baseline_door_sliding_24"
-                    android:title="Entrances and Exits"
-                    app:actionViewClass="android.widget.CheckBox" />
+                    android:id="@+id/classrooms"
+                    android:icon="@drawable/checkbox_state_selector"
+                    android:title="Classrooms"
+                    android:checkable="true"
+                    android:checkableBehavior="single"
+                    android:actionLayout="@layout/menu_checkbox"/>
+                <item
+                    android:id="@+id/studentResources"
+                    android:icon="@drawable/checkbox_state_selector"
+                    android:title="Student Resources"
+                    android:checkable="true"
+                    android:checkableBehavior="single"
+                    android:actionLayout="@layout/menu_checkbox"/>
                 <item
                     android:id="@+id/food"
-                    android:icon="@drawable/ic_baseline_fastfood_24"
+                    android:icon="@drawable/checkbox_state_selector"
                     android:title="Food"
-                    app:actionViewClass="android.widget.CheckBox"
-                    />
+                    android:checkable="true"
+                    android:checkableBehavior="single"
+                    android:actionLayout="@layout/menu_checkbox"/>
                 <item
-                    android:id="@+id/bathrooms"
-                    android:icon="@drawable/ic_baseline_bathtub_24"
-                    android:title="Restrooms"
-                    app:actionViewClass="android.widget.CheckBox"
-                    />
-                <item
-                    android:id="@+id/stuff"
-                    android:icon="@drawable/ic_baseline_electric_scooter_24"
-                    android:title="Other Cool Stuff"
-                    app:actionViewClass="android.widget.CheckBox"
-                />
+                    android:id="@+id/athletics"
+                    android:icon="@drawable/checkbox_state_selector"
+                    android:title="Athletics"
+                    android:checkable="true"
+                    android:checkableBehavior="single"
+                    android:actionLayout="@layout/menu_checkbox"/>
             </menu>
         </item>
     </group>
