@@ -1,6 +1,5 @@
 package com.example.avcinteractivemapapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -9,14 +8,17 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -80,189 +83,214 @@ import java.util.Scanner;
     where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Initialize view
-        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+    final float MAX_ZOOM = 14.0f;
+    final float INITIAL_ZOOM = 17.5f;
 
-        // Initialize map fragment
-        SupportMapFragment supportMapFragment = (SupportMapFragment)
+    // ArrayLists used for markers
+    ArrayList<Marker> userMarker = new ArrayList<>();
+    ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+
+    // HashMap used to lookup a location's xml file
+    HashMap<Marker, String> locations = new HashMap<>();
+
+    // Icons for markers
+    BitmapDescriptor markerIcon;
+    ImageButton centerMapButton;
+    View view;
+
+    // Handles map manipulation once the map is ready
+    // Replaces onMapReady()
+    private final OnMapReadyCallback callback = googleMap -> {
+        setMapStyle(googleMap);
+        setMapBounds(googleMap);
+        centerMapCamera(googleMap);
+
+        markerIcon = BitmapFromVector(getActivity(), R.drawable.marker_icon);
+        centerMapButton = view.findViewById(R.id.center_map);
+
+        parseJson(googleMap);
+
+        // googleMap.setOnMarkerClickListener();
+
+        // Handles marker title clicks
+        googleMap.setOnInfoWindowClickListener(marker -> {
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View popupView;
+
+            // Depending on which marker is clicked, a popup view of the corresponding location is opened.
+            // A HashMap is used to check the name of the marker clicked.
+
+            String popup = locations.get(marker);
+            if (popup == null) return;
+
+            // resId stores the id of the corresponding xml file
+            int resId = getResources().getIdentifier(popup, "layout", getContext().getPackageName());
+
+            popupView = inflater.inflate(resId, null);
+            popupViewCreator(popupView, view);
+        });
+
+        // Handles map clicks
+        googleMap.setOnMapClickListener(latLng -> {
+            if (userMarker.size() > 0) {
+                // Removes existing marker from the map
+                userMarker.get(0).remove();
+
+                // Removes existing Marker object from ArrayList
+                userMarker.remove(0);
+            }
+
+            // Creates a new Marker object and places it at the location
+            Marker newUserMarker = googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("User Marker"));
+
+            // Add user Marker to the ArrayList
+            userMarker.add(newUserMarker);
+
+            // Calculate the distance to the nearest lot
+            Pair<Integer, Double> nearestLot = calculateNearestLot(newUserMarker);
+
+            // Temporary code (just being used to display that the parking calculator actually works)
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View userMarkerView = inflater.inflate(R.layout.user_marker_popup, null);
+            TextView nearestLotView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.lotView);
+            TextView distanceView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.distanceView);
+            nearestLotView.setText(parkingLotMarkers.get(nearestLot.first).getTitle());
+            distanceView.setText(String.format("%.2f %s", nearestLot.second, distanceView.getText()));
+            popupViewCreator(userMarkerView, view);
+        });
+
+        // Handle map camera movement
+        googleMap.setOnCameraMoveListener(() -> {
+            CameraPosition position = googleMap.getCameraPosition();
+
+            // Ensures that the user doesn't go over the max zoom amount
+            if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
+        });
+
+        // Handles center map button clicks
+        centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
+    };
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_maps, container, false);
+    }
+
+    // Once the view is created, we can instantiate the map
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
 
-        // ArrayList used for the logic of removing previously placed user marker
-        ArrayList<Marker> userMarker = new ArrayList<>();
+        this.view = view;
 
-        // ArrayList used for parking markers
-        ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+        if (mapFragment == null) return;
 
-        // HashMap used to lookup a location's xml file
-        HashMap<Marker, String> locations = new HashMap<>();
+        mapFragment.getMapAsync(callback);
+    }
 
-        // Async map
-        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                BitmapDescriptor markerIcon = BitmapFromVector(getActivity(), R.drawable.marker_icon);
+    private void setMapStyle(@NonNull GoogleMap googleMap) {
+         // Adds custom JSON file which uses AVC colors for Google Maps
+         try {
+             googleMap.setMapStyle(
+                     MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.custom_avc_map));
+         } catch(Resources.NotFoundException e){
+             Log.e("JSON", "Can't find style. Error: ", e);
+         }
+    }
 
-                //Set boundary for the map
-                final LatLngBounds avcBounds = new LatLngBounds(new LatLng(34.674910, -118.192287), new LatLng(34.682133, -118.183807));
-                googleMap.setLatLngBoundsForCameraTarget(avcBounds);
+    private void setMapBounds(@NonNull GoogleMap googleMap) {
+        LatLng southwestBound = new LatLng(34.674910, -118.192287);
+        LatLng northeastBound = new LatLng(34.682133, -118.183807);
 
-                //Focus AVC and place default marker (uses custom marker)
-                LatLng avc = new LatLng(34.6773, -118.1866);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(avc, 17.5f));
-                locations.put(googleMap.addMarker(new MarkerOptions().position(avc).title("Antelope Valley College").icon(markerIcon)), "avc_popup");
+        //Set boundary for the map
+        final LatLngBounds avcBounds = new LatLngBounds(southwestBound, northeastBound);
+        googleMap.setLatLngBoundsForCameraTarget(avcBounds);
+    }
 
-                // Read from locations.json
-                InputStream jsonData = getResources().openRawResource(R.raw.locations);
-                Scanner scnr = new Scanner(jsonData);
-                StringBuilder builder = new StringBuilder();
+    private void centerMapCamera(@NonNull GoogleMap googleMap) {
+        LatLng avcCoords = new LatLng(34.6773, -118.1866);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(avcCoords)
+                .zoom(INITIAL_ZOOM)
+                .bearing(0)
+                .build();
 
-                // Build locations.json string
-                while (scnr.hasNextLine()) {
-                    builder.append(scnr.nextLine());
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private void parseJson(GoogleMap googleMap) {
+        // Open json file
+        InputStream jsonData = getResources().openRawResource(R.raw.locations);
+        Scanner scnr = new Scanner(jsonData);
+        StringBuilder builder = new StringBuilder();
+
+        // Build json string
+        while (scnr.hasNextLine()) {
+            builder.append(scnr.nextLine());
+        }
+
+        // Parse json into objects
+        try {
+            JSONArray root = new JSONArray(builder.toString());
+
+            for (int i = 0; i < root.length(); i++) {
+                JSONObject location = root.getJSONObject(i);
+                String title = location.getString("title");
+                double latitude = location.getDouble("latitude");
+                double longitude = location.getDouble("longitude");
+                String xmlFile = location.getString("xml_file");
+                String locationType = location.getString("type");
+
+                Marker tmpMarker = googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title(title)
+                        .icon(markerIcon));
+
+                locations.put(tmpMarker, xmlFile);
+
+                if (locationType.equals("parking")) {
+                    parkingLotMarkers.add(tmpMarker);
                 }
-                scnr.close();
-
-                // Parse json string and add locations to HashMap
-                try {
-                    JSONArray root = new JSONArray(builder.toString());
-
-                    for (int i = 0; i < root.length(); i++) {
-                        JSONObject location = root.getJSONObject(i);
-                        String title = location.getString("title");
-                        double latitude = location.getDouble("latitude");
-                        double longitude = location.getDouble("longitude");
-                        String xmlFile = location.getString("xml_file");
-                        String locationType = location.getString("type");
-
-                        Marker tmpMarker = googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title).icon(markerIcon));
-                        locations.put(tmpMarker, xmlFile);
-
-                        // If the marker is a parking marker, add it to the parkingLotMarkers ArrayList
-                        if (locationType.equals("parking")) {
-                            parkingLotMarkers.add(tmpMarker);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @SuppressLint("InflateParams")
-                    @Override
-                    public boolean onMarkerClick(@NonNull Marker marker) {
-                        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View popupView;
-
-                        // Depending on which marker is clicked, a popup view of the corresponding location is opened.
-                        // A HashMap is used to check the name of the marker clicked.
-
-                        String popup = locations.get(marker);
-                        if (popup == null) return false;
-
-                        // resId stores the id of the corresponding xml file
-                        int resId = getResources().getIdentifier(popup, "layout", getContext().getPackageName());
-
-                        popupView = inflater.inflate(resId, null);
-                        popupViewCreator(popupView, view);
-
-                        return false;
-                    }
-                });
-
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(@NonNull LatLng latLng) {
-
-                        //Checks if the userMarker ArrayList has an existing marker
-                        if(userMarker.size() > 0){
-
-                            //Removes the existing marker from the map
-                            userMarker.get(0).remove();
-
-                            //Removes the existing Marker object from the userMarker ArrayList
-                            userMarker.remove(userMarker.get(0));
-
-                        }
-                        // Creates a new Marker object and places it at the selected latitude and longitude
-                        Marker newUserMarker = googleMap.addMarker(new MarkerOptions().position(latLng).title("User Marker"));
-
-                        // Adds the new Marker object to the userMarker ArrayList
-                        userMarker.add(newUserMarker);
-
-                        // NOTE: The logic for the code below is as follows: index 0 = lotA1, index 1 = lotA2, ..., index 17 = lotF2
-
-                        // Total number of parking lots
-                        final int NUMBER_OF_PARKING_LOTS = 18;
-
-                        //  An array to store the distances to each lot marker from the user's marker.
-                        //  (Index 0 = LotA1's distance to the marker, Index 1 = LotA2's distance, Index 2 = LotA3's distance, ..., Index 17 = Lot F2's distance.
-                        float[] lotDistancesToMarker = new float[NUMBER_OF_PARKING_LOTS];
-
-                        // Calculates and stores the distance of each marker into the lotDistancesToMarker array
-                        for(int i = 0; i < lotDistancesToMarker.length; ++i){
-                            // Store the distance in lotDistancesToMarker
-                            lotDistancesToMarker[i] = calculateMarkerDistance(newUserMarker, parkingLotMarkers.get(i));
-                        }
-
-                        // Finds the smallest value in the lotDistanceToMarker array (this represents the nearest lot marker)
-                        // The nearest parking lot's index is stored in nearestLotIndex
-                        float smallestDistance = lotDistancesToMarker[0];
-                        int nearestLotIndex = 0;
-                        for(int i = 0; i < lotDistancesToMarker.length; ++i){
-                            if(lotDistancesToMarker[i] < smallestDistance) {
-                                smallestDistance = lotDistancesToMarker[i];
-                                nearestLotIndex = i;
-                            }
-                        }
-
-                        // DEBUG PURPOSES
-                        // Log.d("RESULTS", "Lot " + parkingLotMarkers.get(nearestLotIndex).getTitle() + " is closest by " + lotDistancesToMarker[nearestLotIndex] + " meters.");
-
-                        //TEMPORARY CODE? (just being used to display that the parking calculator actually works)
-                        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View userMarkerView = inflater.inflate(R.layout.user_marker_popup, null);
-                        TextView nearestLotView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.lotView);
-                        TextView distanceView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.distanceView);
-                        nearestLotView.setText(parkingLotMarkers.get(nearestLotIndex).getTitle());
-                        distanceView.setText(Float.toString(lotDistancesToMarker[nearestLotIndex]) + distanceView.getText());
-                        popupViewCreator(userMarkerView, view);
-
-                    }
-                });
-
-
-                // Adds custom JSON file which uses AVC colors for Google Maps
-                try {
-                    googleMap.setMapStyle(
-                            MapStyleOptions.loadRawResourceStyle( getActivity(), R.raw.custom_avc_map)
-                    );
-                } catch(Resources.NotFoundException e){
-                    Log.e("JSON", "Can't find style. Error: ", e);
-                }
-
-
-
-                // When map is loaded
-               /* googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        //When something on the map is clicked
-                    }
-                });*/
             }
-        });
-        // Return view
-        return view;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Calculate which lot is the nearest to the user's marker
+    private Pair<Integer, Double> calculateNearestLot(Marker newUserMarker) {
+        // The logic used for the code is as follows:
+        // index[0] = lotA1, index[1] = lotA2, ... , index[17] = lotF2
+        final int NUMBER_OF_PARKING_LOTS = 18;
+        double[] lotDistancesToMarker = new double[NUMBER_OF_PARKING_LOTS];
+        int nearestLotIndex = 0;
+        double smallestDistance = Double.MAX_VALUE;
+
+        // Calculates and stores the distance of each marker into the lotDistancesToMarker array
+        // while calculating the smallest value in the array
+        for (int i = 0; i < lotDistancesToMarker.length; i++) {
+            lotDistancesToMarker[i] = calculateMarkerDistance(newUserMarker, parkingLotMarkers.get(i));
+
+            if (lotDistancesToMarker[i] < smallestDistance) {
+                smallestDistance = lotDistancesToMarker[i];
+                nearestLotIndex = i;
+            }
+        }
+
+        return new Pair<>(nearestLotIndex, smallestDistance);
     }
 
     /**
      * Calculates distance between two given markers; uses Locations.distanceBetween()
      *
-     * @param marker1
-     * @param marker2
+     * @param marker1 - user's marker
+     * @param marker2 - parking lot marker
      * @return The float value in meters of the distance between the two provided markers
      */
     private float calculateMarkerDistance(Marker marker1, Marker marker2){
@@ -270,17 +298,19 @@ public class MapsFragment extends Fragment {
         // If results has length 2 or greater, the initial bearing is stored in results[1].
         // If results has length 3 or greater, the final bearing is stored in results[2].
         float[] results = new float[1];
-        Location.distanceBetween(marker1.getPosition().latitude, marker1.getPosition().longitude, marker2.getPosition().latitude, marker2.getPosition().longitude, results);
+
+        Location.distanceBetween(marker1.getPosition().latitude, marker1.getPosition().longitude,
+                marker2.getPosition().latitude, marker2.getPosition().longitude, results);
         return results[0];
     }
 
     // Gets the width of the screen of current device
-    public static int getScreenWidth() {
+    private static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 
     // Gets the height of the screen of current device
-    public static int getScreenHeight() {
+    private static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
