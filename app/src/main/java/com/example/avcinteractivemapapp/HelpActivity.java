@@ -69,7 +69,8 @@ public class HelpActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else if(position == 1){
-                    //Support Activity
+                    Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                    startActivity(intent);
                 }
             }
         };
