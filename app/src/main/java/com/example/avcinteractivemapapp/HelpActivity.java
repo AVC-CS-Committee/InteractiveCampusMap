@@ -72,6 +72,10 @@ public class HelpActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
                     startActivity(intent);
                 }
+                else if(position == 2) {
+                    Intent intent = new Intent(getApplicationContext(), AboutUsPage.class);
+                    startActivity(intent);
+                }
             }
         };
     }
@@ -81,6 +85,7 @@ public class HelpActivity extends AppCompatActivity {
     private void addHelpItem(){
         helpItems.add(new HelpItems("Frequently Asked Questions"));
         helpItems.add(new HelpItems("Support"));
+        helpItems.add(new HelpItems("About Us"));
 
         //Adds dividers between help items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);

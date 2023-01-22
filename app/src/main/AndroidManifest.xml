@@ -16,6 +16,9 @@
         android:theme="@style/Theme.AVCInteractiveMapApp.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".AboutUsPage"
+            android:exported="false" />
+        <activity
             android:name=".ContactActivity"
             android:exported="false" />
         <!--
