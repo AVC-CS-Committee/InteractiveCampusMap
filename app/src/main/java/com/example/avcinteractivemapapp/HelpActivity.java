@@ -1,8 +1,5 @@
 package com.example.avcinteractivemapapp;
 
-import static java.security.AccessController.getContext;
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
@@ -12,12 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.icu.lang.UCharacter;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -42,13 +34,7 @@ public class HelpActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(HelpActivity.this, R.drawable.back_icon));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private void setAdapter() {
@@ -61,17 +47,14 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void setOnClickListener() {
-        listener = new RecyclerAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                if(position == 0){
-                    Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
-                    startActivity(intent);
-                }
-                else if(position == 1){
-                    Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
-                    startActivity(intent);
-                }
+        listener = (v, position) -> {
+            if(position == 0){
+                Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
+                startActivity(intent);
+            }
+            else if(position == 1){
+                Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                startActivity(intent);
             }
         };
     }

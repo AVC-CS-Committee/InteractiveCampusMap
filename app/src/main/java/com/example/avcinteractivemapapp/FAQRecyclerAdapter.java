@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -50,17 +48,14 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
         }
 
         // Animates the dropdown arrow and expands the CardView when clicked
-        holder.expandIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // handle expand/collapse functionality
-                if(holder.descriptionTextView.getVisibility() == View.GONE){
-                    holder.descriptionTextView.setVisibility(View.VISIBLE);
-                    holder.expandIcon.animate().rotation(180);
-                } else {
-                    holder.descriptionTextView.setVisibility(View.GONE);
-                    holder.expandIcon.animate().rotation(0);
-                }
+        holder.expandIcon.setOnClickListener(v -> {
+            // handle expand/collapse functionality
+            if(holder.descriptionTextView.getVisibility() == View.GONE){
+                holder.descriptionTextView.setVisibility(View.VISIBLE);
+                holder.expandIcon.animate().rotation(180);
+            } else {
+                holder.descriptionTextView.setVisibility(View.GONE);
+                holder.expandIcon.animate().rotation(0);
             }
         });
     }

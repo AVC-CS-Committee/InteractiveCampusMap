@@ -19,35 +19,21 @@ import androidx.fragment.app.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.location.Location;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * DESCRIPTION:
@@ -57,7 +43,6 @@ import java.util.Map;
 //yo
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
-    private CheckBox check;
 
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
@@ -74,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
-        //check = (CheckBox) nav.getMenu().findItem(R.id.markers).getActionView();*/
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
@@ -96,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);
         mapButton.setOnMenuItemClickListener(item -> {
             drawer.closeDrawer(GravityCompat.START);
-            item.setChecked(false);
             return true;
         });
 
@@ -185,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Close the legend view
                     drawer.closeDrawer(GravityCompat.START);
-
                 }
                 else {
                     showMarkerType(lotMarkers);
@@ -208,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Close the legend view
                     drawer.closeDrawer(GravityCompat.START);
-
                 }
                 else {
                     showMarkerType(lotMarkers);
@@ -231,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Close the legend view
                     drawer.closeDrawer(GravityCompat.START);
-
                 }
                 else {
                     showMarkerType(lotMarkers);
@@ -278,20 +258,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private boolean checkMapServices(){
         if (!isServicesOK()) return false;
-        if (!isMapsEnabled()) return false;
-
-        return true;
+        return isMapsEnabled();
     }
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("This application requires GPS to work properly, do you want to enable it?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        Intent enableGpsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(enableGpsIntent, PERMISSIONS_REQUEST_ENABLE_GPS);
-                    }
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    Intent enableGpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(enableGpsIntent, PERMISSIONS_REQUEST_ENABLE_GPS);
+                })
+                .setNegativeButton("No", (dialog, id) -> {
+                    Toast.makeText(this, "Location services is disabled. Some features may not work properly.", Toast.LENGTH_LONG).show();
                 });
         final AlertDialog alert = builder.create();
         alert.show();
