@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (Marker marker : markerType) marker.setVisible(true);
     }
 
-    //Whenever an item is selected in the Map Legend
+    // Whenever an item is selected in the Map Legend
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         ArrayList<Marker> lotMarkers = MapsFragment.parkingLotMarkers;

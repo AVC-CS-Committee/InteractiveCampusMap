@@ -18,6 +18,10 @@
     <string name="uh_general"><b>General:</b>\n\tDr. Uhazy has been at the college more than 29 years.\nBefore becoming a dean in 1998, he taught\nmicrobiology.</string>
     <string name="uh_resources"><b>Resources:</b>\nCOMPUTER LAB\nUH 272: Lab contains a WEPA printer.\n\nWinter Break and Summer Session\nMon. - Thurs: 7:30am - 4:30pm\nFri: 7:30am - 11:30am\n\nFall and Spring Semesters\nMon - Thurs: 8am - 8:00pm\nFri: 8am - 2:30pm\n\nRestaurants:\nSUBWAY\n</string>
 
+    <string name="ssv_picture">SSV Picture</string>
+    <string name="ssv_general"><b>General:</b>\n</string>
+    <string name="ssv_resources"><b>Resources:</b>\n</string>
+
     <string name="college">College</string>
     <string name="avc_general"><b>General:</b>\n</string>
     <string name="avc_resources"><b>Resources:</b>\n</string>
