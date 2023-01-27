@@ -7,6 +7,13 @@
     "type": "classroom"
   },
   {
+    "title": "Student Services",
+    "latitude": 34.6780305978796,
+    "longitude": -118.18516830596049,
+    "xml_file": "ssv_popup",
+    "type": "resource"
+  },
+  {
     "title": "Yoshida Hall",
     "latitude": 34.67899187744454,
     "longitude": -118.18548358738202,

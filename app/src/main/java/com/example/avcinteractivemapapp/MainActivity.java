@@ -19,35 +19,21 @@ import androidx.fragment.app.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.location.Location;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * DESCRIPTION:
@@ -57,7 +43,6 @@ import java.util.Map;
 //yo
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
-    private CheckBox check;
 
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
@@ -74,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
-        //check = (CheckBox) nav.getMenu().findItem(R.id.markers).getActionView();*/
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
@@ -96,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);
         mapButton.setOnMenuItemClickListener(item -> {
             drawer.closeDrawer(GravityCompat.START);
-            item.setChecked(false);
             return true;
         });
 
@@ -108,22 +91,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     void hideMarkerType(ArrayList<Marker> markerType) {
-        for(int i = 0; i < markerType.size(); ++i){
-            markerType.get(i).setVisible(false);
-        }
+        for (Marker marker : markerType) marker.setVisible(false);
     }
 
-    void unhideMarkerType(ArrayList<Marker> markerType) {
-        for(int i = 0; i < markerType.size(); ++i){
-            markerType.get(i).setVisible(true);
-        }
+    void showMarkerType(ArrayList<Marker> markerType) {
+        for (Marker marker : markerType) marker.setVisible(true);
     }
 
-    //Whenever an item is selected in the Map Legend
+    // Whenever an item is selected in the Map Legend
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        HashMap<Marker, String> allMarkers = MapsFragment.locations;
         ArrayList<Marker> lotMarkers = MapsFragment.parkingLotMarkers;
         ArrayList<Marker> classMarkers = MapsFragment.classroomLocations;
         ArrayList<Marker> resourceMarkers = MapsFragment.resourceLocations;
@@ -132,15 +109,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.lots:
-
                 // Ensures the lot markers display. Accounts for the case where they're already disabled
-                unhideMarkerType(lotMarkers);
+                showMarkerType(lotMarkers);
 
                 // Sets checked state of checkbox
                 item.setChecked(!item.isChecked());
 
                 if(item.isChecked()) {
-
                     hideMarkerType(classMarkers);
                     hideMarkerType(resourceMarkers);
                     hideMarkerType(foodMarkers);
@@ -151,16 +126,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
                 else {
-
-                    unhideMarkerType(classMarkers);
-                    unhideMarkerType(resourceMarkers);
-                    unhideMarkerType(foodMarkers);
-                    unhideMarkerType(athleticMarkers);
+                    showMarkerType(classMarkers);
+                    showMarkerType(resourceMarkers);
+                    showMarkerType(foodMarkers);
+                    showMarkerType(athleticMarkers);
                 }
                 return true;
             case R.id.classrooms:
-
-                unhideMarkerType(classMarkers);
+                showMarkerType(classMarkers);
 
                 item.setChecked(!item.isChecked());
 
@@ -175,16 +148,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
                 else {
-                    unhideMarkerType(lotMarkers);
-                    unhideMarkerType(resourceMarkers);
-                    unhideMarkerType(foodMarkers);
-                    unhideMarkerType(athleticMarkers);
+                    showMarkerType(lotMarkers);
+                    showMarkerType(resourceMarkers);
+                    showMarkerType(foodMarkers);
+                    showMarkerType(athleticMarkers);
                 }
 
                 return true;
             case R.id.studentResources:
-
-                unhideMarkerType(resourceMarkers);
+                showMarkerType(resourceMarkers);
 
                 item.setChecked(!item.isChecked());
 
@@ -196,19 +168,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Close the legend view
                     drawer.closeDrawer(GravityCompat.START);
-
                 }
                 else {
-                    unhideMarkerType(lotMarkers);
-                    unhideMarkerType(classMarkers);
-                    unhideMarkerType(foodMarkers);
-                    unhideMarkerType(athleticMarkers);
+                    showMarkerType(lotMarkers);
+                    showMarkerType(classMarkers);
+                    showMarkerType(foodMarkers);
+                    showMarkerType(athleticMarkers);
                 }
 
                 return true;
             case R.id.food:
-
-                unhideMarkerType(foodMarkers);
+                showMarkerType(foodMarkers);
 
                 item.setChecked(!item.isChecked());
 
@@ -220,19 +190,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Close the legend view
                     drawer.closeDrawer(GravityCompat.START);
-
                 }
                 else {
-                    unhideMarkerType(lotMarkers);
-                    unhideMarkerType(resourceMarkers);
-                    unhideMarkerType(classMarkers);
-                    unhideMarkerType(athleticMarkers);
+                    showMarkerType(lotMarkers);
+                    showMarkerType(resourceMarkers);
+                    showMarkerType(classMarkers);
+                    showMarkerType(athleticMarkers);
                 }
 
                 return true;
             case R.id.athletics:
-
-                unhideMarkerType(athleticMarkers);
+                showMarkerType(athleticMarkers);
 
                 item.setChecked(!item.isChecked());
 
@@ -244,13 +212,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Close the legend view
                     drawer.closeDrawer(GravityCompat.START);
-
                 }
                 else {
-                    unhideMarkerType(lotMarkers);
-                    unhideMarkerType(resourceMarkers);
-                    unhideMarkerType(foodMarkers);
-                    unhideMarkerType(classMarkers);
+                    showMarkerType(lotMarkers);
+                    showMarkerType(resourceMarkers);
+                    showMarkerType(foodMarkers);
+                    showMarkerType(classMarkers);
                 }
 
                 return true;
@@ -290,23 +257,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private boolean checkMapServices(){
-        if(isServicesOK()){
-            if(isMapsEnabled()){
-                return true;
-            }
-        }
-        return false;
+        if (!isServicesOK()) return false;
+        return isMapsEnabled();
     }
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("This application requires GPS to work properly, do you want to enable it?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        Intent enableGpsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(enableGpsIntent, PERMISSIONS_REQUEST_ENABLE_GPS);
-                    }
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    Intent enableGpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(enableGpsIntent, PERMISSIONS_REQUEST_ENABLE_GPS);
+                })
+                .setNegativeButton("No", (dialog, id) -> {
+                    Toast.makeText(this, "Location services is disabled. Some features may not work properly.", Toast.LENGTH_LONG).show();
                 });
         final AlertDialog alert = builder.create();
         alert.show();
@@ -357,8 +321,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //an error occured but we can resolve it
-            Log.d(TAG, "isServicesOK: an error occured but we can fix it");
+            //an error occurred but we can resolve it
+            Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
         }else{
