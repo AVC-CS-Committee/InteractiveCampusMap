@@ -19,8 +19,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
-        android:background="@color/avc_menu"
-        android:src="@drawable/ic_crosshair_gps"
+        android:background="@drawable/center_map_background"
+        android:src="@drawable/map_center_icon"
         android:contentDescription="@string/center_gps_button" />
 
 </RelativeLayout>
