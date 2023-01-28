@@ -1,6 +1,8 @@
 package com.example.avcinteractivemapapp;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,12 +18,20 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +44,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,7 +98,7 @@ public class MapsFragment extends Fragment {
     final float MAX_ZOOM = 14.0f;
     final float INITIAL_ZOOM = 17.5f;
 
-    // ArrayLists used for markers
+    // Marker Lists
     ArrayList<Marker> userMarker = new ArrayList<>();
     public static ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
     public static ArrayList<Marker> classroomLocations = new ArrayList<>();
@@ -96,6 +108,12 @@ public class MapsFragment extends Fragment {
 
     // HashMap used to lookup a location's xml file
     public static HashMap<Marker, String> locations = new HashMap<>();
+
+    // Locations API Related (GPS Feature)
+    Location currentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_CODE = 101;
+    private GoogleMap mMap;
 
     // Icons for markers
     BitmapDescriptor markerIcon;
@@ -108,6 +126,8 @@ public class MapsFragment extends Fragment {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
         centerMapCamera(googleMap);
+
+        mMap = googleMap;
 
         markerIcon = BitmapFromVector(getActivity(), R.drawable.marker_icon);
         centerMapButton = view.findViewById(R.id.center_map);
@@ -176,7 +196,80 @@ public class MapsFragment extends Fragment {
         // Handles center map button clicks
         centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
 
+        // GPS Related
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity());
+        getCurrentLocation();
+
     };
+
+    // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
+    private void getCurrentLocation() {
+
+        // Checks if the permission is not granted, if it's not then evaluates to true
+        if(ActivityCompat.checkSelfPermission(
+                this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+
+                if(location != null) {
+
+                    currentLocation = location;
+                   /* SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.google_map);
+                    assert supportMapFragment != null;
+                    supportMapFragment.getMapAsync(MapsFragment);*/
+
+                }
+
+            }
+        });
+
+        // intervalMillis sets how quickly the user's location is updated in milliseconds
+        // IMPORTANT: The the lower the interval the faster the user's phone battery drains, but the faster the location is updated.
+        LocationRequest.Builder mLocationRequest = new LocationRequest.Builder(60000);
+        mLocationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
+        LocationCallback mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                //Toast.makeText(getApplicationContext()," location result is  " + locationResult, Toast.LENGTH_LONG).show();
+
+                if (locationResult == null) {
+                    //Toast.makeText(getApplicationContext(),"current location is null ", Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        //Toast.makeText(getApplicationContext(),"current location is " + location.getLongitude(), Toast.LENGTH_LONG).show();
+
+                        //TODO: UI updates.
+                    }
+                }
+            }
+        };
+
+    }
+
+    // Permission Request for GPS
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (REQUEST_CODE) {
+            case REQUEST_CODE:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getCurrentLocation();
+                }
+                break;
+        }
+    }
 
     @Nullable
     @Override
@@ -210,8 +303,8 @@ public class MapsFragment extends Fragment {
     }
 
     private void setMapBounds(@NonNull GoogleMap googleMap) {
-        LatLng southwestBound = new LatLng(34.674910, -118.192287);
-        LatLng northeastBound = new LatLng(34.682133, -118.183807);
+        LatLng southwestBound = new LatLng(34.674910, -118.192287); // 34.674910, -118.192287
+        LatLng northeastBound = new LatLng(34.682133, -118.183807); //  34.682133, -118.183807
 
         //Set boundary for the map
         final LatLngBounds avcBounds = new LatLngBounds(southwestBound, northeastBound);
