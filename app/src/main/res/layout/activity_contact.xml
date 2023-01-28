@@ -6,4 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ContactActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
