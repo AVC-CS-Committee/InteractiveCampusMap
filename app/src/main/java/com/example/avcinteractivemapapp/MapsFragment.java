@@ -36,6 +36,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -199,6 +200,11 @@ public class MapsFragment extends Fragment {
         // GPS Related
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity());
         getCurrentLocation();
+
+        // The uiSettings object removes default Google Maps hover buttons
+        UiSettings uiSettings = googleMap.getUiSettings();
+        // Removing the "Directions" and "Open in Maps" buttons
+        uiSettings.setMapToolbarEnabled(false);
 
     };
 
