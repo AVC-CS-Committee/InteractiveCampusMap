@@ -90,7 +90,7 @@ When creating commits, try to use descriptive messages (e.g. `Fixed bug` vs `Fix
 
 ### Resources
 
-If you are not very familiar with using Git and GitHub, and or are having issues with setting up Android Studio, check out these videos!
+If you are not very familiar with using Git and GitHub, and/or are having issues with setting up Android Studio, check out these videos!
 
 * [Git/GitHub Guide](https://youtu.be/8Dd7KRpKeaE)
 * [Git Auto Detection in Android Studio](https://youtu.be/GhfJTOu3_SE?t=20)
@@ -101,6 +101,7 @@ If you are not very familiar with using Git and GitHub, and or are having issues
 - [Android Studio](https://developer.android.com/studio)
 - [Google Maps SDK for Android](https://console.cloud.google.com/marketplace/product/google/maps-android-backend.googleapis.com?authuser=2&project=testing-gm-362905)
 - [Trello](https://trello.com/en)
+- [Figma](https://www.figma.com/file/2KHa4Wjhsp17Dq2KBWzndX/AVC-Interactive-Map-Design-Team?node-id=0%3A1&t=7LV1NWxSdmb0zoj5-1)
 
 ## Features
 
