@@ -8,7 +8,7 @@
 * [Introduction](#introduction)
 * [Contributors](#contributors)
 * [Getting Started](#getting-started)
-  * [Setting Up](#setting-up)
+  * [Prerequisites](#prerequisites)
   * [Cloning the Repository](#cloning-the-repository)
   * [Setting up the Emulator](#setting-up-the-emulator)
   * [Debugging the App](#debugging-the-app)
