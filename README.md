@@ -14,14 +14,16 @@
   * [Debugging the App](#debugging-the-app)
   * [Best Practices](#best-practices)
 * [Tools](#tools)
+* [Features](#features)
 * [Version History](#version-history)
 * [Acknowledgments](#acknowledgments)
 
 ## Introduction
 
-The interactive campus map of Antelope Valley College is a feature that is planned to be added to the myAVC app
-with a launch date set for April/May 2023. The purpose is to help AVC students, faculty, and CMS to navigate the
-campus in efficient ways as well as allow opportunities to explore resources available at AVC.
+The interactive campus map of Antelope Valley College is currently being developed as a standalone application 
+that is planned to be integrated into the myAVC app in the future. A closed beta of this app is planned to launch
+May 2023. The purpose of this app is to help AVC students, faculty, and CMS to navigate the campus in efficient ways
+as well as allow opportunities to explore resources available at AVC.
 
 ## Contributors
 
@@ -100,6 +102,16 @@ If you are not very familiar with using Git and GitHub, and or are having issues
 - [Google Maps SDK for Android](https://console.cloud.google.com/marketplace/product/google/maps-android-backend.googleapis.com?authuser=2&project=testing-gm-362905)
 - [Trello](https://trello.com/en)
 
+## Features
+
+* Map markers for important campus locations
+* Re-center buttons for the general map and user locations
+* Nearest parking lot calculator
+* Help Page including FAQs, Support, and About Us sections
+* Marker/Location filter
+* Realtime GPS tracker
+* Legend View
+
 ## Version History
 
 * Still in development!
@@ -109,4 +121,7 @@ If you are not very familiar with using Git and GitHub, and or are having issues
 Inspiration, code snippets, etc.
 
 * [Template README File](https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc)
-
+* [Android Studio Related Tutorials](https://gist.github.com/stardustgd/12d278575125ffa1ccf4cbe6f6edd4f4)
+* [GitHub Related Tutorials](https://gist.github.com/stardustgd/e9acf2fd9d432679f141713bd2fd1f0e)
+* [Google Maps SDK Documentation & Tutorials](https://gist.github.com/stardustgd/6ecec4498569197a6d81f463e186b892)
+* [Tutorials Used to Implement Features](https://gist.github.com/stardustgd/0909968bf5b4fd7afbc1dc6361397337)
