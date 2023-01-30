@@ -16,13 +16,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -32,17 +30,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * DESCRIPTION:
@@ -55,6 +44,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
+
+    // Booleans for determining the visibility of markers
+    private boolean showParkingLots = false;
+    private boolean showClassrooms = false;
+    private boolean showStudentResources = false;
+    private boolean showFood = false;
+    private boolean showAthletics = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         locationsNearUserButton.setOnMenuItemClickListener(item -> {
             MapsFragment.findNearestMarkersToUser();
             return true;
-        });*/
+        }); */
 
         // Closes toolbar when map button is clicked
         MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);
@@ -116,152 +112,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
 
         // Resets the state for all location markers
-        HashMap<Marker, String> locations = MapsFragment.locations;
-        showAllMarkers(locations);
-
+        filterMarkers();
     }
-
-    // Logic for marker filtering
-    void hideMarkerType(ArrayList<Marker> markerType) {
-        for (Marker marker : markerType) marker.setVisible(false);
-    }
-
-    void showMarkerType(ArrayList<Marker> markerType) {
-        for (Marker marker : markerType) marker.setVisible(true);
-    }
-
-    void showAllMarkers(Map<Marker, String> locations){
-        for (Map.Entry<Marker, String> entry : locations.entrySet()) {
-            entry.getKey().setVisible(true);
-        }
+    // Filter the markers based on the boolean values of each marker type's visibility
+    public void filterMarkers() {
+        for (Marker marker : MapsFragment.parkingLotMarkers) marker.setVisible(showParkingLots);
+        for (Marker marker : MapsFragment.classroomLocations) marker.setVisible(showClassrooms);
+        for (Marker marker : MapsFragment.resourceLocations) marker.setVisible(showStudentResources);
+        for (Marker marker : MapsFragment.foodLocations) marker.setVisible(showFood);
+        for (Marker marker : MapsFragment.athleticLocations) marker.setVisible(showAthletics);
     }
 
     // Whenever an item is selected in the Map Legend
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        ArrayList<Marker> lotMarkers = MapsFragment.parkingLotMarkers;
-        ArrayList<Marker> classMarkers = MapsFragment.classroomLocations;
-        ArrayList<Marker> resourceMarkers = MapsFragment.resourceLocations;
-        ArrayList<Marker> foodMarkers = MapsFragment.foodLocations;
-        ArrayList<Marker> athleticMarkers = MapsFragment.athleticLocations;
+        // Set the checkbox checked state
+        item.setChecked(!item.isChecked());
 
+        // Set the boolean value for the filter clicked on
         switch (item.getItemId()) {
-            case R.id.lots:
-                // Ensures the lot markers display. Accounts for the case where they're already disabled
-                showMarkerType(lotMarkers);
-
-                // Sets checked state of checkbox
-                item.setChecked(!item.isChecked());
-
-                if(item.isChecked()) {
-                    hideMarkerType(classMarkers);
-                    hideMarkerType(resourceMarkers);
-                    hideMarkerType(foodMarkers);
-                    hideMarkerType(athleticMarkers);
-
-                    // Close the legend view
-                    drawer.closeDrawer(GravityCompat.START);
-
-                }
-                else {
-                    showMarkerType(classMarkers);
-                    showMarkerType(resourceMarkers);
-                    showMarkerType(foodMarkers);
-                    showMarkerType(athleticMarkers);
-                }
-                return true;
-            case R.id.classrooms:
-                showMarkerType(classMarkers);
-
-                item.setChecked(!item.isChecked());
-
-                if(item.isChecked()) {
-                    hideMarkerType(lotMarkers);
-                    hideMarkerType(resourceMarkers);
-                    hideMarkerType(foodMarkers);
-                    hideMarkerType(athleticMarkers);
-
-                    // Close the legend view
-                    drawer.closeDrawer(GravityCompat.START);
-
-                }
-                else {
-                    showMarkerType(lotMarkers);
-                    showMarkerType(resourceMarkers);
-                    showMarkerType(foodMarkers);
-                    showMarkerType(athleticMarkers);
-                }
-
-                return true;
-            case R.id.studentResources:
-                showMarkerType(resourceMarkers);
-
-                item.setChecked(!item.isChecked());
-
-                if(item.isChecked()) {
-                    hideMarkerType(lotMarkers);
-                    hideMarkerType(classMarkers);
-                    hideMarkerType(foodMarkers);
-                    hideMarkerType(athleticMarkers);
-
-                    // Close the legend view
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-                else {
-                    showMarkerType(lotMarkers);
-                    showMarkerType(classMarkers);
-                    showMarkerType(foodMarkers);
-                    showMarkerType(athleticMarkers);
-                }
-
-                return true;
-            case R.id.food:
-                showMarkerType(foodMarkers);
-
-                item.setChecked(!item.isChecked());
-
-                if(item.isChecked()) {
-                    hideMarkerType(lotMarkers);
-                    hideMarkerType(resourceMarkers);
-                    hideMarkerType(classMarkers);
-                    hideMarkerType(athleticMarkers);
-
-                    // Close the legend view
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-                else {
-                    showMarkerType(lotMarkers);
-                    showMarkerType(resourceMarkers);
-                    showMarkerType(classMarkers);
-                    showMarkerType(athleticMarkers);
-                }
-
-                return true;
-            case R.id.athletics:
-                showMarkerType(athleticMarkers);
-
-                item.setChecked(!item.isChecked());
-
-                if(item.isChecked()) {
-                    hideMarkerType(lotMarkers);
-                    hideMarkerType(resourceMarkers);
-                    hideMarkerType(foodMarkers);
-                    hideMarkerType(classMarkers);
-
-                    // Close the legend view
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-                else {
-                    showMarkerType(lotMarkers);
-                    showMarkerType(resourceMarkers);
-                    showMarkerType(foodMarkers);
-                    showMarkerType(classMarkers);
-                }
-
-                return true;
-            default:
-                return false;
+            case (R.id.lots):
+                showParkingLots = item.isChecked();
+                break;
+            case (R.id.classrooms):
+                showClassrooms = item.isChecked();
+                break;
+            case (R.id.studentResources):
+                showStudentResources = item.isChecked();
+                break;
+            case (R.id.food):
+                showFood = item.isChecked();
+                break;
+            case (R.id.athletics):
+                showAthletics = item.isChecked();
+                break;
         }
+
+        filterMarkers();
+        return super.onOptionsItemSelected(item);
     }
 
     //Closes drawer instead of closing activity
