@@ -18,17 +18,31 @@
             android:icon="@drawable/home_icon"
             android:title="Home" />
         <item
-            android:id="@+id/nav_back"
-            android:icon="@drawable/back_icon"
-            android:title="Back" />
-        <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_baseline_help_24"
             android:title="Help"/>
     </group>
 
+    <group >
+        <item android:title="Tools">
+            <menu>
+                <item
+                    android:id="@+id/locations_near_me"
+                    android:title="Locations Near Me"
+                    android:icon="@drawable/near_me"
+                    app:actionLayout="@layout/switch_item"
+                    android:checkable="false" />
+                <item
+                    android:id="@+id/nearest_parking"
+                    android:title="Nearest Parking"
+                    android:icon="@drawable/nearest_lot_icon"/>
+
+            </menu>
+        </item>
+    </group>
+
     <group android:checkableBehavior="all">
-        <item android:title="Map Legend">
+        <item android:title="Filters">
 
             <!-- CheckBox Items -->
             <menu>
@@ -71,6 +85,5 @@
             </menu>
         </item>
     </group>
-
 
 </menu>

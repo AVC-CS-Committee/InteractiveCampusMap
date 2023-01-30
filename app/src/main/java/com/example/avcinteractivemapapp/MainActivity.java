@@ -78,12 +78,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        //Opens HelpActivity when help button is clicked
+        // Opens HelpActivity when help button is clicked
         MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
         helpButton.setOnMenuItemClickListener(item -> {
             openHelpActivity();
             return true;
         });
+
+        // Initiates method to determine the nearest markers based on the user's current location
+       /* MenuItem locationsNearUserButton = nav.getMenu().findItem(R.id.nav_locations_near_me);
+        locationsNearUserButton.setOnMenuItemClickListener(item -> {
+            MapsFragment.findNearestMarkersToUser();
+            return true;
+        });*/
 
         // Closes toolbar when map button is clicked
         MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);

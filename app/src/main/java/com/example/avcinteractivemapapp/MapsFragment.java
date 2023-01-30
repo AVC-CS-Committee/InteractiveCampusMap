@@ -208,6 +208,13 @@ public class MapsFragment extends Fragment {
 
     };
 
+    public static void findNearestMarkersToUser() {
+        // 1) Determine user's current location
+        // 2) Pass that info. to the nearest location calculator
+        // 3) The nearest location calculator checks user's location to all other locations, determines
+        //    which are closest based on a predetermined radius around a user
+    }
+
     // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
     private void getCurrentLocation() {
 
