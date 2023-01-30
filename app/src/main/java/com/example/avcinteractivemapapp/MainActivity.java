@@ -41,6 +41,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * DESCRIPTION:
@@ -97,6 +99,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
     }
 
+    /*
+        Called whenever this activity is about to go into the background or not be visible by the user.
+        Good place to save unsaved data, perform cleanup operations, etc.
+        Overriding this method allows us to create custom behaviors before the activity is no longer the priority.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Resets the state for all location markers
+        HashMap<Marker, String> locations = MapsFragment.locations;
+        showAllMarkers(locations);
+
+    }
+
     // Logic for marker filtering
     void hideMarkerType(ArrayList<Marker> markerType) {
         for (Marker marker : markerType) marker.setVisible(false);
@@ -104,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     void showMarkerType(ArrayList<Marker> markerType) {
         for (Marker marker : markerType) marker.setVisible(true);
+    }
+
+    void showAllMarkers(Map<Marker, String> locations){
+        for (Map.Entry<Marker, String> entry : locations.entrySet()) {
+            entry.getKey().setVisible(true);
+        }
     }
 
     // Whenever an item is selected in the Map Legend
