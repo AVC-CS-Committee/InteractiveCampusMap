@@ -115,12 +115,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         filterMarkers();
     }
     // Filter the markers based on the boolean values of each marker type's visibility
-    public void filterMarkers() {
+    private void filterMarkers() {
+        // If all the filters are unchecked, we want to show all the markers
+        if (isFiltersDisabled()) {
+            showAllMarkers();
+            return;
+        }
+
         for (Marker marker : MapsFragment.parkingLotMarkers) marker.setVisible(showParkingLots);
         for (Marker marker : MapsFragment.classroomLocations) marker.setVisible(showClassrooms);
         for (Marker marker : MapsFragment.resourceLocations) marker.setVisible(showStudentResources);
         for (Marker marker : MapsFragment.foodLocations) marker.setVisible(showFood);
         for (Marker marker : MapsFragment.athleticLocations) marker.setVisible(showAthletics);
+    }
+
+    // Helper method that toggles all markers to be visible
+    private void showAllMarkers() {
+        for (Marker marker : MapsFragment.locations.keySet()) marker.setVisible(true);
+    }
+
+    // Helper method that checks if all the filters are set to false (unchecked)
+    private boolean isFiltersDisabled() {
+        if (showParkingLots) return false;
+        if (showClassrooms) return false;
+        if (showStudentResources) return false;
+        if (showFood) return false;
+        return !showAthletics;
     }
 
     // Whenever an item is selected in the Map Legend
