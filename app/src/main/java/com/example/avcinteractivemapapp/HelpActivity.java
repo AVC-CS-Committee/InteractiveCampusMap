@@ -83,8 +83,8 @@ public class HelpActivity extends AppCompatActivity {
     // Adds items to the help activity
     // NOTE: If the position of an item in the helpItems ArrayList changes, it's position must be updated above in the setOnClickListener()
     private void addHelpItem(){
-        helpItems.add(new HelpItems("Frequently Asked Questions"));
-        helpItems.add(new HelpItems("Support"));
+        helpItems.add(new HelpItems("Frequently Asked Campus Questions"));
+        helpItems.add(new HelpItems("Emergency Contact"));
         helpItems.add(new HelpItems("About Us"));
 
         //Adds dividers between help items

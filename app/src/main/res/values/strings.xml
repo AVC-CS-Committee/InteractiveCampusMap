@@ -1,9 +1,22 @@
 <resources>
     <string name="app_name">AVCInteractiveMapApp</string>
-    <!--
-    <string name="Q1_T">Where are the open labs and what are their hours?</string>
-    <string name="Q1_D">Link to website</string>
-    -->
+
+    <!--Emergency Contact Activity Related-->
+    <string name="sherrifs_office_description">Monday through Friday: 7:30 am to Midnight. After midnight, the office is closed but officers are on patrol throughout the campus. You can contact them after midnight and up until 7:30 am the following morning from any payphone at *80 or from your cell phone at 661.722.6399.\n
+        \nSaturday and Sunday: The office is closed on Saturday and Sunday but officers are on patrol throughout the campus. You can contact them from any payphone at *80, or from your cell phone at 661.722.6399.\n
+        \nLocation: The Antelope Valley College safety and security department is located in the Student Services Center on the south side of the building in room T800.
+    </string>
+    <string name="campus_safety_escort_description">The Antelope College safety and security department has enacted a campus escort program on a 24hour basis. In the event a student, employee or visitor wishes an escort to their car, office, classroom or any other location on campus, simply dial 6399 and request the escort. From any payphone, dialing *80. From any cell phone, dial 661.722.6399.\n
+        \nAn officer will be dispatched to the requesting party to their destination. If the request is to your vehicle, our officer will stand by until you safely exit the parking lot.\n
+        \nCalling from Home: In the event you are calling from home and wish an escort from your vehicle to a location on campus, simply contact us at 661.722.6399 and advise us of the following:\n
+        \nLocation you will be arriving in
+        \nType of vehicle
+        \nLocation in which you wish to be escorted to\n
+        \nThat\'s all it takes. An officer will meet you at the location requested and escort you to your destination.
+    </string>
+    <string name="criminal_prevention_detection_description">The Antelope valley College safety and security department is a pro-active department. Our officers are constantly on alert to guard against criminal activity. High visibility and 24 hour patrols ensure all who come onto our campus have a great learning environment.</string>
+
+
     <string name="center_gps_button">Center map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
