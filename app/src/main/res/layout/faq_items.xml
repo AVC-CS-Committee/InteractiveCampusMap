@@ -9,7 +9,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:cardBackgroundColor="@color/avc_menu"
+        app:cardBackgroundColor="@color/white_item"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
                 android:textSize="16sp"
                 android:text="Question"
                 android:ellipsize="end"
-                android:textColor="@color/white"
+                android:textColor="@color/black_txt"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/spinner"
                 android:paddingRight="10dp"
@@ -59,8 +59,7 @@
                 android:layout_marginTop="8dp"
                 android:textSize="14sp"
                 android:text="Answer"
-                android:textStyle="bold"
-                android:textColor="@color/gold"
+                android:textColor="@color/gray_txt"
                 android:textColorLink="#FFAB54"
                 android:visibility="gone"
                 android:maxLines="3"

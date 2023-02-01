@@ -8,8 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="grey">#2B2B2B</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_bg">#F2F3F8</color>
+    <color name="white_item">#FFFEFE</color>
+    <color name="black_txt">#181A30</color>
+    <color name="gray_txt">#181A30</color>
     <color name="gold">#F18A20</color>
-    <color name="avc_menu">#3F0015</color>
+    <color name="avc_menu">#8D1C40</color>
     <color name="avc_light_red">#8A1C40</color>
     <color name="status_bar">#73313F</color>
     <color name="blue">#68D3FF</color>
