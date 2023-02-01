@@ -88,6 +88,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }); */
 
+        MenuItem nearestParkingButton = nav.getMenu().findItem(R.id.nearest_parking);
+        nearestParkingButton.setOnMenuItemClickListener(item -> {
+            if (MapsFragment.enableParkingCalculator()) {
+                Toast.makeText(this, "Nearest parking lot calculator enabled!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Nearest parking lot calculator disabled!", Toast.LENGTH_LONG).show();
+            }
+            return true;
+        });
+
         // Closes toolbar when map button is clicked
         MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);
         mapButton.setOnMenuItemClickListener(item -> {

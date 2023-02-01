@@ -121,6 +121,9 @@ public class MapsFragment extends Fragment {
     ImageButton centerMapButton;
     View view;
 
+    // Parking calculator toggle (false by default)
+    private static boolean enableParkingCalculator = false;
+
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
     private final OnMapReadyCallback callback = googleMap -> {
@@ -213,6 +216,11 @@ public class MapsFragment extends Fragment {
         // 2) Pass that info. to the nearest location calculator
         // 3) The nearest location calculator checks user's location to all other locations, determines
         //    which are closest based on a predetermined radius around a user
+    }
+
+    public static boolean enableParkingCalculator() {
+        enableParkingCalculator = !enableParkingCalculator;
+        return enableParkingCalculator;
     }
 
     // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
