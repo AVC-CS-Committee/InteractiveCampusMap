@@ -160,6 +160,7 @@ public class MapsFragment extends Fragment {
 
         // Handles map clicks
         googleMap.setOnMapClickListener(latLng -> {
+            if (!enableParkingCalculator) return;
             if (userMarker.size() > 0) {
                 // Removes existing marker from the map
                 userMarker.get(0).remove();
