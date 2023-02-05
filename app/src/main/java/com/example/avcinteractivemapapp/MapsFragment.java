@@ -3,6 +3,7 @@ package com.example.avcinteractivemapapp;
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -96,12 +97,12 @@ import java.util.Scanner;
 
 /**
  * DESCRIPTION:
-    This class (fragment) is for managing the Google Maps API. All the features that need to be
-    added to the map go here. Whenever MainActivity executes, it automatically calls on
-    getSupportFragmentManager() which loads the code in this fragment.
-    When this class is instantiated, onCreateView() (which is in this class) is called.
-    Inside this method, onMapReady() is called. This is where most of the logic for the map goes and
-    where code for implementing a new feature related to the map should be written.
+ This class (fragment) is for managing the Google Maps API. All the features that need to be
+ added to the map go here. Whenever MainActivity executes, it automatically calls on
+ getSupportFragmentManager() which loads the code in this fragment.
+ When this class is instantiated, onCreateView() (which is in this class) is called.
+ Inside this method, onMapReady() is called. This is where most of the logic for the map goes and
+ where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment {
     final float MAX_ZOOM = 14.0f;
@@ -125,7 +126,9 @@ public class MapsFragment extends Fragment {
     private GoogleMap mMap;
 
     // GPS Related
+    private Circle previousCircle;
     private LocationRequest mLocationRequest;
+    public static boolean enableCircleFilter = false;
 
     // Icons for markers
     BitmapDescriptor markerIcon;
@@ -223,11 +226,14 @@ public class MapsFragment extends Fragment {
 
     };
 
-    public static void findNearestMarkersToUser() {
+    public static boolean enableCircleFilter() {
         // 1) Determine user's current location
         // 2) Pass that info. to the nearest location calculator
         // 3) The nearest location calculator checks user's location to all other locations, determines
         //    which are closest based on a predetermined radius around a user
+        enableCircleFilter = !enableCircleFilter;
+        Log.d("TEST", "Current Value: " + enableCircleFilter);
+        return enableCircleFilter;
     }
 
     public static boolean enableParkingCalculator() {
@@ -235,13 +241,11 @@ public class MapsFragment extends Fragment {
         return enableParkingCalculator;
     }
 
-    private Circle previousCircle;
-
     // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
     private void getCurrentLocation() {
 
         // Checks if the permission is not granted, if it's not then evaluates to true
-        if(ActivityCompat.checkSelfPermission(
+        if (ActivityCompat.checkSelfPermission(
                 this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -249,14 +253,13 @@ public class MapsFragment extends Fragment {
             ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
-        mMap.setMyLocationEnabled(true);
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
 
-                if(location != null) {
+                if (location != null) {
 
                     currentLocation = location;
                    /* SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.google_map);
@@ -277,39 +280,64 @@ public class MapsFragment extends Fragment {
 
         // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
         getFusedLocationProviderClient(this.requireActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
 
-                        Location location = locationResult.getLastLocation();
+                //Log.d("TEST", "Value: " + enableCircleFilter);
+                if (enableCircleFilter) {
 
-                        // Removes circles from previous locations
-                        if (previousCircle != null) {
-                            previousCircle.remove();
-                        }
+                    mMap.setMyLocationEnabled(true);
 
-                        // Customizes circle appearance
-                        CircleOptions circleOptions = new CircleOptions()
-                                .center(new LatLng(location.getLatitude(), location.getLongitude()))
-                                .radius(100)  // radius in meters
-                                .fillColor(getResources().getColor(R.color.light_blue))
-                                .strokeColor(Color.TRANSPARENT)
-                                .strokeWidth(2);
+                    Location location = locationResult.getLastLocation();
 
-                        // Stores current circle for removal upon next location update
-                        previousCircle = mMap.addCircle(circleOptions);
-
-                        // Filter markers that are within the circle
-                        for (Marker marker : locations.keySet()) {
-                            if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
-                                marker.setVisible(true);
-                            } else {
-                                marker.setVisible(false);
-                            }
-                        }
-
+                    // Removes circles from previous locations
+                    if (previousCircle != null) {
+                        previousCircle.remove();
                     }
-                },
-                Looper.myLooper());
+                    // Customizes circle appearance
+                    CircleOptions circleOptions = new CircleOptions()
+                            .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                            .radius(100)  // radius in meters
+                            .fillColor(getResources().getColor(R.color.light_blue))
+                            .strokeColor(Color.TRANSPARENT)
+                            .strokeWidth(2);
+
+                    // Stores current circle for removal upon next location update
+                    previousCircle = mMap.addCircle(circleOptions);
+
+                    // Filter markers that are within the circle
+                    for (Marker marker : locations.keySet()) {
+                        if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
+                            marker.setVisible(true);
+                        } else {
+                            marker.setVisible(false);
+                        }
+                    }
+
+                }
+                else {
+
+                    // Remove circle
+                    if (previousCircle != null) {
+                        previousCircle.remove();
+                    }
+
+                    // If the marker is already visible, keep it visible, if not, ensure it's not
+                    for (Marker marker : MapsFragment.locations.keySet()) {
+                        if(!marker.isVisible()){
+                            marker.setVisible(false);
+                        }
+                    }
+
+                    // Remove location display
+                    mMap.setMyLocationEnabled(false);
+
+                }
+
+            }
+            }, Looper.myLooper());
+
 
     }
 

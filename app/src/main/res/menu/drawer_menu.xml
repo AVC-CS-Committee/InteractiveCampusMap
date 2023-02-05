@@ -30,7 +30,6 @@
                     android:id="@+id/locations_near_me"
                     android:title="Locations Near Me"
                     android:icon="@drawable/near_me"
-                    app:actionLayout="@layout/switch_item"
                     android:checkable="false" />
                 <item
                     android:id="@+id/nearest_parking"
