@@ -1,14 +1,18 @@
 package com.example.avcinteractivemapapp;
 
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -40,6 +44,8 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -47,6 +53,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +62,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
@@ -115,6 +123,9 @@ public class MapsFragment extends Fragment {
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
     private GoogleMap mMap;
+
+    // GPS Related
+    private LocationRequest mLocationRequest;
 
     // Icons for markers
     BitmapDescriptor markerIcon;
@@ -202,7 +213,7 @@ public class MapsFragment extends Fragment {
         centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
 
         // GPS Related
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity());
+        fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
         getCurrentLocation();
 
         // The uiSettings object removes default Google Maps hover buttons
@@ -223,6 +234,8 @@ public class MapsFragment extends Fragment {
         enableParkingCalculator = !enableParkingCalculator;
         return enableParkingCalculator;
     }
+
+    private Circle previousCircle;
 
     // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
     private void getCurrentLocation() {
@@ -255,29 +268,48 @@ public class MapsFragment extends Fragment {
             }
         });
 
-        // intervalMillis sets how quickly the user's location is updated in milliseconds
         // IMPORTANT: The the lower the interval the faster the user's phone battery drains, but the faster the location is updated.
-        LocationRequest.Builder mLocationRequest = new LocationRequest.Builder(60000);
-        mLocationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
-        LocationCallback mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                //Toast.makeText(getApplicationContext()," location result is  " + locationResult, Toast.LENGTH_LONG).show();
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(60000); // How quickly the location is updated
+        mLocationRequest.setFastestInterval(1000);
 
-                if (locationResult == null) {
-                    //Toast.makeText(getApplicationContext(),"current location is null ", Toast.LENGTH_LONG).show();
 
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    if (location != null) {
-                        //Toast.makeText(getApplicationContext(),"current location is " + location.getLongitude(), Toast.LENGTH_LONG).show();
+        // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
+        getFusedLocationProviderClient(this.requireActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
 
-                        //TODO: UI updates.
+                        Location location = locationResult.getLastLocation();
+
+                        // Removes circles from previous locations
+                        if (previousCircle != null) {
+                            previousCircle.remove();
+                        }
+
+                        // Customizes circle appearance
+                        CircleOptions circleOptions = new CircleOptions()
+                                .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                                .radius(100)  // radius in meters
+                                .fillColor(getResources().getColor(R.color.light_blue))
+                                .strokeColor(Color.TRANSPARENT)
+                                .strokeWidth(2);
+
+                        // Stores current circle for removal upon next location update
+                        previousCircle = mMap.addCircle(circleOptions);
+
+                        // Filter markers that are within the circle
+                        for (Marker marker : locations.keySet()) {
+                            if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
+                                marker.setVisible(true);
+                            } else {
+                                marker.setVisible(false);
+                            }
+                        }
+
                     }
-                }
-            }
-        };
+                },
+                Looper.myLooper());
 
     }
 
