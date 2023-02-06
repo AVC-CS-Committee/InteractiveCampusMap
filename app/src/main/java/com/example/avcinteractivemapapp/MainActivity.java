@@ -26,7 +26,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -82,11 +85,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // Initiates method to determine the nearest markers based on the user's current location
-       /* MenuItem locationsNearUserButton = nav.getMenu().findItem(R.id.nav_locations_near_me);
+        MenuItem locationsNearUserButton = nav.getMenu().findItem(R.id.locations_near_me);
+        // Sets initial state of swtich as unchecked
+        locationsNearUserButton.setActionView((RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item, null));
+        // Change state of switch when clicked and enable/disable circle filter
         locationsNearUserButton.setOnMenuItemClickListener(item -> {
-            MapsFragment.findNearestMarkersToUser();
+            RelativeLayout actionLayout;
+            if (MapsFragment.enableCircleFilter()) {
+                actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item_enabled, null);
+                locationsNearUserButton.setActionView(actionLayout);
+            }
+            else{
+                actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item, null);
+                locationsNearUserButton.setActionView(actionLayout);
+            }
             return true;
-        }); */
+        });
+
+        MenuItem nearestParkingButton = nav.getMenu().findItem(R.id.nearest_parking);
+        nearestParkingButton.setOnMenuItemClickListener(item -> {
+            if (MapsFragment.enableParkingCalculator()) {
+                Toast.makeText(this, "Nearest parking lot calculator enabled!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Nearest parking lot calculator disabled!", Toast.LENGTH_LONG).show();
+            }
+            return true;
+        });
 
         // Closes toolbar when map button is clicked
         MenuItem mapButton = nav.getMenu().findItem(R.id.nav_map);

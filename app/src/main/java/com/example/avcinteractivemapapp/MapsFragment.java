@@ -1,14 +1,19 @@
 package com.example.avcinteractivemapapp;
 
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -40,6 +45,8 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -47,6 +54,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +63,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
@@ -88,12 +97,12 @@ import java.util.Scanner;
 
 /**
  * DESCRIPTION:
-    This class (fragment) is for managing the Google Maps API. All the features that need to be
-    added to the map go here. Whenever MainActivity executes, it automatically calls on
-    getSupportFragmentManager() which loads the code in this fragment.
-    When this class is instantiated, onCreateView() (which is in this class) is called.
-    Inside this method, onMapReady() is called. This is where most of the logic for the map goes and
-    where code for implementing a new feature related to the map should be written.
+ This class (fragment) is for managing the Google Maps API. All the features that need to be
+ added to the map go here. Whenever MainActivity executes, it automatically calls on
+ getSupportFragmentManager() which loads the code in this fragment.
+ When this class is instantiated, onCreateView() (which is in this class) is called.
+ Inside this method, onMapReady() is called. This is where most of the logic for the map goes and
+ where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment {
     final float MAX_ZOOM = 14.0f;
@@ -116,10 +125,18 @@ public class MapsFragment extends Fragment {
     private static final int REQUEST_CODE = 101;
     private GoogleMap mMap;
 
+    // GPS Related
+    private Circle previousCircle;
+    private LocationRequest mLocationRequest;
+    public static boolean enableCircleFilter = false;
+
     // Icons for markers
     BitmapDescriptor markerIcon;
     ImageButton centerMapButton;
     View view;
+
+    // Parking calculator toggle (false by default)
+    private static boolean enableParkingCalculator = false;
 
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
@@ -157,6 +174,7 @@ public class MapsFragment extends Fragment {
 
         // Handles map clicks
         googleMap.setOnMapClickListener(latLng -> {
+            if (!enableParkingCalculator) return;
             if (userMarker.size() > 0) {
                 // Removes existing marker from the map
                 userMarker.get(0).remove();
@@ -198,7 +216,7 @@ public class MapsFragment extends Fragment {
         centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
 
         // GPS Related
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity());
+        fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
         getCurrentLocation();
 
         // The uiSettings object removes default Google Maps hover buttons
@@ -208,18 +226,26 @@ public class MapsFragment extends Fragment {
 
     };
 
-    public static void findNearestMarkersToUser() {
+    public static boolean enableCircleFilter() {
         // 1) Determine user's current location
         // 2) Pass that info. to the nearest location calculator
         // 3) The nearest location calculator checks user's location to all other locations, determines
         //    which are closest based on a predetermined radius around a user
+        enableCircleFilter = !enableCircleFilter;
+        Log.d("TEST", "Current Value: " + enableCircleFilter);
+        return enableCircleFilter;
+    }
+
+    public static boolean enableParkingCalculator() {
+        enableParkingCalculator = !enableParkingCalculator;
+        return enableParkingCalculator;
     }
 
     // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
     private void getCurrentLocation() {
 
         // Checks if the permission is not granted, if it's not then evaluates to true
-        if(ActivityCompat.checkSelfPermission(
+        if (ActivityCompat.checkSelfPermission(
                 this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -227,14 +253,13 @@ public class MapsFragment extends Fragment {
             ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
-        mMap.setMyLocationEnabled(true);
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
 
-                if(location != null) {
+                if (location != null) {
 
                     currentLocation = location;
                    /* SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.google_map);
@@ -246,29 +271,73 @@ public class MapsFragment extends Fragment {
             }
         });
 
-        // intervalMillis sets how quickly the user's location is updated in milliseconds
         // IMPORTANT: The the lower the interval the faster the user's phone battery drains, but the faster the location is updated.
-        LocationRequest.Builder mLocationRequest = new LocationRequest.Builder(60000);
-        mLocationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
-        LocationCallback mLocationCallback = new LocationCallback() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(60000); // How quickly the location is updated
+        mLocationRequest.setFastestInterval(1000);
+
+
+        // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
+        getFusedLocationProviderClient(this.requireActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                //Toast.makeText(getApplicationContext()," location result is  " + locationResult, Toast.LENGTH_LONG).show();
 
-                if (locationResult == null) {
-                    //Toast.makeText(getApplicationContext(),"current location is null ", Toast.LENGTH_LONG).show();
+                //Log.d("TEST", "Value: " + enableCircleFilter);
+                if (enableCircleFilter) {
 
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    if (location != null) {
-                        //Toast.makeText(getApplicationContext(),"current location is " + location.getLongitude(), Toast.LENGTH_LONG).show();
+                    mMap.setMyLocationEnabled(true);
 
-                        //TODO: UI updates.
+                    Location location = locationResult.getLastLocation();
+
+                    // Removes circles from previous locations
+                    if (previousCircle != null) {
+                        previousCircle.remove();
                     }
+                    // Customizes circle appearance
+                    CircleOptions circleOptions = new CircleOptions()
+                            .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                            .radius(100)  // radius in meters
+                            .fillColor(getResources().getColor(R.color.light_blue))
+                            .strokeColor(Color.TRANSPARENT)
+                            .strokeWidth(2);
+
+                    // Stores current circle for removal upon next location update
+                    previousCircle = mMap.addCircle(circleOptions);
+
+                    // Filter markers that are within the circle
+                    for (Marker marker : locations.keySet()) {
+                        if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
+                            marker.setVisible(true);
+                        } else {
+                            marker.setVisible(false);
+                        }
+                    }
+
                 }
+                else {
+
+                    // Remove circle
+                    if (previousCircle != null) {
+                        previousCircle.remove();
+                    }
+
+                    // If the marker is already visible, keep it visible, if not, ensure it's not
+                    for (Marker marker : MapsFragment.locations.keySet()) {
+                        if(!marker.isVisible()){
+                            marker.setVisible(false);
+                        }
+                    }
+
+                    // Remove location display
+                    mMap.setMyLocationEnabled(false);
+
+                }
+
             }
-        };
+            }, Looper.myLooper());
+
 
     }
 

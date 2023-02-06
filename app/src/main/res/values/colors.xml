@@ -17,5 +17,6 @@
     <color name="avc_light_red">#8A1C40</color>
     <color name="status_bar">#73313F</color>
     <color name="blue">#68D3FF</color>
+    <color name="light_blue">#5C92E0FF</color>
 
 </resources>
