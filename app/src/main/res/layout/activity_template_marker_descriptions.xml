@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
+
+    <!-- Location Title TextView -->
+
+    <TextView
+        android:id="@+id/location_title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="5dp"
+        android:fontFamily="@font/graduate_regular"
+        android:text="Uhazy Hall"
+        android:textColor="@color/gold"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    <!-- Divider View 1 -->
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_marginRight="180dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="2dp"
+        android:background="@color/avc_light_red"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toBottomOf="@id/location_title_textView" />
+
+
+    <!-- Location ImageView -->
+
+    <ImageView
+        android:id="@+id/location_imageView"
+        android:layout_width="380dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/uhazyhall"
+        android:background="@drawable/image_border"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+
+    <!-- Description Title TextView -->
+
+    <TextView
+        android:id="@+id/description_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:fontFamily="@font/graduate_regular"
+        android:textColor="@color/gold"
+        android:layout_marginLeft="20dp"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_imageView"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+         />
+
+
+    <!-- Divider View 2 -->
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_marginRight="180dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="2dp"
+        android:background="@color/avc_light_red"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toBottomOf="@id/description_title" />
+
+
+    <!-- Scrollable Description TextView -->
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/description_border"
+        android:id="@+id/scrollView"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
+
+        <TextView
+            android:id="@+id/description_textView"
+            android:text="@string/campus_safety_escort_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:padding="16dp" />
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
