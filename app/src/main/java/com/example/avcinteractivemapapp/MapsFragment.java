@@ -5,6 +5,7 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -118,6 +119,7 @@ public class MapsFragment extends Fragment {
 
     // HashMap used to lookup a location's xml file
     public static HashMap<Marker, String> locations = new HashMap<>();
+    public static HashMap<Marker, MapLocation> markerLocation = new HashMap<>();
 
     // Locations API Related (GPS Feature)
     Location currentLocation;
@@ -156,20 +158,20 @@ public class MapsFragment extends Fragment {
 
         // Handles marker title clicks
         googleMap.setOnInfoWindowClickListener(marker -> {
-            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupView;
+            // Activity Popup
+            MapLocation locationInfo = markerLocation.get(marker);
+            if (locationInfo == null) return;
 
-            // Depending on which marker is clicked, a popup view of the corresponding location is opened.
-            // A HashMap is used to check the name of the marker clicked.
+            Intent intent = new Intent(getActivity(), TemplateMarkerDescriptions.class);
 
-            String popup = locations.get(marker);
-            if (popup == null) return;
+            // Bundles allow for passing data between activities
+            Bundle bundle = new Bundle();
+            bundle.putString("title", marker.getTitle());
+            bundle.putString("description", locationInfo.getDescription());
+            bundle.putString("images", locationInfo.getImages());
+            intent.putExtras(bundle);
 
-            // resId stores the id of the corresponding xml file
-            int resId = getResources().getIdentifier(popup, "layout", getContext().getPackageName());
-
-            popupView = inflater.inflate(resId, null);
-            popupViewCreator(popupView, view);
+            startActivity(intent);
         });
 
         // Handles map clicks
@@ -431,6 +433,12 @@ public class MapsFragment extends Fragment {
                         .position(new LatLng(latitude, longitude))
                         .title(title)
                         .icon(markerIcon));
+
+                // Create MapLocation object
+                String description = location.getString("description");
+                JSONArray locationImages = location.getJSONArray("images");
+
+               markerLocation.put(tmpMarker, new MapLocation(description, locationImages));
 
                 // All markers are stored in the locations hashmap. This is required for displaying popups.
                 locations.put(tmpMarker, xmlFile);
