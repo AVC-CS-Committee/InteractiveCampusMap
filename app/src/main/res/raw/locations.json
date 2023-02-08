@@ -11,13 +11,22 @@
     "type": "location"
   },
   {
+    "title": "Student Services",
+    "latitude": 34.6780305978796,
+    "longitude": -118.18516830596049,
+    "xml_file": "ssv_popup",
+    "description": "",
+    "images": [],
+    "type": "resource"
+  },
+  {
     "title": "Yoshida Hall",
     "latitude": 34.67899187744454,
     "longitude": -118.18548358738202,
     "xml_file": "yh_popup",
     "description": "",
     "images": ["yh"],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Subway",
@@ -26,7 +35,7 @@
     "xml_file": "subway_popup",
     "description": "",
     "images": ["subway"],
-    "type": "location"
+    "type": "food"
   },
   {
     "title": "SOAR (Students on the Academic Rise) High School",
@@ -35,7 +44,7 @@
     "xml_file": "soar_popup",
     "description": "",
     "images": ["soar"],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Gymnasium",
@@ -44,7 +53,7 @@
     "xml_file": "gym_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "athletic"
   },
   {
     "title": "Marauder Stadium",
@@ -53,7 +62,7 @@
     "xml_file": "stadium_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "athletic"
   },
   {
     "title": "Performing Arts Theatre",
@@ -62,7 +71,7 @@
     "xml_file": "pat_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Art Gallery",
@@ -71,7 +80,7 @@
     "xml_file": "gallery_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Administration Building",
@@ -80,7 +89,7 @@
     "xml_file": "admin_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "resource"
   },
   {
     "title": "Admissions and Records Office",
@@ -89,7 +98,7 @@
     "xml_file": "admissions_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "resource"
   },
   {
     "title": "Mesquite Hall",
@@ -98,7 +107,7 @@
     "xml_file": "mh_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Learning Center",
@@ -107,7 +116,7 @@
     "xml_file": "lc_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "resource"
   },
   {
     "title": "Marauder Bookstore",
@@ -116,7 +125,7 @@
     "xml_file": "bookstore_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "resource"
   },
   {
     "title": "Library",
@@ -125,7 +134,7 @@
     "xml_file": "lib_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "resource"
   },
   {
     "title": "Lecture Hall",
@@ -134,7 +143,7 @@
     "xml_file": "lh_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Math and Engineering",
@@ -143,7 +152,7 @@
     "xml_file": "me_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Office for Students with Disabilities",
@@ -152,7 +161,7 @@
     "xml_file": "osd_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "resource"
   },
   {
     "title": "Fine Arts",
@@ -161,7 +170,7 @@
     "xml_file": "fa_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Fine Arts Music and Offices",
@@ -170,7 +179,7 @@
     "xml_file": "famo_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Technical Education Technology",
@@ -179,7 +188,7 @@
     "xml_file": "tet_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Technical Education: Agriculture Lab",
@@ -188,7 +197,7 @@
     "xml_file": "teal_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Greenhouse",
@@ -197,7 +206,7 @@
     "xml_file": "gh_popup",
     "description": "",
     "images": [],
-    "type": "location"
+    "type": "classroom"
   },
   {
     "title": "Lot A1",
