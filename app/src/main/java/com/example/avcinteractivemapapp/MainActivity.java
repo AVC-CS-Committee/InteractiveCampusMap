@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Telling app to use custom toolbar as actionbar replacement
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
