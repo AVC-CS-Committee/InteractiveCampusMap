@@ -11,15 +11,15 @@
         <!-- Creating items for menu-->
         <item
             android:id="@+id/nav_map"
-            android:icon="@drawable/map_icon"
+            android:icon="@drawable/icon_map"
             android:title="Map" />
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/home_icon"
+            android:icon="@drawable/icon_home"
             android:title="Home" />
         <item
             android:id="@+id/nav_help"
-            android:icon="@drawable/ic_baseline_help_24"
+            android:icon="@drawable/icon_help"
             android:title="Help"/>
     </group>
 
@@ -29,12 +29,12 @@
                 <item
                     android:id="@+id/locations_near_me"
                     android:title="Locations Near Me"
-                    android:icon="@drawable/near_me"
+                    android:icon="@drawable/icon_near_me"
                     android:checkable="false" />
                 <item
                     android:id="@+id/nearest_parking"
                     android:title="Nearest Parking"
-                    android:icon="@drawable/nearest_lot_icon"/>
+                    android:icon="@drawable/icon_nearest_lot"/>
 
             </menu>
         </item>

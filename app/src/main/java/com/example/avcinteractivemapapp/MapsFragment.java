@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,8 +35,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,7 +61,6 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 /*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
@@ -149,7 +145,7 @@ public class MapsFragment extends Fragment {
 
         mMap = googleMap;
 
-        markerIcon = BitmapFromVector(getActivity(), R.drawable.marker_icon);
+        markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
         centerMapButton = view.findViewById(R.id.center_map);
 
         parseJson(googleMap);
@@ -198,7 +194,7 @@ public class MapsFragment extends Fragment {
 
             // Temporary code (just being used to display that the parking calculator actually works)
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View userMarkerView = inflater.inflate(R.layout.user_marker_popup, null);
+            View userMarkerView = inflater.inflate(R.layout.popup_user_marker, null);
             TextView nearestLotView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.lotView);
             TextView distanceView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.distanceView);
             nearestLotView.setText(parkingLotMarkers.get(nearestLot.first).getTitle());

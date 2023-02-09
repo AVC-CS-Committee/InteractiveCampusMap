@@ -20,7 +20,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
         android:background="@drawable/center_map_background"
-        android:src="@drawable/map_center_icon"
+        android:src="@drawable/icon_map_center"
         android:contentDescription="@string/center_gps_button" />
 
 </RelativeLayout>

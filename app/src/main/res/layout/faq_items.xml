@@ -41,7 +41,7 @@
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_spinner"
+                android:src="@drawable/icon_spinner"
                 android:rotation="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/textView"

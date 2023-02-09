@@ -39,7 +39,7 @@ public class ContactActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(AppCompatResources.getDrawable(ContactActivity.this, R.drawable.back_icon));
+        toolbar.setNavigationIcon(AppCompatResources.getDrawable(ContactActivity.this, R.drawable.icon_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

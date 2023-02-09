@@ -5,7 +5,6 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +23,7 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
 
         // Adds the back button
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(AppCompatResources.getDrawable(TemplateMarkerDescriptions.this, R.drawable.back_icon));
+        toolbar.setNavigationIcon(AppCompatResources.getDrawable(TemplateMarkerDescriptions.this, R.drawable.icon_back));
 
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
@@ -70,7 +69,7 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
             JSONArray paths = new JSONArray(imageJson);
 
             for (int i = 0; i < paths.length(); i++) {
-                imagePaths.add(paths.getString(i));
+                imagePaths.add("image_" + paths.getString(i));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);

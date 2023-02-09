@@ -21,7 +21,7 @@ public class AboutUsPage extends AppCompatActivity {
         aboutItems = new ArrayList<>();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(AppCompatResources.getDrawable(AboutUsPage.this, R.drawable.back_icon));
+        toolbar.setNavigationIcon(AppCompatResources.getDrawable(AboutUsPage.this, R.drawable.icon_back));
 
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
