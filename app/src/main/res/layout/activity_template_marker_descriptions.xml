@@ -110,10 +110,10 @@
 
         <TextView
             android:id="@+id/description_textView"
-            android:text="@string/campus_safety_escort_description"
+            android:text="Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textColor="@color/black"
             android:padding="16dp" />
 
