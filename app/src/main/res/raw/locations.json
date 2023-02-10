@@ -3,18 +3,14 @@
     "title": "Uhazy Hall",
     "latitude": 34.6787345742857,
     "longitude": -118.18635845710243,
-    "xml_file": "uh_popup",
     "description": "Dr. Uhazy has been at the college for more than 29 years.\nBefore becoming a dean in 1998,he taught microbiology.\nResources:\nCOMPUTER LAB\nUH 272: Lab contains a WEPA printer.\n\nWinter Break and Summer Session...",
-    "images": [
-      "uhazyhall"
-    ],
+    "images": ["uhazyhall"],
     "type": "classroom"
   },
   {
     "title": "Student Services",
     "latitude": 34.6780305978796,
     "longitude": -118.18516830596049,
-    "xml_file": "ssv_popup",
     "description": "",
     "images": ["ssv"],
     "type": "resource"
@@ -23,7 +19,6 @@
     "title": "Yoshida Hall",
     "latitude": 34.67899187744454,
     "longitude": -118.18548358738202,
-    "xml_file": "yh_popup",
     "description": "",
     "images": ["yh"],
     "type": "classroom"
@@ -32,7 +27,6 @@
     "title": "Subway",
     "latitude": 34.67918530937743,
     "longitude": -118.18672504028271,
-    "xml_file": "subway_popup",
     "description": "",
     "images": ["subway"],
     "type": "food"
@@ -41,7 +35,6 @@
     "title": "SOAR (Students on the Academic Rise) High School",
     "latitude": 34.67877310935158,
     "longitude": -118.18800679457378,
-    "xml_file": "soar_popup",
     "description": "",
     "images": ["soar"],
     "type": "classroom"
@@ -50,7 +43,6 @@
     "title": "Gymnasium",
     "latitude": 34.67804292141216,
     "longitude": -118.18734085519353,
-    "xml_file": "gym_popup",
     "description": "",
     "images": ["gym"],
     "type": "athletic"
@@ -59,7 +51,6 @@
     "title": "Marauder Stadium",
     "latitude": 34.67634068573699,
     "longitude": -118.19008554556989,
-    "xml_file": "stadium_popup",
     "description": "",
     "images": ["stadium"],
     "type": "athletic"
@@ -68,7 +59,6 @@
     "title": "Performing Arts Theatre",
     "latitude": 34.6754613377245,
     "longitude": -118.18723230937766,
-    "xml_file": "pat_popup",
     "description": "",
     "images": ["pat"],
     "type": "classroom"
@@ -77,7 +67,6 @@
     "title": "Art Gallery",
     "latitude": 34.67633186256671,
     "longitude": -118.18678106433192,
-    "xml_file": "gallery_popup",
     "description": "",
     "images": ["gallery"],
     "type": "classroom"
@@ -86,7 +75,6 @@
     "title": "Administration Building",
     "latitude": 34.6755201268822,
     "longitude": -118.18459238195355,
-    "xml_file": "admin_popup",
     "description": "",
     "images": ["admissions"],
     "type": "resource"
@@ -95,7 +83,6 @@
     "title": "Admissions and Records Office",
     "latitude": 34.67638480157416,
     "longitude": -118.18531121391118,
-    "xml_file": "admissions_popup",
     "description": "",
     "images": ["admissions"],
     "type": "resource"
@@ -104,7 +91,6 @@
     "title": "Mesquite Hall",
     "latitude": 34.67687342944362,
     "longitude": -118.18512883579885,
-    "xml_file": "mh_popup",
     "description": "",
     "images": ["me"],
     "type": "classroom"
@@ -113,7 +99,6 @@
     "title": "Learning Center",
     "latitude": 34.67725682725537,
     "longitude": -118.18531269317117,
-    "xml_file": "lc_popup",
     "description": "",
     "images": ["lc"],
     "type": "resource"
@@ -122,7 +107,6 @@
     "title": "Marauder Bookstore",
     "latitude": 34.676153144936336,
     "longitude": -118.1860004428573,
-    "xml_file": "bookstore_popup",
     "description": "",
     "images": ["bookstore"],
     "type": "resource"
@@ -131,7 +115,6 @@
     "title": "Library",
     "latitude": 34.67705751700522,
     "longitude": -118.18623111282814,
-    "xml_file": "lib_popup",
     "description": "",
     "images": ["college"],
     "type": "resource"
@@ -140,7 +123,6 @@
     "title": "Lecture Hall",
     "latitude": 34.67709130468547,
     "longitude": -118.18756250227011,
-    "xml_file": "lh_popup",
     "description": "",
     "images": ["lh"],
     "type": "classroom"
@@ -149,7 +131,6 @@
     "title": "Math and Engineering",
     "latitude": 34.67775573632852,
     "longitude": -118.18589961736947,
-    "xml_file": "me_popup",
     "description": "",
     "images": ["me"],
     "type": "classroom"
@@ -158,7 +139,6 @@
     "title": "Office for Students with Disabilities",
     "latitude": 34.67672471757968,
     "longitude": -118.18439631632184,
-    "xml_file": "osd_popup",
     "description": "",
     "images": ["osd"],
     "type": "resource"
@@ -167,7 +147,6 @@
     "title": "Fine Arts",
     "latitude": 34.67648676160919,
     "longitude": -118.18738628333938,
-    "xml_file": "fa_popup",
     "description": "",
     "images": ["fa"],
     "type": "classroom"
@@ -176,7 +155,6 @@
     "title": "Fine Arts Music and Offices",
     "latitude": 34.67626532974614,
     "longitude": -118.18770778514867,
-    "xml_file": "famo_popup",
     "description": "",
     "images": ["fa"],
     "type": "classroom"
@@ -185,7 +163,6 @@
     "title": "Technical Education Technology",
     "latitude": 34.67973186506707,
     "longitude": -118.18654794631942,
-    "xml_file": "tet_popup",
     "description": "",
     "images": ["tet"],
     "type": "classroom"
@@ -194,7 +171,6 @@
     "title": "Technical Education: Agriculture Lab",
     "latitude": 34.679898891625314,
     "longitude": -118.1870825677824,
-    "xml_file": "teal_popup",
     "description": "",
     "images": ["greenhouse"],
     "type": "classroom"
@@ -203,7 +179,6 @@
     "title": "Greenhouse",
     "latitude": 34.67988988181543,
     "longitude": -118.18754492181769,
-    "xml_file": "gh_popup",
     "description": "",
     "images": ["greenhouse"],
     "type": "classroom"
@@ -212,7 +187,6 @@
     "title": "Lot A1",
     "latitude": 34.681530052571766,
     "longitude": -118.1873813729704,
-    "xml_file": "lot_a1_popup",
     "description": "",
     "images": ["lota1"],
     "type": "parking"
@@ -221,7 +195,6 @@
     "title": "Lot A2",
     "latitude": 34.6815160851563,
     "longitude": -118.18654051741896,
-    "xml_file": "lot_a2_popup",
     "description": "",
     "images": ["lota2"],
     "type": "parking"
@@ -230,7 +203,6 @@
     "title": "Lot A3",
     "latitude": 34.68145251714801,
     "longitude": -118.18554110652022,
-    "xml_file": "lot_a3_popup",
     "description": "",
     "images": ["lota3"],
     "type": "parking"
@@ -239,7 +211,6 @@
     "title": "Lot A4",
     "latitude": 34.68137532735808,
     "longitude": -118.18434291777308,
-    "xml_file": "lot_a4_popup",
     "description": "",
     "images": ["lota4"],
     "type": "parking"
@@ -248,7 +219,6 @@
     "title": "Lot B1",
     "latitude": 34.680290592554464,
     "longitude": -118.18435262827403,
-    "xml_file": "lot_b1_popup",
     "description": "",
     "images": ["lotb1"],
     "type": "parking"
@@ -257,7 +227,6 @@
     "title": "Lot B2",
     "latitude": 34.67893436565732,
     "longitude": -118.1843313226645,
-    "xml_file": "lot_b2_popup",
     "description": "",
     "images": ["lotb2"],
     "type": "parking"
@@ -266,7 +235,6 @@
     "title": "Lot C1",
     "latitude": 34.67795565478103,
     "longitude": -118.18434219529921,
-    "xml_file": "lot_c1_popup",
     "description": "",
     "images": ["lotc1"],
     "type": "parking"
@@ -275,7 +243,6 @@
     "title": "Lot C2",
     "latitude": 34.67715814518791,
     "longitude": -118.18433596797071,
-    "xml_file": "lot_c2_popup",
     "description": "",
     "images": ["lotc2"],
     "type": "parking"
@@ -284,7 +251,6 @@
     "title": "Lot C3",
     "latitude": 34.67636064783748,
     "longitude": -118.18422669590109,
-    "xml_file": "lot_c3_popup",
     "description": "",
     "images": ["lotc3"],
     "type": "parking"
@@ -293,7 +259,6 @@
     "title": "Lot D1",
     "latitude": 34.6753859837446,
     "longitude": -118.18541367472605,
-    "xml_file": "lot_d1_popup",
     "description": "",
     "images": ["lotd1"],
     "type": "parking"
@@ -302,7 +267,6 @@
     "title": "Lot D2",
     "latitude": 34.67549627456488,
     "longitude": -118.18617005769254,
-    "xml_file": "lot_d2_popup",
     "description": "",
     "images": ["lotd2"],
     "type": "parking"
@@ -311,7 +275,6 @@
     "title": "Lot E1",
     "latitude": 34.67581345503335,
     "longitude": -118.18892817158141,
-    "xml_file": "lot_e1_popup",
     "description": "",
     "images": ["lote1"],
     "type": "parking"
@@ -320,7 +283,6 @@
     "title": "Lot E2",
     "latitude": 34.6769166812582,
     "longitude": -118.18915190113239,
-    "xml_file": "lot_e2_popup",
     "description": "",
     "images": ["lote2"],
     "type": "parking"
@@ -329,7 +291,6 @@
     "title": "Lot E3",
     "latitude": 34.67675828726229,
     "longitude": -118.18841680858253,
-    "xml_file": "lot_e3_popup",
     "description": "",
     "images": ["lote3"],
     "type": "parking"
@@ -338,7 +299,6 @@
     "title": "Lot E4",
     "latitude": 34.67751746225447,
     "longitude": -118.18911823651975,
-    "xml_file": "lot_e4_popup",
     "description": "",
     "images": ["lote4"],
     "type": "parking"
@@ -347,7 +307,6 @@
     "title": "Lot E5",
     "latitude": 34.67919774054158,
     "longitude": -118.18916950001093,
-    "xml_file": "lot_e5_popup",
     "description": "",
     "images": ["lote5"],
     "type": "parking"
@@ -356,7 +315,6 @@
     "title": "Lot F1",
     "latitude": 34.67613026710341,
     "longitude": -118.19203306356845,
-    "xml_file": "lot_f1_popup",
     "description": "",
     "images": ["lotf1"],
     "type": "parking"
@@ -365,7 +323,6 @@
     "title": "Lot F2",
     "latitude": 34.67793654636213,
     "longitude": -118.19232252356142,
-    "xml_file": "lot_f2_popup",
     "description": "",
     "images": ["lotf2"],
     "type": "parking"
