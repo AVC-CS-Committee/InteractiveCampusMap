@@ -113,9 +113,8 @@ public class MapsFragment extends Fragment {
     public static ArrayList<Marker> athleticLocations = new ArrayList<>();
     public static ArrayList<Marker> resourceLocations = new ArrayList<>();
 
-    // HashMap used to lookup a location's xml file
-    public static HashMap<Marker, String> locations = new HashMap<>();
-    public static HashMap<Marker, MapLocation> markerLocation = new HashMap<>();
+    // HashMap used to lookup a location's MapLocation object
+    public static HashMap<Marker, MapLocation> locations = new HashMap<>();
 
     // Locations API Related (GPS Feature)
     Location currentLocation;
@@ -155,7 +154,7 @@ public class MapsFragment extends Fragment {
         // Handles marker title clicks
         googleMap.setOnInfoWindowClickListener(marker -> {
             // Activity Popup
-            MapLocation locationInfo = markerLocation.get(marker);
+            MapLocation locationInfo = locations.get(marker);
             if (locationInfo == null) return;
 
             Intent intent = new Intent(getActivity(), TemplateMarkerDescriptions.class);
@@ -422,7 +421,6 @@ public class MapsFragment extends Fragment {
                 String title = location.getString("title");
                 double latitude = location.getDouble("latitude");
                 double longitude = location.getDouble("longitude");
-                String xmlFile = location.getString("xml_file");
                 String locationType = location.getString("type");
 
                 Marker tmpMarker = googleMap.addMarker(new MarkerOptions()
@@ -434,10 +432,8 @@ public class MapsFragment extends Fragment {
                 String description = location.getString("description");
                 JSONArray locationImages = location.getJSONArray("images");
 
-               markerLocation.put(tmpMarker, new MapLocation(description, locationImages));
-
                 // All markers are stored in the locations hashmap. This is required for displaying popups.
-                locations.put(tmpMarker, xmlFile);
+                locations.put(tmpMarker, new MapLocation(description, locationImages));
 
                 // Location types are sorted into their respective ArrayLists
                 if (locationType.equals("parking")) {
