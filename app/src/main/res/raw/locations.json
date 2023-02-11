@@ -1,5 +1,45 @@
 [
   {
+    "title": "Facilities Services",
+    "latitude": 34.68055821978821,
+    "longitude": -118.18743605625858,
+    "description": "",
+    "images": [""],
+    "type": "resource"
+  },
+  {
+    "title": "CSU Bakersfield",
+    "latitude": 34.680353586506165,
+    "longitude": -118.18506976951421,
+    "description": "",
+    "images": [""],
+    "type": "classroom"
+  },
+  {
+    "title": "Tennis Court",
+    "latitude": 34.67814023222777,
+    "longitude": -118.18848748454626,
+    "description": "",
+    "images": [""],
+    "type": "athletic"
+  },
+  {
+    "title": "Baseball Stadium",
+    "latitude": 34.67837691817422,
+    "longitude": -118.19151700283047,
+    "description": "",
+    "images": [""],
+    "type": "athletic"
+  },
+  {
+    "title": "LASD-AVC Unit (Security, Lost and Found)",
+    "latitude": 34.67546300912904,
+    "longitude": -118.18781384031028,
+    "description": "",
+    "images": [""],
+    "type": "resource"
+  },
+  {
     "title": "Uhazy Hall",
     "latitude": 34.6787345742857,
     "longitude": -118.18635845710243,
