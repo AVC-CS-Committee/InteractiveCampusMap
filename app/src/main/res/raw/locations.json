@@ -3,7 +3,7 @@
     "title": "Facilities Services",
     "latitude": 34.68055821978821,
     "longitude": -118.18743605625858,
-    "description": "",
+    "description": "Facilities Services (FS) supports Antelope Valley College’s mission by maintaining and enhancing buildings, grounds and the physical infrastructure in a cost-effective, safe and environmentally responsible manner. The S3 logo represents the ongoing goals of the department and defines the meaning of safety, service, and sustainability. Facilities Services prioritizes safety through preventative maintenance and hazard mitigation, offers excellent customer service in maintenance and operations, and strives for long-term sustainability in controlling usage and reducing waste.",
     "images": [""],
     "type": "resource"
   },
@@ -11,15 +11,15 @@
     "title": "CSU Bakersfield",
     "latitude": 34.680353586506165,
     "longitude": -118.18506976951421,
-    "description": "",
+    "description": "California State University, Bakersfield operates a branch campus in the Antelope Valley on the northeast corner of Antelope Valley College. The campus provides the residents of the Greater Antelope Valley academic degree programs leading to a Bachelor degree in a small number of disciplines, and the ability to obtain a Master’s degree in a few areas, without leaving the community. This cooperative arrangement between two segments of California’s public higher education system enables students who complete an Associate of Arts or Associate of Science program at a community college to continue their academic studies at state resident rates. All programs offered at CSUB AV are fully accredited by the Western Association of Schools and Colleges and are an integral part of the curricula of California State University, Bakersfield.",
     "images": [""],
     "type": "classroom"
   },
   {
-    "title": "Tennis Court",
+    "title": "Tennis Courts",
     "latitude": 34.67814023222777,
     "longitude": -118.18848748454626,
-    "description": "",
+    "description": "The tennis courts serve as a competitive training ground for the school's athletics program. These top-notch facilities provide students with the opportunity to hone their skills and compete at a high level in the sport of tennis. The tennis courts are a key resource for AVC's athletics program, offering students the chance to showcase their talents and represent the school on the court.",
     "images": [""],
     "type": "athletic"
   },
@@ -27,7 +27,7 @@
     "title": "Baseball Stadium",
     "latitude": 34.67837691817422,
     "longitude": -118.19151700283047,
-    "description": "",
+    "description": "The Baseball Stadium is an exceptional facility optimized for the sport of baseball. This stadium offers students a first-class playing surface, replete with all the equipment and resources necessary to compete with distinction. The Baseball Stadium plays a key role in AVC's athletics program, providing a platform for students to showcase their talents and represent the school on the diamond.",
     "images": [""],
     "type": "athletic"
   },
@@ -35,7 +35,7 @@
     "title": "LASD-AVC Unit (Security, Lost and Found)",
     "latitude": 34.67546300912904,
     "longitude": -118.18781384031028,
-    "description": "",
+    "description": "The Los Angeles Sheriff's Department (LASD) office at Antelope Valley College is a crucial location for campus security. The LASD is responsible for maintaining a safe and secure environment for students, faculty, and staff. They also manage the Lost & Found, where students can retrieve lost items or report lost items. The LASD office is staffed by highly skilled professionals who are dedicated to providing exceptional security services to the campus community. They strive to ensure that all students, faculty, and staff feel protected and secure while on campus, and are available to assist with any security concerns or incidents. Whether you need to report a lost item, or have a query about campus security, the LASD office is the go-to place for students, faculty, and staff.",
     "images": [""],
     "type": "resource"
   },
@@ -59,7 +59,7 @@
     "title": "Yoshida Hall",
     "latitude": 34.67899187744454,
     "longitude": -118.18548358738202,
-    "description": "",
+    "description": "Yoshida Hall (YH) is the main location for applied arts and also includes lectures related to math and science. The first and second floors house classrooms, offices, and coffee, food, and drink vending machines.\n\nYoshida Hall is also where the STEM office (YH 121A) and STEM lab (YH 115) are located. The classrooms are designed with the latest technology and tools to provide students with a comfortable and productive learning environment, while the STEM office and lab offer centralized support and hands-on learning opportunities for students in STEM fields. Whether students are pursuing a degree in the arts or in STEM fields, Yoshida Hall is a vital resource for their academic success at Antelope Valley College.",
     "images": ["yh"],
     "type": "classroom"
   },
@@ -83,7 +83,7 @@
     "title": "Gymnasium",
     "latitude": 34.67804292141216,
     "longitude": -118.18734085519353,
-    "description": "",
+    "description": "The Gymnasium is a dynamic sports facility, hosting games for basketball, volleyball, and more. The gym provides students with an optimal playing surface, as well as all the necessary equipment and facilities to play at their best. The Gymnasium serves as an important part of AVC's athletics program, allowing students to hone their skills and perform on the court in front of their peers and community.",
     "images": ["gym"],
     "type": "athletic"
   },
@@ -91,7 +91,7 @@
     "title": "Marauder Stadium",
     "latitude": 34.67634068573699,
     "longitude": -118.19008554556989,
-    "description": "",
+    "description": "The Marauder Stadium is a versatile athletic venue, hosting events for soccer, football, and more. This stadium provides students with a premier playing surface, complete with all the necessary equipment and facilities to perform at their peak. The Marauder Stadium is a critical component of AVC's athletics program, affording students the chance to exhibit their abilities and represent the college on the field.",
     "images": ["stadium"],
     "type": "athletic"
   },
@@ -211,7 +211,7 @@
     "title": "Technical Education: Agriculture Lab",
     "latitude": 34.679898891625314,
     "longitude": -118.1870825677824,
-    "description": "",
+    "description": "The Technical Education: Agriculture Lab provides students with hands-on learning opportunities in the field of agriculture. This state-of-the-art facility offers students access to labs where they can gain practical experience and develop their skills in agriculture-related subjects. The labs provide a unique and immersive learning environment that allows students to apply what they have learned in their courses to real-world scenarios. The Technical Education: Agriculture Lab is an essential resource for students looking to pursue a career in agriculture or related fields.",
     "images": ["greenhouse"],
     "type": "classroom"
   },
@@ -219,7 +219,7 @@
     "title": "Greenhouse",
     "latitude": 34.67988988181543,
     "longitude": -118.18754492181769,
-    "description": "",
+    "description": "The greenhouses serve as a hands-on learning resource for biology students. These state-of-the-art facilities function as normal greenhouses, providing students with the opportunity to gain practical experience in plant growth and maintenance. The greenhouses offer a unique and immersive learning environment for students to further their understanding of the biological processes involved in plant growth and development.",
     "images": ["greenhouse"],
     "type": "classroom"
   },
