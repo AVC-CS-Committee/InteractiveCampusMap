@@ -169,6 +169,8 @@ public class MapsFragment extends Fragment {
             startActivity(intent);
         });
 
+        // TODO: Change parking lot calculator so that it reveals the nearest lot based on user's current location.
+        //       On button click, close the drawers, centers, and info window is shown.
         // Handles map clicks
         googleMap.setOnMapClickListener(latLng -> {
             if (!enableParkingCalculator) return;
