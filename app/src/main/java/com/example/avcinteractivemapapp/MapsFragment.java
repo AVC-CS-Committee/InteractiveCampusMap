@@ -252,6 +252,7 @@ public class MapsFragment extends Fragment {
             ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
+        mMap.setMyLocationEnabled(true);
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -278,7 +279,8 @@ public class MapsFragment extends Fragment {
 
 
         // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
-        getFusedLocationProviderClient(this.requireActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+        // TODO: Fix the circle filter
+       /* getFusedLocationProviderClient(this.requireActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
             @SuppressLint("MissingPermission")
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -335,7 +337,7 @@ public class MapsFragment extends Fragment {
                 }
 
             }
-            }, Looper.myLooper());
+            }, Looper.myLooper());*/
 
 
     }
