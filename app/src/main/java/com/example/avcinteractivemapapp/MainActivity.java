@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean showFood = false;
     private boolean showAthletics = false;
 
+    // Create instance of MapsFragment
+    private MapsFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,6 +71,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
+
+        //A new fragment object is created to reference the MapsFragment.java class
+        fragment = new MapsFragment();
+
+        //Loads the Google Maps fragment to display the map
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
@@ -105,11 +114,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         MenuItem nearestParkingButton = nav.getMenu().findItem(R.id.nearest_parking);
         nearestParkingButton.setOnMenuItemClickListener(item -> {
-            if (MapsFragment.enableParkingCalculator()) {
-                Toast.makeText(this, "Nearest parking lot calculator enabled!", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Nearest parking lot calculator disabled!", Toast.LENGTH_LONG).show();
+            // Calculate the nearest lot and move camera
+            if (!fragment.enableParkingCalculator()) {
+                buildAlertMessageNoGps();
+                return false;
             }
+
+            // Close the drawer
+            drawer.closeDrawer(GravityCompat.START);
+
             return true;
         });
 
@@ -120,11 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         });
 
-        //A new fragment object is created to reference the MapsFragment.java class
-        Fragment fragment = new MapsFragment();
-
-        //Loads the Google Maps fragment to display the map
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
     }
 
     /*
@@ -147,16 +155,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
 
-        for (Marker marker : MapsFragment.parkingLotMarkers) marker.setVisible(showParkingLots);
-        for (Marker marker : MapsFragment.classroomLocations) marker.setVisible(showClassrooms);
-        for (Marker marker : MapsFragment.resourceLocations) marker.setVisible(showStudentResources);
-        for (Marker marker : MapsFragment.foodLocations) marker.setVisible(showFood);
-        for (Marker marker : MapsFragment.athleticLocations) marker.setVisible(showAthletics);
+        for (Marker marker : fragment.parkingLotMarkers) marker.setVisible(showParkingLots);
+        for (Marker marker : fragment.classroomLocations) marker.setVisible(showClassrooms);
+        for (Marker marker : fragment.resourceLocations) marker.setVisible(showStudentResources);
+        for (Marker marker : fragment.foodLocations) marker.setVisible(showFood);
+        for (Marker marker : fragment.athleticLocations) marker.setVisible(showAthletics);
     }
 
     // Helper method that toggles all markers to be visible
     private void showAllMarkers() {
-        for (Marker marker : MapsFragment.locations.keySet()) marker.setVisible(true);
+        for (Marker marker : fragment.locations.keySet()) marker.setVisible(true);
     }
 
     // Helper method that checks if all the filters are set to false (unchecked)

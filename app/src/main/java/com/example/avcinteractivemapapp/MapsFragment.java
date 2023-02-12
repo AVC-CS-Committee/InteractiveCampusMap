@@ -107,19 +107,19 @@ public class MapsFragment extends Fragment {
 
     // Marker Lists
     ArrayList<Marker> userMarker = new ArrayList<>();
-    public static ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
-    public static ArrayList<Marker> classroomLocations = new ArrayList<>();
-    public static ArrayList<Marker> foodLocations = new ArrayList<>();
-    public static ArrayList<Marker> athleticLocations = new ArrayList<>();
-    public static ArrayList<Marker> resourceLocations = new ArrayList<>();
+    public ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+    public ArrayList<Marker> classroomLocations = new ArrayList<>();
+    public ArrayList<Marker> foodLocations = new ArrayList<>();
+    public ArrayList<Marker> athleticLocations = new ArrayList<>();
+    public ArrayList<Marker> resourceLocations = new ArrayList<>();
 
     // HashMap used to lookup a location's MapLocation object
-    public static HashMap<Marker, MapLocation> locations = new HashMap<>();
+    public HashMap<Marker, MapLocation> locations = new HashMap<>();
 
     // Locations API Related (GPS Feature)
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int REQUEST_CODE = 101;
+    private final int REQUEST_CODE = 101;
     private GoogleMap mMap;
 
     // GPS Related
@@ -235,9 +235,35 @@ public class MapsFragment extends Fragment {
         return enableCircleFilter;
     }
 
-    public static boolean enableParkingCalculator() {
-        enableParkingCalculator = !enableParkingCalculator;
-        return enableParkingCalculator;
+    public boolean enableParkingCalculator() {
+        // Update the current user's location
+        getCurrentLocation();
+
+        // Check if the current location exists
+        // if it doesn't, return false
+        if (currentLocation == null) return false;
+
+        // Convert current user's location into a marker
+        Marker userLocation = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+
+        // Calculate the nearest lot to the user
+        Pair<Integer, Double> nearestLot = calculateNearestLot(userLocation);
+        Marker nearestLotMarker = parkingLotMarkers.get(nearestLot.first);
+
+        // Remove the temporary marker
+        userLocation.remove();
+
+        // Get the lot's coordinates
+        LatLng nearestLotCoords = nearestLotMarker.getPosition();
+
+        // Move the map camera to the coords
+        moveCamera(mMap, nearestLotCoords);
+
+        // Show the marker title
+        nearestLotMarker.showInfoWindow();
+
+        return true;
     }
 
     // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
@@ -398,6 +424,16 @@ public class MapsFragment extends Fragment {
         LatLng avcCoords = new LatLng(34.6773, -118.1866);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(avcCoords)
+                .zoom(INITIAL_ZOOM)
+                .bearing(0)
+                .build();
+
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private void moveCamera(GoogleMap googleMap, LatLng coords) {
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(coords)
                 .zoom(INITIAL_ZOOM)
                 .bearing(0)
                 .build();
