@@ -1,22 +1,17 @@
 package com.example.avcinteractivemapapp;
 
-import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -25,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,10 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,15 +37,11 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -104,11 +91,12 @@ import java.util.Scanner;
  where code for implementing a new feature related to the map should be written.
  */
 public class MapsFragment extends Fragment implements LocationListener {
+    // Map related variables
     final float MAX_ZOOM = 14.0f;
     final float INITIAL_ZOOM = 17.5f;
+    final LatLng AVC_COORDS = new LatLng(34.6773, -118.1866);
 
     // Marker Lists
-    ArrayList<Marker> userMarker = new ArrayList<>();
     public ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
     public ArrayList<Marker> classroomLocations = new ArrayList<>();
     public ArrayList<Marker> foodLocations = new ArrayList<>();
@@ -135,15 +123,12 @@ public class MapsFragment extends Fragment implements LocationListener {
     ImageButton centerMapButton;
     View view;
 
-    // Parking calculator toggle (false by default)
-    private static boolean enableParkingCalculator = false;
-
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
-        centerMapCamera(googleMap);
+        moveMapCamera(googleMap, AVC_COORDS);
 
         mMap = googleMap;
 
@@ -172,39 +157,8 @@ public class MapsFragment extends Fragment implements LocationListener {
             startActivity(intent);
         });
 
-        // TODO: Change parking lot calculator so that it reveals the nearest lot based on user's current location.
-        //       On button click, close the drawers, centers, and info window is shown.
-        // Handles map clicks
-        googleMap.setOnMapClickListener(latLng -> {
-            if (!enableParkingCalculator) return;
-            if (userMarker.size() > 0) {
-                // Removes existing marker from the map
-                userMarker.get(0).remove();
-
-                // Removes existing Marker object from ArrayList
-                userMarker.remove(0);
-            }
-
-            // Creates a new Marker object and places it at the location
-            Marker newUserMarker = googleMap.addMarker(new MarkerOptions()
-                    .position(latLng)
-                    .title("User Marker"));
-
-            // Add user Marker to the ArrayList
-            userMarker.add(newUserMarker);
-
-            // Calculate the distance to the nearest lot
-            Pair<Integer, Double> nearestLot = calculateNearestLot(newUserMarker);
-
-            // Temporary code (just being used to display that the parking calculator actually works)
-            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View userMarkerView = inflater.inflate(R.layout.popup_user_marker, null);
-            TextView nearestLotView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.lotView);
-            TextView distanceView = userMarkerView.findViewById(R.id.userMarkerPopup).findViewById(R.id.distanceView);
-            nearestLotView.setText(parkingLotMarkers.get(nearestLot.first).getTitle());
-            distanceView.setText(String.format("%.2f %s", nearestLot.second, distanceView.getText()));
-            popupViewCreator(userMarkerView, view);
-        });
+        // Handles map clicks (was used for the old version of the nearest lot calculator)
+        googleMap.setOnMapClickListener(latLng -> {});
 
         // Handle map camera movement
         googleMap.setOnCameraMoveListener(() -> {
@@ -215,7 +169,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         // Handles center map button clicks
-        centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
+        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS));
 
         // GPS Related
         //fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
@@ -258,16 +212,14 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Update the current user's location
         getCurrentLocation();
 
-        // Check if the current location exists
-        // if it doesn't, return false
-        // FIXME: Don't think this is the correct way to check if the current lat and long are initialized
-        if (currentLong == 0.0 && currentLong == 0.0) return false;
+        // Check if the current location exists. If it doesn't, return false
+        if (currentLong == 0.0 && currentLat == 0.0) return false;
 
         // Convert current user's location into a marker
         Marker userLocation = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(currentLat, currentLong)));
 
-        // Calculate the nearest lot to the user
+        // Calculate the nearest lot to the user then grab the lot marker
         Pair<Integer, Double> nearestLot = calculateNearestLot(userLocation);
         Marker nearestLotMarker = parkingLotMarkers.get(nearestLot.first);
 
@@ -278,11 +230,10 @@ public class MapsFragment extends Fragment implements LocationListener {
         LatLng nearestLotCoords = nearestLotMarker.getPosition();
 
         // Move the map camera to the coords
-        moveCamera(mMap, nearestLotCoords);
+        moveMapCamera(mMap, nearestLotCoords);
 
         // Show the marker title
         nearestLotMarker.showInfoWindow();
-
         return true;
     }
 
@@ -422,18 +373,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         googleMap.setLatLngBoundsForCameraTarget(avcBounds);
     }
 
-    private void centerMapCamera(@NonNull GoogleMap googleMap) {
-        LatLng avcCoords = new LatLng(34.6773, -118.1866);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(avcCoords)
-                .zoom(INITIAL_ZOOM)
-                .bearing(0)
-                .build();
-
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-
-    private void moveCamera(GoogleMap googleMap, LatLng coords) {
+    private void moveMapCamera(GoogleMap googleMap, LatLng coords) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(coords)
                 .zoom(INITIAL_ZOOM)
