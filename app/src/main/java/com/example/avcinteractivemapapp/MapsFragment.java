@@ -13,6 +13,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -101,7 +103,7 @@ import java.util.Scanner;
  Inside this method, onMapReady() is called. This is where most of the logic for the map goes and
  where code for implementing a new feature related to the map should be written.
  */
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment implements LocationListener {
     final float MAX_ZOOM = 14.0f;
     final float INITIAL_ZOOM = 17.5f;
 
@@ -117,8 +119,9 @@ public class MapsFragment extends Fragment {
     public HashMap<Marker, MapLocation> locations = new HashMap<>();
 
     // Locations API Related (GPS Feature)
-    Location currentLocation;
-    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationManager locationManager;
+    double currentLat;
+    double currentLong;
     private final int REQUEST_CODE = 101;
     private GoogleMap mMap;
 
@@ -215,7 +218,8 @@ public class MapsFragment extends Fragment {
         centerMapButton.setOnClickListener(view -> centerMapCamera(googleMap));
 
         // GPS Related
-        fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
+        //fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         getCurrentLocation();
 
         // The uiSettings object removes default Google Maps hover buttons
@@ -224,6 +228,21 @@ public class MapsFragment extends Fragment {
         uiSettings.setMapToolbarEnabled(false);
 
     };
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        currentLat = location.getLatitude();
+        currentLong = location.getLongitude();
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
+    }
 
     public static boolean enableCircleFilter() {
         // 1) Determine user's current location
@@ -241,11 +260,12 @@ public class MapsFragment extends Fragment {
 
         // Check if the current location exists
         // if it doesn't, return false
-        if (currentLocation == null) return false;
+        // FIXME: Don't think this is the correct way to check if the current lat and long are initialized
+        if (currentLong == 0.0 && currentLong == 0.0) return false;
 
         // Convert current user's location into a marker
         Marker userLocation = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+                .position(new LatLng(currentLat, currentLong)));
 
         // Calculate the nearest lot to the user
         Pair<Integer, Double> nearestLot = calculateNearestLot(userLocation);
@@ -266,7 +286,7 @@ public class MapsFragment extends Fragment {
         return true;
     }
 
-    // Locations API required logic for GPS. Tutorial used: https://youtu.be/cnlSyYeRqrs
+    // Locations API required logic for GPS. Tutorial used for getting current location: https://javapapers.com/android/get-current-location-in-android/
     private void getCurrentLocation() {
 
         // Checks if the permission is not granted, if it's not then evaluates to true
@@ -278,30 +298,12 @@ public class MapsFragment extends Fragment {
             ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
+        // Requests location updates. Second parameter determines how quickly the user's location is updated
+        // The quicker the location is updated the more quickly the battery drains
+        // Currently using 2500 which is the highest it can be without causing any bugs
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+        // Makes user's current location visible
         mMap.setMyLocationEnabled(true);
-
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-
-                if (location != null) {
-
-                    currentLocation = location;
-                   /* SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.google_map);
-                    assert supportMapFragment != null;
-                    supportMapFragment.getMapAsync(MapsFragment);*/
-
-                }
-
-            }
-        });
-
-        // IMPORTANT: The the lower the interval the faster the user's phone battery drains, but the faster the location is updated.
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(60000); // How quickly the location is updated
-        mLocationRequest.setFastestInterval(1000);
 
 
         // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
