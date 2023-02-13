@@ -120,10 +120,10 @@
     "type": "resource"
   },
   {
-    "title": "Admissions and Records Office",
+    "title": "Future Cedar Hall",
     "latitude": 34.67638480157416,
     "longitude": -118.18531121391118,
-    "description": "The Admissions and Records Office is the first place a student should visit. We process all admission and registration forms. The Enrollment Services (Admissions & Records, Graduation and Transcript Departments) mission is to serve as a continuous resource for students throughout their academic experience.\n\nEnrollment Services serves as a resource for admissions, registration transactions, academic records and grades, athletic intercollegiate eligibility, petitions, evaluation of transcripts for the purpose of awarding degrees and certificates, enrollment verifications, and the production of a timely and accurate transcript.  Enrollment Services is committed to a positive student experience and offers a variety of accurate, efficient, and prompt services using a variety of resources and technologies.",
+    "description": "Currently under construction.",
     "images": ["admissions"],
     "type": "resource"
   },
@@ -136,11 +136,11 @@
     "type": "classroom"
   },
   {
-    "title": "Learning Center",
+    "title": "Old Learning Center (Closed)",
     "latitude": 34.67725682725537,
     "longitude": -118.18531269317117,
-    "description": "The Learning Center (LC) is a hub for student success and academic support. Whether you're looking for extra help in a particular class, want to reinforce what you learned, or simply need a quiet study space, the LC has everything you need to make the most of your college experience. The LC offers a variety of services, including live online front-counter access on Zoom, small group and individual drop-in tutoring, supplemental instruction, tutoring appointments, and faculty-led math, reading, writing, and study skills workshops. In addition to these academic support services, the LC also features an open computer lab, study space, and various resources available for check-out, such as laptops, media, textbooks, and study supplies. With the help of the friendly and knowledgeable staff at the LC, students can feel confident and prepared as they work towards their academic goals.",
-    "images": ["lc"],
+    "description": "Not currently in use by AVC.",
+    "images": ["olc"],
     "type": "resource"
   },
   {
@@ -171,7 +171,15 @@
     "title": "Lecture Hall",
     "latitude": 34.67709130468547,
     "longitude": -118.18756250227011,
-    "description": "",
+    "description": "The Lecture Hall provides students with a space to attend lectures and learn in a traditional college room setting. The building houses classrooms that cater to a wide range of subjects and are designed to facilitate learning through presentations, discussions, and other interactive methods. With its spacious auditorium-style layout, students can enjoy an immersive educational experience as they delve into new topics and ideas.",
+    "images": [""],
+    "type": "classroom"
+  },
+  {
+    "title": "Sage Hall",
+    "latitude": 34.67714651488922,
+    "longitude": -118.18709120662562,
+    "description": "Sage Hall is a hub for student success and academic support. It's the new home for the learning center and includes classroom space. Whether you're looking for extra help in a particular class, want to reinforce what you learned, or simply need a quiet study space, the Sage Hall has everything you need to make the most of your college experience. It offers a variety of services, including live online front-counter access on Zoom, small group and individual drop-in tutoring, supplemental instruction, tutoring appointments, and faculty-led math, reading, writing, and study skills workshops. In addition to these academic support services, Sage Hall also features an open computer lab, study space, and various resources available for check-out, such as laptops, media, textbooks, and study supplies. With the help of the friendly and knowledgeable staff, students can feel confident and prepared as they work towards their academic goals.",
     "images": ["lh"],
     "type": "classroom"
   },
@@ -179,7 +187,7 @@
     "title": "Math and Engineering",
     "latitude": 34.67775573632852,
     "longitude": -118.18589961736947,
-    "description": "",
+    "description": "The Math and Engineering building (ME) is designed for students pursuing degrees in engineering, mathematics, and computer science. It features a spacious computer lab equipped with the latest technology, as well as traditional classrooms that are optimized for learning. The building is the center of excellence for students who are interested in these fields, offering lectures, hands-on experience, and ample opportunities for growth and exploration. Whether you're an aspiring engineer, mathematician, or computer scientist, the Math and Engineering building provides the ideal environment for you to succeed.",
     "images": ["me"],
     "type": "classroom"
   },
@@ -187,7 +195,7 @@
     "title": "Office for Students with Disabilities",
     "latitude": 34.67672471757968,
     "longitude": -118.18439631632184,
-    "description": "",
+    "description": "The OSD program provides support services, specialized instruction, and educational accommodations to students with disabilities so that they can participate as fully and benefit as equitably from the college experience as their non-disabled peers. An Academic Accommodation Plan (AAP) is developed for each student which links student’s goals, curriculum program, and academic adjustments, auxiliary aids, services and/or instruction to his/her disability related educational limitation.\n\nThe mission of the Office for Students With Disabilities (OSD) Program is to provide students with disabilities equal access to education by offering quality support services that directly relate to a student’s limitations as a result of their disability. The OSD Program assists students with their understanding and acceptance of their limitations as a result of their disability and also promotes and fosters independence by teaching students to articulate their needs to AVC instructors and staff. Moreover the OSD Program is committed to the academic success and personal growth of all students with disabilities at AVC.",
     "images": ["osd"],
     "type": "resource"
   },
@@ -195,7 +203,7 @@
     "title": "Fine Arts",
     "latitude": 34.67648676160919,
     "longitude": -118.18738628333938,
-    "description": "",
+    "description": "The Fine Arts building is a hub for creativity and artistic expression on campus. This stunning building houses a range of classrooms designed for students pursuing a major in the arts. Whether you are interested in painting, drawing, sculpture, or any other medium, this building provides you with the resources you need to hone your craft and unleash your artistic potential. From large, open studios to smaller, more intimate workspaces, the Fine Arts Building offers a supportive and inspiring environment for students to explore their passions and develop their skills. Whether you're an aspiring artist, a seasoned veteran, or simply curious about the arts, the Fine Arts Building is the place to be.",
     "images": ["fa"],
     "type": "classroom"
   },
@@ -203,7 +211,7 @@
     "title": "Fine Arts Music and Offices",
     "latitude": 34.67626532974614,
     "longitude": -118.18770778514867,
-    "description": "",
+    "description": "The Fine Arts Music and Offices building is a vital space for aspiring musicians and artists at Antelope Valley College. With dedicated classrooms specifically designed for music and arts education, students can hone their skills and perfect their craft in a supportive environment. In addition to these classrooms, the building also features offices for arts professors, providing a centralized location for all things arts-related. Whether you're looking to take a music class, meet with your professor, or simply immerse yourself in the creative atmosphere, this building is the perfect destination.",
     "images": ["fa"],
     "type": "classroom"
   },
@@ -211,15 +219,15 @@
     "title": "Technical Education Technology",
     "latitude": 34.67973186506707,
     "longitude": -118.18654794631942,
-    "description": "",
+    "description": "The Technical Education Technology building is home to the Career Technical Education Division. Here, students have the opportunity to gain hands-on experience in preparing for entry-level positions and professionals can enhance their skills in today's competitive workplace. The building is equipped with modern classrooms, computer labs and other resources that provide students with the tools they need to succeed. Whether you are a beginner or an experienced professional, the Technical Education Technology Building has the resources and instruction you need to achieve your career goals.",
     "images": ["tet"],
     "type": "classroom"
   },
   {
-    "title": "Technical Education: Agriculture Lab",
+    "title": "Technical Education Agriculture Lab",
     "latitude": 34.679898891625314,
     "longitude": -118.1870825677824,
-    "description": "The Technical Education: Agriculture Lab provides students with hands-on learning opportunities in the field of agriculture. This state-of-the-art facility offers students access to labs where they can gain practical experience and develop their skills in agriculture-related subjects. The labs provide a unique and immersive learning environment that allows students to apply what they have learned in their courses to real-world scenarios. The Technical Education: Agriculture Lab is an essential resource for students looking to pursue a career in agriculture or related fields.",
+    "description": "The Technical Education Agriculture Lab provides students with hands-on learning opportunities in the field of agriculture. This state-of-the-art facility offers students access to labs where they can gain practical experience and develop their skills in agriculture-related subjects. The labs provide a unique and immersive learning environment that allows students to apply what they have learned in their courses to real-world scenarios. The Technical Education: Agriculture Lab is an essential resource for students looking to pursue a career in agriculture or related fields.",
     "images": ["greenhouse"],
     "type": "classroom"
   },
