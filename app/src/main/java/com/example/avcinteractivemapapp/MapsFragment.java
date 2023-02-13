@@ -52,35 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-/*TODO: (FOR THOSE WORKING ON THE GOOGLE MAPS API)
-        Tutorial being followed: https://youtu.be/lBW58tPLn-A?list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi
-        -Restrict API Key; get done before deployment
-        -Polish Google Services, GPS, and location permissions
-        -Add custom markers to each location (buildings, parking lots, stadium, etc.)
-        -Set boundaries (DONE)
-        -On marker click open a popup menu with info about that location
- */
-
-/*TODO: Implement the functionality of the maps legend. Create an event listener that listens to current checks in
-        the drawer menu so that it will hide or remove all markers associated with the checklists description.
-*/
-
-/*
-    DONE: Nearest Parking calculator
-            -the user taps anywhere on avc and the nearest parking lot is shown (don't need the markers on every building)
-            -we'd only need the parking lot markers
-            -calculates the distance between the place the user tapped on the map and all the parking lot markers
-            -the marker that is the closest is displayed (and a path is revealed to it?)
- */
-
-/*
-    TODO: Code to eventually refactor
-        -Adding markers for each location
-        -Adding popups on each marker click?
-        -Parking Calculator
-
- */
-
 /**
  * DESCRIPTION:
  This class (fragment) is for managing the Google Maps API. All the features that need to be
