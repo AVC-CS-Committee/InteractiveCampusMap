@@ -90,6 +90,8 @@ public class MapsFragment extends Fragment implements LocationListener {
     public static boolean enableCircleFilter = false;
 
     // Icons for markers
+    BitmapDescriptor parkingMarkerIcon, classroomMarkerIcon, foodMarkerIcon, athleticsMarkerIcon, resourceMarkerIcon;
+    // Temporary
     BitmapDescriptor markerIcon;
     ImageButton centerMapButton;
     View view;
@@ -104,6 +106,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         mMap = googleMap;
 
         markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
+        parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_parking_marker);
         centerMapButton = view.findViewById(R.id.center_map);
 
         parseJson(googleMap);
@@ -379,7 +382,7 @@ public class MapsFragment extends Fragment implements LocationListener {
                 Marker tmpMarker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .title(title)
-                        .icon(markerIcon));
+                        .icon(markerIcon)); // Initialize all markers with default blue icon
 
                 // Create MapLocation object
                 String description = location.getString("description");
@@ -390,6 +393,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
                 // Location types are sorted into their respective ArrayLists
                 if (locationType.equals("parking")) {
+                    tmpMarker.setIcon(parkingMarkerIcon);
                     parkingLotMarkers.add(tmpMarker);
                 }
                 if(locationType.equals("classroom")){
