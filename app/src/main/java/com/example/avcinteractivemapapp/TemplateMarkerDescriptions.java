@@ -55,6 +55,8 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
         try {
             int imageId = getResources().getIdentifier(imagePaths.get(0), "drawable", getPackageName());
 
+            if (imageId == 0) return;
+
             // Set image
             ImageView image = findViewById(R.id.location_imageView);
             image.setImageResource(imageId);
