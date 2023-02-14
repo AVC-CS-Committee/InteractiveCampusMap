@@ -106,7 +106,11 @@ public class MapsFragment extends Fragment implements LocationListener {
         mMap = googleMap;
 
         markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
-        parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_parking_marker);
+        parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_parking);
+        classroomMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_classroom);
+        foodMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_food);
+        resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
+        athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
         centerMapButton = view.findViewById(R.id.center_map);
 
         parseJson(googleMap);
@@ -397,15 +401,19 @@ public class MapsFragment extends Fragment implements LocationListener {
                     parkingLotMarkers.add(tmpMarker);
                 }
                 if(locationType.equals("classroom")){
+                    tmpMarker.setIcon(classroomMarkerIcon);
                     classroomLocations.add(tmpMarker);
                 }
                 if(locationType.equals("resource")){
+                    tmpMarker.setIcon(resourceMarkerIcon);
                     resourceLocations.add(tmpMarker);
                 }
                 if(locationType.equals("food")){
+                    tmpMarker.setIcon(foodMarkerIcon);
                     foodLocations.add(tmpMarker);
                 }
                 if(locationType.equals("athletic")){
+                    tmpMarker.setIcon(athleticsMarkerIcon);
                     athleticLocations.add(tmpMarker);
                 }
             }
