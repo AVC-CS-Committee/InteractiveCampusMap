@@ -69,11 +69,18 @@ public class MapsFragment extends Fragment implements LocationListener {
     final LatLng AVC_COORDS = new LatLng(34.6773, -118.1866);
 
     // Marker Lists
-    public ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
-    public ArrayList<Marker> classroomLocations = new ArrayList<>();
-    public ArrayList<Marker> foodLocations = new ArrayList<>();
-    public ArrayList<Marker> athleticLocations = new ArrayList<>();
-    public ArrayList<Marker> resourceLocations = new ArrayList<>();
+    private ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+    private ArrayList<Marker> classroomLocations = new ArrayList<>();
+    private ArrayList<Marker> foodLocations = new ArrayList<>();
+    private ArrayList<Marker> athleticLocations = new ArrayList<>();
+    private ArrayList<Marker> resourceLocations = new ArrayList<>();
+
+    // Booleans for determining the visibility of markers
+    public boolean showParkingLots = false;
+    public boolean showClassrooms = false;
+    public boolean showStudentResources = false;
+    public boolean showFood = false;
+    public boolean showAthletics = false;
 
     // HashMap used to lookup a location's MapLocation object
     public HashMap<Marker, MapLocation> locations = new HashMap<>();
@@ -161,6 +168,36 @@ public class MapsFragment extends Fragment implements LocationListener {
         uiSettings.setMapToolbarEnabled(false);
 
     };
+
+    // Filter the markers based on the boolean values of each marker type's visibility
+    public void filterMarkers() {
+        // If all the filters are unchecked, we want to show all the markers
+        if (isFiltersDisabled()) {
+            showAllMarkers();
+            return;
+        }
+
+        for (Marker marker : parkingLotMarkers) marker.setVisible(showParkingLots);
+        for (Marker marker : classroomLocations) marker.setVisible(showClassrooms);
+        for (Marker marker : resourceLocations) marker.setVisible(showStudentResources);
+        for (Marker marker : foodLocations) marker.setVisible(showFood);
+        for (Marker marker : athleticLocations) marker.setVisible(showAthletics);
+    }
+
+    // Helper method that toggles all markers to be visible
+    private void showAllMarkers() {
+        for (Marker marker : locations.keySet()) marker.setVisible(true);
+    }
+
+    // Helper method that checks if all the filters are set to false (unchecked)
+    private boolean isFiltersDisabled() {
+        if (showParkingLots) return false;
+        if (showClassrooms) return false;
+        if (showStudentResources) return false;
+        if (showFood) return false;
+        return !showAthletics;
+    }
+
     @Override
     public void onLocationChanged(@NonNull Location location) {
         currentLat = location.getLatitude();

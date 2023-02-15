@@ -48,12 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
 
-    // Booleans for determining the visibility of markers
-    private boolean showParkingLots = false;
-    private boolean showClassrooms = false;
-    private boolean showStudentResources = false;
-    private boolean showFood = false;
-    private boolean showAthletics = false;
 
     // Create instance of MapsFragment
     private MapsFragment fragment;
@@ -69,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
 
         //A new fragment object is created to reference the MapsFragment.java class
@@ -145,35 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
 
         // Resets the state for all location markers
-        filterMarkers();
-    }
-    // Filter the markers based on the boolean values of each marker type's visibility
-    private void filterMarkers() {
-        // If all the filters are unchecked, we want to show all the markers
-        if (isFiltersDisabled()) {
-            showAllMarkers();
-            return;
-        }
-
-        for (Marker marker : fragment.parkingLotMarkers) marker.setVisible(showParkingLots);
-        for (Marker marker : fragment.classroomLocations) marker.setVisible(showClassrooms);
-        for (Marker marker : fragment.resourceLocations) marker.setVisible(showStudentResources);
-        for (Marker marker : fragment.foodLocations) marker.setVisible(showFood);
-        for (Marker marker : fragment.athleticLocations) marker.setVisible(showAthletics);
-    }
-
-    // Helper method that toggles all markers to be visible
-    private void showAllMarkers() {
-        for (Marker marker : fragment.locations.keySet()) marker.setVisible(true);
-    }
-
-    // Helper method that checks if all the filters are set to false (unchecked)
-    private boolean isFiltersDisabled() {
-        if (showParkingLots) return false;
-        if (showClassrooms) return false;
-        if (showStudentResources) return false;
-        if (showFood) return false;
-        return !showAthletics;
+        fragment.filterMarkers();
     }
 
     // Whenever an item is selected in the Map Legend
@@ -185,23 +151,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set the boolean value for the filter clicked on
         switch (item.getItemId()) {
             case (R.id.lots):
-                showParkingLots = item.isChecked();
+                fragment.showParkingLots = item.isChecked();
                 break;
             case (R.id.classrooms):
-                showClassrooms = item.isChecked();
+                fragment.showClassrooms = item.isChecked();
                 break;
             case (R.id.studentResources):
-                showStudentResources = item.isChecked();
+                fragment.showStudentResources = item.isChecked();
                 break;
             case (R.id.food):
-                showFood = item.isChecked();
+                fragment.showFood = item.isChecked();
                 break;
             case (R.id.athletics):
-                showAthletics = item.isChecked();
+                fragment.showAthletics = item.isChecked();
                 break;
         }
 
-        filterMarkers();
+        fragment.filterMarkers();
         return super.onOptionsItemSelected(item);
     }
 
