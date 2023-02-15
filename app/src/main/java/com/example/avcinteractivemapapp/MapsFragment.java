@@ -224,6 +224,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         return enableCircleFilter;
     }
 
+    ArrayList<Marker> temp = new ArrayList<Marker>(0);
     public boolean enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
@@ -249,12 +250,25 @@ public class MapsFragment extends Fragment implements LocationListener {
         moveMapCamera(mMap, nearestLotCoords);
 
         // Check if the marker is visible, if it isn't, make it visible
-        if (!nearestLotMarker.isVisible()) {
+        if (!nearestLotMarker.isVisible() && temp.size() == 0) {
+            temp.add(nearestLotMarker);
             nearestLotMarker.setVisible(true);
-
             // Hide the marker again after some time (in ms)
-            new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> nearestLotMarker.setVisible(false),
-                    5000);
+            /*new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> nearestLotMarker.setVisible(false),
+                    5000);*/
+        }
+        else if(temp.size() >= 1 ){
+
+            if(showParkingLots) {
+                temp.clear();
+                temp.add(nearestLotMarker);
+            }
+            else{
+                temp.get(0).setVisible(false);
+                temp.clear();
+                temp.add(nearestLotMarker);
+                nearestLotMarker.setVisible(true);
+            }
         }
 
         // Show the marker title
