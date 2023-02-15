@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -209,6 +210,15 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         // Move the map camera to the coords
         moveMapCamera(mMap, nearestLotCoords);
+
+        // Check if the marker is visible, if it isn't, make it visible
+        if (!nearestLotMarker.isVisible()) {
+            nearestLotMarker.setVisible(true);
+
+            // Hide the marker again after some time (in ms)
+            new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> nearestLotMarker.setVisible(false),
+                    5000);
+        }
 
         // Show the marker title
         nearestLotMarker.showInfoWindow();
