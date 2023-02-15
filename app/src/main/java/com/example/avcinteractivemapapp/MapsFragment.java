@@ -69,6 +69,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     final LatLng AVC_COORDS = new LatLng(34.6773, -118.1866);
 
     // Marker Lists
+    private ArrayList<Marker> userLocationMarkers = new ArrayList<>();
     private ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
     private ArrayList<Marker> classroomLocations = new ArrayList<>();
     private ArrayList<Marker> foodLocations = new ArrayList<>();
@@ -182,6 +183,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         for (Marker marker : resourceLocations) marker.setVisible(showStudentResources);
         for (Marker marker : foodLocations) marker.setVisible(showFood);
         for (Marker marker : athleticLocations) marker.setVisible(showAthletics);
+        for (Marker marker : userLocationMarkers) marker.setVisible(true);
     }
 
     // Helper method that toggles all markers to be visible
@@ -224,7 +226,6 @@ public class MapsFragment extends Fragment implements LocationListener {
         return enableCircleFilter;
     }
 
-    ArrayList<Marker> temp = new ArrayList<Marker>(0);
     public boolean enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
@@ -250,23 +251,19 @@ public class MapsFragment extends Fragment implements LocationListener {
         moveMapCamera(mMap, nearestLotCoords);
 
         // Check if the marker is visible, if it isn't, make it visible
-        if (!nearestLotMarker.isVisible() && temp.size() == 0) {
-            temp.add(nearestLotMarker);
+        if (!nearestLotMarker.isVisible() && userLocationMarkers.size() == 0) {
+            userLocationMarkers.add(nearestLotMarker);
             nearestLotMarker.setVisible(true);
-            // Hide the marker again after some time (in ms)
-            /*new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> nearestLotMarker.setVisible(false),
-                    5000);*/
         }
-        else if(temp.size() >= 1 ){
-
+        else if(userLocationMarkers.size() >= 1 ){
             if(showParkingLots) {
-                temp.clear();
-                temp.add(nearestLotMarker);
+                userLocationMarkers.clear();
+                userLocationMarkers.add(nearestLotMarker);
             }
             else{
-                temp.get(0).setVisible(false);
-                temp.clear();
-                temp.add(nearestLotMarker);
+                userLocationMarkers.get(0).setVisible(false);
+                userLocationMarkers.clear();
+                userLocationMarkers.add(nearestLotMarker);
                 nearestLotMarker.setVisible(true);
             }
         }
