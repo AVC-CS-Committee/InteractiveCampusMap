@@ -42,22 +42,47 @@
 
 
     <!-- Location ImageView -->
-
-    <ImageView
-        android:id="@+id/location_imageView"
+    <ViewFlipper
+        android:id="@+id/imageScroller"
+        android:autoStart="false"
         android:layout_width="380dp"
         android:layout_height="200dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image_avc_logo"
-        android:foreground="@drawable/image_border"
+        android:background="@drawable/image_border"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+        app:layout_constraintTop_toBottomOf="@+id/divider1">
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_avc_logo" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_avc_logo" />
+
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_avc_logo" />
+
+
+    </ViewFlipper>
+
 
 
     <!-- Description Title TextView -->
@@ -73,7 +98,7 @@
         android:textSize="25sp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageScroller"
         android:paddingTop="10dp"
         android:paddingBottom="5dp"
          />

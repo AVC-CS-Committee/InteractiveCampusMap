@@ -44,7 +44,7 @@
     "latitude": 34.6787345742857,
     "longitude": -118.18635845710243,
     "description": "Uhazy Hall (UH) hosts lectures related to health and sciences. It’s two stories of classrooms, laboratory spaces, and professor offices.\n\nOn the first floor, there is a Subway and food court to cater to students' dining needs. The second floor houses the S.T.E.M. center, which is available to all students and faculty with an AVC ID card. It's equipped with all the essentials, including computers, a WEPA printer, whiteboards, and plenty of study spaces to support student learning and academic pursuits.",
-    "images": ["uhazyhall"],
+    "images": ["uhazyhall", "ssv", "yh"],
     "type": "classroom"
   },
   {
@@ -52,7 +52,7 @@
     "latitude": 34.6780305978796,
     "longitude": -118.18516830596049,
     "description": "Student Services (SSV) provides a one-stop-shop for students to access information and resources related to their education. Located in a convenient location on campus, the SSV houses a variety of services that aim to support students in achieving their academic and personal goals. From general information to financial aid and career counseling, the SSV has a wealth of resources to help students succeed. With information related to student programs, student work, and appointments with advisors and counselors, the SSV is the perfect place for students to get the information and support they need to excel in their studies. Whether you're a first-time college student or a returning student looking for assistance, the SSV is an essential resource for students at AVC.",
-    "images": ["ssv"],
+    "images": ["ssv", "subway"],
     "type": "resource"
   },
   {
