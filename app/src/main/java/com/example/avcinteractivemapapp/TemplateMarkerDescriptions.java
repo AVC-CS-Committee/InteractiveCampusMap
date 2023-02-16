@@ -17,22 +17,18 @@ import java.util.ArrayList;
 
 public class TemplateMarkerDescriptions extends AppCompatActivity {
     ArrayList<String> imagePaths = new ArrayList<>();
-    ViewFlipper  viewFlipper;
+    ViewFlipper viewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_marker_descriptions);
 
-        viewFlipper = (ViewFlipper) findViewById(R.id.imageScroller); // get the reference of ViewFlipper
-
         // Adds the back button
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(TemplateMarkerDescriptions.this, R.drawable.icon_back));
 
-        toolbar.setNavigationOnClickListener(v -> {
-            onBackPressed();
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         Bundle bundle = getIntent().getExtras();
 
@@ -56,63 +52,48 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
     }
 
     private void setImage() {
+        // Get the reference of ViewFlipper
+        viewFlipper = findViewById(R.id.imageScroller);
+
+        // Sets how quickly the images are flipped (in milliseconds)
+        viewFlipper.setFlipInterval(1000);
+
+        // If a popup has no images, use default image
+        if (imagePaths.isEmpty()) {
+            int defaultImage = getResources().getIdentifier("image_avc_logo", "drawable", getPackageName());
+            if (defaultImage == 0) return;
+
+            ImageView image = new ImageView(getApplicationContext());
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            image.setImageResource(defaultImage);
+
+            viewFlipper.addView(image);
+            viewFlipper.startFlipping();
+            return;
+        }
+
         // Get image id
         try {
-            int imageId = getResources().getIdentifier(imagePaths.get(0), "drawable", getPackageName());
-
-            if (imageId == 0) return;
-
-            // Sets how quickly the images are flipped (in milliseconds)
-            viewFlipper.setFlipInterval(1000);
-
-            // The 1st image is always set
-            ImageView image = findViewById(R.id.image1);
-            image.setImageResource(imageId);
-
             // Set image(s)
-            // True if location has 3 images
-            if(imagePaths.size() == 3) {
+            for (int i = 0; i < imagePaths.size(); i++) {
+                // Get the image via path
+                int imageId = getResources().getIdentifier(imagePaths.get(i), "drawable", getPackageName());
+                if (imageId == 0) return;
 
-                // Starts flipping through images
-                viewFlipper.startFlipping();
+                // Create a new ImageView object and set the image
+                ImageView image = new ImageView(getApplicationContext());
+                image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                image.setImageResource(imageId);
 
-                // Set image 2
-                int imageId2 = getResources().getIdentifier(imagePaths.get(1), "drawable", getPackageName());
-                ImageView image2 = findViewById(R.id.image2);
-                image2.setImageResource(imageId2);
-
-                // Set image 3
-                int imageId3 = getResources().getIdentifier(imagePaths.get(2), "drawable", getPackageName());
-                ImageView image3 = findViewById(R.id.image3);
-                image3.setImageResource(imageId3);
-
+                // Add the image to the ViewFlipper
+                viewFlipper.addView(image);
             }
-            // True if location has 2 images
-            else if(imagePaths.size() == 2) {
 
-                // Removes the last template image since only 2 images are being flipped through
-                viewFlipper.removeView(findViewById(R.id.image3));
-
-                // Starts flipping through images
-                viewFlipper.startFlipping();
-
-                // Set image 2
-                int imageId2 = getResources().getIdentifier(imagePaths.get(1), "drawable", getPackageName());
-                ImageView image2 = findViewById(R.id.image2);
-                image2.setImageResource(imageId2);
-
-            }
-            // Default case is just 1 image
-            else {
-
-                // Stop flipping if only 1 image (otherwise would flip through template images)
-                viewFlipper.stopFlipping();
-            }
+            viewFlipper.startFlipping();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void parseJson(String imageJson) {
@@ -126,6 +107,4 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-
-
 }

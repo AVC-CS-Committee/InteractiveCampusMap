@@ -55,35 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider1">
-
-        <ImageView
-            android:id="@+id/image1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_avc_logo" />
-
-        <ImageView
-            android:id="@+id/image2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_avc_logo" />
-
-        <ImageView
-            android:id="@+id/image3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_avc_logo" />
-
-
     </ViewFlipper>
-
-
 
     <!-- Description Title TextView -->
 
