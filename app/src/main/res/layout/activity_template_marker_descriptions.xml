@@ -12,6 +12,10 @@
 
     <!-- Location Title TextView -->
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/image_border"/>
     <TextView
         android:id="@+id/location_title_textView"
         android:layout_width="wrap_content"
