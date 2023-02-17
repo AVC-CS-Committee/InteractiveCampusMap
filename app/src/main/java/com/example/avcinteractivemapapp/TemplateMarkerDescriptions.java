@@ -66,20 +66,6 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
         // Sets how quickly the images are flipped (in milliseconds)
         viewFlipper.setFlipInterval(5000);
 
-        // If a popup has no images, use default image
-        if (imagePaths.isEmpty()) {
-            int defaultImage = getResources().getIdentifier("image_avc_logo", "drawable", getPackageName());
-            if (defaultImage == 0) return;
-
-            ImageView image = new ImageView(getApplicationContext());
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            image.setImageResource(defaultImage);
-
-            viewFlipper.addView(image);
-            viewFlipper.startFlipping();
-            return;
-        }
-
         // Get image id
         try {
             // Set image(s)
@@ -108,9 +94,12 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
         try {
             JSONArray paths = new JSONArray(imageJson);
 
-            for (int i = 0; i < paths.length(); i++) {
+            // If JSONArray is empty, use default image
+            if (paths.length() == 0) imagePaths.add("image_avc_logo");
+
+            for (int i = 0; i < paths.length(); i++)
                 imagePaths.add("image_" + paths.getString(i));
-            }
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

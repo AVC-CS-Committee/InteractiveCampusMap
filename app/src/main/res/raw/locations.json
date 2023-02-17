@@ -4,7 +4,7 @@
     "latitude": 34.68055821978821,
     "longitude": -118.18743605625858,
     "description": "Facilities Services (FS) supports Antelope Valley College’s mission by maintaining and enhancing buildings, grounds and the physical infrastructure in a cost-effective, safe and environmentally responsible manner. The S3 logo represents the ongoing goals of the department and defines the meaning of safety, service, and sustainability. Facilities Services prioritizes safety through preventative maintenance and hazard mitigation, offers excellent customer service in maintenance and operations, and strives for long-term sustainability in controlling usage and reducing waste.",
-    "images": [""],
+    "images": [],
     "type": "resource"
   },
   {
@@ -20,7 +20,7 @@
     "latitude": 34.67814023222777,
     "longitude": -118.18848748454626,
     "description": "The tennis courts serve as a competitive training ground for the school's athletics program. These top-notch facilities provide students with the opportunity to hone their skills and compete at a high level in the sport of tennis. The tennis courts are a key resource for AVC's athletics program, offering students the chance to showcase their talents and represent the school on the court.",
-    "images": [""],
+    "images": [],
     "type": "athletic"
   },
   {
@@ -28,7 +28,7 @@
     "latitude": 34.67837691817422,
     "longitude": -118.19151700283047,
     "description": "The Baseball Stadium is an exceptional facility optimized for the sport of baseball. This stadium offers students a first-class playing surface, replete with all the equipment and resources necessary to compete with distinction. The Baseball Stadium plays a key role in AVC's athletics program, providing a platform for students to showcase their talents and represent the school on the diamond.",
-    "images": [""],
+    "images": [],
     "type": "athletic"
   },
   {
@@ -36,7 +36,7 @@
     "latitude": 34.67546300912904,
     "longitude": -118.18781384031028,
     "description": "The Los Angeles Sheriff's Department (LASD) office at Antelope Valley College is a crucial location for campus security. The LASD is responsible for maintaining a safe and secure environment for students, faculty, and staff. They also manage the Lost & Found, where students can retrieve lost items or report lost items. The LASD office is staffed by highly skilled professionals who are dedicated to providing exceptional security services to the campus community. They strive to ensure that all students, faculty, and staff feel protected and secure while on campus, and are available to assist with any security concerns or incidents. Whether you need to report a lost item, or have a query about campus security, the LASD office is the go-to place for students, faculty, and staff.",
-    "images": [""],
+    "images": [],
     "type": "resource"
   },
   {
