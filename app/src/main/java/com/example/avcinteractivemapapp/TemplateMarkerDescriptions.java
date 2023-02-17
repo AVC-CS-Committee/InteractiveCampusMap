@@ -83,7 +83,8 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
                 viewFlipper.addView(image);
             }
 
-            viewFlipper.startFlipping();
+            // Flip images if there are more than one image
+            if (viewFlipper.getChildCount() > 1) viewFlipper.startFlipping();
 
         } catch (Exception e) {
             e.printStackTrace();
