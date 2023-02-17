@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -55,8 +57,14 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
         // Get the reference of ViewFlipper
         viewFlipper = findViewById(R.id.imageScroller);
 
+        // Set the animations to use between image flips
+        Animation inAnimation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        Animation outAnimation = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
+        viewFlipper.setInAnimation(inAnimation);
+        viewFlipper.setOutAnimation(outAnimation);
+
         // Sets how quickly the images are flipped (in milliseconds)
-        viewFlipper.setFlipInterval(1000);
+        viewFlipper.setFlipInterval(5000);
 
         // If a popup has no images, use default image
         if (imagePaths.isEmpty()) {
