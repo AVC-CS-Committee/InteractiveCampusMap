@@ -66,29 +66,23 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
         // Sets how quickly the images are flipped (in milliseconds)
         viewFlipper.setFlipInterval(5000);
 
-        // Get image id
-        try {
-            // Set image(s)
-            for (int i = 0; i < imagePaths.size(); i++) {
-                // Get the image via path
-                int imageId = getResources().getIdentifier(imagePaths.get(i), "drawable", getPackageName());
-                if (imageId == 0) return;
+        // Set image(s)
+        for (int i = 0; i < imagePaths.size(); i++) {
+            // Get the image via path
+            int imageId = getResources().getIdentifier(imagePaths.get(i), "drawable", getPackageName());
+            if (imageId == 0) return;
 
-                // Create a new ImageView object and set the image
-                ImageView image = new ImageView(getApplicationContext());
-                image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                image.setImageResource(imageId);
+            // Create a new ImageView object and set the image
+            ImageView image = new ImageView(getApplicationContext());
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            image.setImageResource(imageId);
 
-                // Add the image to the ViewFlipper
-                viewFlipper.addView(image);
-            }
-
-            // Flip images if there are more than one image
-            if (viewFlipper.getChildCount() > 1) viewFlipper.startFlipping();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Add the image to the ViewFlipper
+            viewFlipper.addView(image);
         }
+
+        // Flip images if there are more than one image
+        if (viewFlipper.getChildCount() > 1) viewFlipper.startFlipping();
     }
 
     private void parseJson(String imageJson) {
