@@ -21,10 +21,12 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +52,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
@@ -75,6 +78,13 @@ public class MapsFragment extends Fragment implements LocationListener {
     final float MAX_ZOOM = 14.0f;
     final float INITIAL_ZOOM = 17.5f;
     final LatLng AVC_COORDS = new LatLng(34.6773, -118.1866);
+    final LatLng SOUTHWEST_BOUND = new LatLng(34.674910, -118.192287);
+    final LatLng NORTHEAST_BOUND = new LatLng(34.682133, -118.183807);
+    final LatLngBounds AVC_BOUNDS = new LatLngBounds(SOUTHWEST_BOUND, NORTHEAST_BOUND);
+
+
+    MainActivity mainActivity;
+
 
     // Marker Lists
     private ArrayList<Marker> userLocationMarkers = new ArrayList<>();
@@ -99,7 +109,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     double currentLat;
     double currentLong;
     private final int REQUEST_CODE = 101;
-    private GoogleMap mMap;
+    public GoogleMap mMap;
 
     // GPS Related
     private Circle previousCircle;
@@ -119,6 +129,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
         moveMapCamera(googleMap, AVC_COORDS);
+
+        mainActivity = (MainActivity) getActivity();
 
         mMap = googleMap;
 
@@ -195,8 +207,20 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     // Helper method that toggles all markers to be visible
-    private void showAllMarkers() {
+    public void showAllMarkers() {
         for (Marker marker : locations.keySet()) marker.setVisible(true);
+    }
+
+    // Toggles all markers to be invisible
+    public void disableAllMarkers() {
+        for (Marker marker : locations.keySet()) marker.setVisible(false);
+    }
+
+    // Show specific markers
+    public void showSpecificMarkers(ArrayList<Marker> markers) {
+        for(Marker marker : markers) {
+            marker.setVisible(true);
+        }
     }
 
     // Helper method that checks if all the filters are set to false (unchecked)
@@ -224,14 +248,23 @@ public class MapsFragment extends Fragment implements LocationListener {
         LocationListener.super.onProviderDisabled(provider);
     }
 
-    public static boolean enableCircleFilter() {
+    public boolean enableCircleFilter() {
         // 1) Determine user's current location
         // 2) Pass that info. to the nearest location calculator
         // 3) The nearest location calculator checks user's location to all other locations, determines
         //    which are closest based on a predetermined radius around a user
         enableCircleFilter = !enableCircleFilter;
-        Log.d("TEST", "Current Value: " + enableCircleFilter);
+        getCurrentLocation();
         return enableCircleFilter;
+    }
+
+
+
+    public void disableCircleFilter(){
+        enableCircleFilter = false;
+        getCurrentLocation();
+        mainActivity.toggleOffCircleFilterSwitch();
+
     }
 
     public boolean enableParkingCalculator() {
@@ -302,65 +335,92 @@ public class MapsFragment extends Fragment implements LocationListener {
 
 
         // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
-        // TODO: Fix the circle filter
-       /* getFusedLocationProviderClient(this.requireActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
+        if (enableCircleFilter) {
 
-                //Log.d("TEST", "Value: " + enableCircleFilter);
-                if (enableCircleFilter) {
 
-                    mMap.setMyLocationEnabled(true);
+            // Get the last known location from the network provider
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-                    Location location = locationResult.getLastLocation();
+            LatLng currentUserCoords = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    // Removes circles from previous locations
-                    if (previousCircle != null) {
-                        previousCircle.remove();
-                    }
-                    // Customizes circle appearance
-                    CircleOptions circleOptions = new CircleOptions()
-                            .center(new LatLng(location.getLatitude(), location.getLongitude()))
-                            .radius(100)  // radius in meters
-                            .fillColor(getResources().getColor(R.color.light_blue))
-                            .strokeColor(Color.TRANSPARENT)
-                            .strokeWidth(2);
+            // Checks if user is within map bounds. If false, feature is not enabled
+            if(AVC_BOUNDS.contains(currentUserCoords)) {
 
-                    // Stores current circle for removal upon next location update
-                    previousCircle = mMap.addCircle(circleOptions);
+                // Toggle switch UI on
+                mainActivity.toggleOnCircleFilterSwitch();
+                // Disables markers outside of the circle
+                mainActivity.disableNonCircleFilterMarkers();
 
-                    // Filter markers that are within the circle
-                    for (Marker marker : locations.keySet()) {
-                        if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
-                            marker.setVisible(true);
-                        } else {
-                            marker.setVisible(false);
+                // Center on user
+                moveMapCamera(mMap, new LatLng(location.getLatitude(), location.getLongitude()));
+
+                mMap.setMyLocationEnabled(true);
+
+                // Removes circles from previous locations
+                if (previousCircle != null) {
+                    previousCircle.remove();
+                }
+                // Customizes circle appearance
+                CircleOptions circleOptions = new CircleOptions()
+                        .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                        .radius(100)  // radius in meters
+                        .fillColor(getResources().getColor(R.color.light_blue))
+                        .strokeColor(Color.TRANSPARENT)
+                        .strokeWidth(2);
+
+                // Stores current circle for removal upon next location update
+                previousCircle = mMap.addCircle(circleOptions);
+
+                // Filter markers that are within the circle
+                for (Marker marker : locations.keySet()) {
+                    if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
+                        // WARNING: Might also have to account for different location types being in the circle at one time. Might cause issues
+                        //          with visibility of markers. (Works fine so far.)
+                        marker.setVisible(true);
+                    } else {
+                        marker.setVisible(false);
+                        if(parkingLotMarkers.contains(marker)){
+                            showParkingLots = false;
+                        }
+                        if(classroomLocations.contains(marker)){
+                            showClassrooms = false;
+                        }
+                        if(foodLocations.contains(marker)){
+                            showFood = false;
+                        }
+                        if(athleticLocations.contains(marker)){
+                            showAthletics = false;
+                        }
+                        if(resourceLocations.contains(marker)){
+                            showStudentResources = false;
                         }
                     }
-
                 }
-                else {
+            }
+            else{
 
-                    // Remove circle
-                    if (previousCircle != null) {
-                        previousCircle.remove();
-                    }
-
-                    // If the marker is already visible, keep it visible, if not, ensure it's not
-                    for (Marker marker : locations.keySet()) {
-                        if(!marker.isVisible()){
-                            marker.setVisible(false);
-                        }
-                    }
-
-                    // Remove location display
-                    mMap.setMyLocationEnabled(false);
-
-                }
+                Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
 
             }
-            }, Looper.myLooper());*/
+
+        }
+        else {
+
+            // Remove circle
+            if (previousCircle != null) {
+                previousCircle.remove();
+            }
+
+            // If the marker is already visible, keep it visible, if not, ensure it's not
+            for (Marker marker : locations.keySet()) {
+                if(!marker.isVisible()){
+                    marker.setVisible(false);
+                }
+            }
+
+
+        }
+
 
 
     }
@@ -409,15 +469,12 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     private void setMapBounds(@NonNull GoogleMap googleMap) {
-        LatLng southwestBound = new LatLng(34.674910, -118.192287); // 34.674910, -118.192287
-        LatLng northeastBound = new LatLng(34.682133, -118.183807); //  34.682133, -118.183807
 
         //Set boundary for the map
-        final LatLngBounds avcBounds = new LatLngBounds(southwestBound, northeastBound);
-        googleMap.setLatLngBoundsForCameraTarget(avcBounds);
+        googleMap.setLatLngBoundsForCameraTarget(AVC_BOUNDS);
     }
 
-    private void moveMapCamera(GoogleMap googleMap, LatLng coords) {
+    public void moveMapCamera(GoogleMap googleMap, LatLng coords) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(coords)
                 .zoom(INITIAL_ZOOM)
