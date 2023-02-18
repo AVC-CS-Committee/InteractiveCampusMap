@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (fragment.enableCircleFilter()) {
                 drawer.closeDrawer(GravityCompat.START);
             }
-            else{
+            else {
                 toggleOffCircleFilterSwitch();
                 fragment.showAllMarkers();
             }
@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set the checkbox checked state
         item.setChecked(!item.isChecked());
 
+        // If a filter is activated, disable the circle filter
         fragment.disableCircleFilter();
 
         // Set the boolean value for the filter clicked on
@@ -184,7 +185,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment.showClassrooms = item.isChecked();
                 break;
             case (R.id.studentResources):
-                // FIXME: Step 1, set student resource markers to true
                 fragment.showStudentResources = item.isChecked();
                 break;
             case (R.id.food):
