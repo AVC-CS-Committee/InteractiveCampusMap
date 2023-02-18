@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -35,13 +34,7 @@ public class HelpActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(HelpActivity.this, R.drawable.icon_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private void setAdapter() {
@@ -54,21 +47,18 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void setOnClickListener() {
-        listener = new RecyclerAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                if(position == 0){
-                    Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
-                    startActivity(intent);
-                }
-                else if(position == 1){
-                    Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
-                    startActivity(intent);
-                }
-                else if(position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), AboutUsPage.class);
-                    startActivity(intent);
-                }
+        listener = (v, position) -> {
+            if(position == 0){
+                Intent intent = new Intent(getApplicationContext(), FAQActivity.class);
+                startActivity(intent);
+            }
+            else if(position == 1){
+                Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                startActivity(intent);
+            }
+            else if(position == 2) {
+                Intent intent = new Intent(getApplicationContext(), AboutUsPage.class);
+                startActivity(intent);
             }
         };
     }

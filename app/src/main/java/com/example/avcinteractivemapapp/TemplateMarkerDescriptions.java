@@ -5,7 +5,6 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -81,7 +80,7 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
             viewFlipper.addView(image);
         }
 
-        // Flip images if there are more than one image
+        // Flip images if there's more than one image
         if (viewFlipper.getChildCount() > 1) viewFlipper.startFlipping();
     }
 

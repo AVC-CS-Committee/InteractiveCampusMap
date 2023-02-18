@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -40,12 +39,7 @@ public class ContactActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(ContactActivity.this, R.drawable.icon_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
     }
 

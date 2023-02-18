@@ -1,9 +1,6 @@
 package com.example.avcinteractivemapapp;
 
-import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,7 +13,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -25,8 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,9 +28,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -584,30 +576,6 @@ public class MapsFragment extends Fragment implements LocationListener {
         Location.distanceBetween(marker1.getPosition().latitude, marker1.getPosition().longitude,
                 marker2.getPosition().latitude, marker2.getPosition().longitude, results);
         return results[0];
-    }
-
-    // Gets the width of the screen of current device
-    private static int getScreenWidth() {
-        return Resources.getSystem().getDisplayMetrics().widthPixels;
-    }
-
-    // Gets the height of the screen of current device
-    private static int getScreenHeight() {
-        return Resources.getSystem().getDisplayMetrics().heightPixels;
-    }
-
-    //General code needed to create a new popup. Code used: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
-    private void popupViewCreator(View popupView, View view){
-        // create the popup window
-        // Set the width and height slightly smaller than device display screen.
-        int width = (getScreenWidth() - 150);
-        int height = (getScreenHeight() - 450);
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window token
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
     //Logic for adding a custom marker (https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/#:~:text=For%20adding%20a%20custom%20marker,this%20marker%20to%20our%20Map.)

@@ -16,7 +16,6 @@ public class MapLocation {
     }
 
     public String getImages() {
-
         return locationImages.toString();
     }
 }
