@@ -25,7 +25,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -48,9 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //For determining whether or not user grants permission for location services
     private boolean mLocationPermissionGranted = false;
 
-
     // Create instance of MapsFragment
     private MapsFragment fragment;
+
+    MenuItem locationsNearUserButton;
+    RelativeLayout actionLayout;
+    NavigationView nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        NavigationView nav = findViewById(R.id.nav_view);
+        nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
 
         //A new fragment object is created to reference the MapsFragment.java class
@@ -89,19 +94,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // Initiates method to determine the nearest markers based on the user's current location
-        MenuItem locationsNearUserButton = nav.getMenu().findItem(R.id.locations_near_me);
-        // Sets initial state of swtich as unchecked
+        locationsNearUserButton = nav.getMenu().findItem(R.id.locations_near_me);
+        // Sets initial state of switch as unchecked
         locationsNearUserButton.setActionView((RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item, null));
         // Change state of switch when clicked and enable/disable circle filter
         locationsNearUserButton.setOnMenuItemClickListener(item -> {
-            RelativeLayout actionLayout;
-            if (MapsFragment.enableCircleFilter()) {
-                actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item_enabled, null);
-                locationsNearUserButton.setActionView(actionLayout);
+
+            // Attempt to enable the circle filter
+            if (fragment.enableCircleFilter()) {
+                drawer.closeDrawer(GravityCompat.START);
             }
-            else{
-                actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item, null);
-                locationsNearUserButton.setActionView(actionLayout);
+            else {
+                toggleOffCircleFilterSwitch();
+                fragment.showAllMarkers();
             }
             return true;
         });
@@ -129,6 +134,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void toggleOnCircleFilterSwitch(){
+        actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item_enabled, null);
+        locationsNearUserButton.setActionView(actionLayout);
+    }
+
+    public void toggleOffCircleFilterSwitch(){
+        actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item, null);
+        locationsNearUserButton.setActionView(actionLayout);
+    }
+
     /*
         Called whenever this activity is about to go into the background or not be visible by the user.
         Good place to save unsaved data, perform cleanup operations, etc.
@@ -142,11 +157,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragment.filterMarkers();
     }
 
+    public void disableNonCircleFilterMarkers() {
+
+        // Disable filter checks (UI)
+        Menu filtersMenu = nav.getMenu().findItem(R.id.Filters).getSubMenu();
+        for (int i = 0; i < filtersMenu.size(); i++) {
+            filtersMenu.getItem(i).setChecked(false);
+        }
+
+    }
+
     // Whenever an item is selected in the Map Legend
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Set the checkbox checked state
         item.setChecked(!item.isChecked());
+
+        // If a filter is activated, disable the circle filter
+        fragment.disableCircleFilter();
 
         // Set the boolean value for the filter clicked on
         switch (item.getItemId()) {

@@ -41,7 +41,7 @@
     </group>
 
     <group android:checkableBehavior="all">
-        <item android:title="Filters">
+        <item android:title="Filters" android:id="@+id/Filters">
 
             <!-- CheckBox Items -->
             <menu>
