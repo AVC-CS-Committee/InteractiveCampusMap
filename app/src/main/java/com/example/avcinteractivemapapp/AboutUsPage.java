@@ -3,14 +3,12 @@ package com.example.avcinteractivemapapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
 import java.util.ArrayList;
 
 public class AboutUsPage extends AppCompatActivity {
-    RecyclerView recyclerView;
     ArrayList<Question> aboutItems;
 
     @Override
@@ -23,8 +21,6 @@ public class AboutUsPage extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(AboutUsPage.this, R.drawable.icon_back));
 
-        toolbar.setNavigationOnClickListener(v -> {
-            onBackPressed();
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 }
