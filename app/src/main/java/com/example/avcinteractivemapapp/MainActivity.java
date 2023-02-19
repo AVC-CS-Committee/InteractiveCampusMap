@@ -21,6 +21,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -29,14 +31,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * DESCRIPTION:
@@ -57,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout actionLayout;
     NavigationView nav;
 
+    SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -70,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
+
+        searchView = findViewById(R.id.searchView);
 
         //A new fragment object is created to reference the MapsFragment.java class
         fragment = new MapsFragment();
@@ -130,6 +142,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mapButton.setOnMenuItemClickListener(item -> {
             drawer.closeDrawer(GravityCompat.START);
             return true;
+        });
+
+        // adding on query listener for our search view.
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on below line we are getting the
+                // location name from search view.
+
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
 
     }
