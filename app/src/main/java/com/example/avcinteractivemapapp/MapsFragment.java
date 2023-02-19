@@ -548,23 +548,22 @@ public class MapsFragment extends Fragment implements LocationListener {
             JSONArray root = new JSONArray(builder.toString());
 
             for (int i = 0; i < root.length(); i++) {
+                // Get all JSON fields
                 JSONObject location = root.getJSONObject(i);
                 String title = location.getString("title");
-                double latitude = location.getDouble("latitude");
-                double longitude = location.getDouble("longitude");
+                LatLng coords = new LatLng(location.getDouble("latitude"),
+                        location.getDouble("longitude"));
                 String locationType = location.getString("type");
-
-                Marker tmpMarker = googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(latitude, longitude))
-                        .title(title)
-                        .icon(markerIcon)); // Initialize all markers with default blue icon
-
-                // Create MapLocation object
                 String description = location.getString("description");
                 JSONArray locationImages = location.getJSONArray("images");
 
-                // All markers are stored in the locations hashmap. This is required for displaying popups.
-                locations.put(tmpMarker, new MapLocation(description, locationImages));
+                Marker tmpMarker = googleMap.addMarker(new MarkerOptions()
+                        .position(coords)
+                        .title(title)
+                        .icon(markerIcon)); // Initialize all markers with default blue icon
+
+                // All markers are stored in the locations hashmap with a MapLocation object.
+                locations.put(tmpMarker, new MapLocation(title, description, coords, locationImages));
 
                 // Location types are sorted into their respective ArrayLists
                 if (locationType.equals("parking")) {
