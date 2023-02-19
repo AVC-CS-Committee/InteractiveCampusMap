@@ -21,6 +21,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -29,14 +31,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * DESCRIPTION:
@@ -56,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MenuItem locationsNearUserButton;
     RelativeLayout actionLayout;
     NavigationView nav;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
             return true;
         });
+
 
     }
 
