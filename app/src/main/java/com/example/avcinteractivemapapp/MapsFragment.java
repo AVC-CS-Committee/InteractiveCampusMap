@@ -227,8 +227,17 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+
+        // Set the current lat and long
         currentLat = location.getLatitude();
         currentLong = location.getLongitude();
+
+        // For circle filter. If active and user is in bounds, create the circle
+        // Circle is created here in order to remove the previously created circle more quickly.
+        // Without this, the circle will not update properly
+        if(enableCircleFilter && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))){
+            createCircle(location);
+        }
     }
 
     @Override
@@ -242,10 +251,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     public boolean enableCircleFilter() {
-        // 1) Determine user's current location
-        // 2) Pass that info. to the nearest location calculator
-        // 3) The nearest location calculator checks user's location to all other locations, determines
-        //    which are closest based on a predetermined radius around a user
+
         enableCircleFilter = !enableCircleFilter;
         getCurrentLocation();
         return enableCircleFilter;
@@ -307,6 +313,53 @@ public class MapsFragment extends Fragment implements LocationListener {
         return true;
     }
 
+    // Creates circle around user and contains logic for circle filter
+    private void createCircle(Location location){
+
+        // Removes circles from previous locations
+        if (previousCircle != null) {
+            previousCircle.remove();
+        }
+
+        // Customizes circle appearance
+        CircleOptions circleOptions = new CircleOptions()
+                .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                .radius(100)  // radius in meters
+                .fillColor(getResources().getColor(R.color.light_blue))
+                .strokeColor(Color.TRANSPARENT)
+                .strokeWidth(2);
+
+        // Stores current circle for removal upon next location update
+        previousCircle = mMap.addCircle(circleOptions);
+
+        // Filter markers that are within the circle
+        for (Marker marker : locations.keySet()) {
+            if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
+                // WARNING: Might also have to account for different location types being in the circle at one time. Might cause issues
+                //          with visibility of markers. (Works fine so far.)
+                marker.setVisible(true);
+            } else {
+                marker.setVisible(false);
+                if(parkingLotMarkers.contains(marker)){
+                    showParkingLots = false;
+                }
+                if(classroomLocations.contains(marker)){
+                    showClassrooms = false;
+                }
+                if(foodLocations.contains(marker)){
+                    showFood = false;
+                }
+                if(athleticLocations.contains(marker)){
+                    showAthletics = false;
+                }
+                if(resourceLocations.contains(marker)){
+                    showStudentResources = false;
+                }
+            }
+        }
+
+    }
+
     // Locations API required logic for GPS. Tutorial used for getting current location: https://javapapers.com/android/get-current-location-in-android/
     private void getCurrentLocation() {
 
@@ -322,7 +375,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Requests location updates. Second parameter determines how quickly the user's location is updated
         // The quicker the location is updated the more quickly the battery drains
         // Currently using 2500 which is the highest it can be without causing any bugs
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
         // Makes user's current location visible
         mMap.setMyLocationEnabled(true);
 
@@ -332,7 +385,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
 
             // Get the last known location from the network provider
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             LatLng currentUserCoords = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -344,51 +397,15 @@ public class MapsFragment extends Fragment implements LocationListener {
                 // Disables markers outside of the circle
                 mainActivity.disableNonCircleFilterMarkers();
 
+                // Not required to call createCircle() again here, however, it helps with displaying
+                // the circle more quickly
+                createCircle(location);
+
                 // Center on user
                 moveMapCamera(mMap, new LatLng(location.getLatitude(), location.getLongitude()));
 
                 mMap.setMyLocationEnabled(true);
 
-                // Removes circles from previous locations
-                if (previousCircle != null) {
-                    previousCircle.remove();
-                }
-                // Customizes circle appearance
-                CircleOptions circleOptions = new CircleOptions()
-                        .center(new LatLng(location.getLatitude(), location.getLongitude()))
-                        .radius(100)  // radius in meters
-                        .fillColor(getResources().getColor(R.color.light_blue))
-                        .strokeColor(Color.TRANSPARENT)
-                        .strokeWidth(2);
-
-                // Stores current circle for removal upon next location update
-                previousCircle = mMap.addCircle(circleOptions);
-
-                // Filter markers that are within the circle
-                for (Marker marker : locations.keySet()) {
-                    if (SphericalUtil.computeDistanceBetween(marker.getPosition(), previousCircle.getCenter()) <= previousCircle.getRadius()) {
-                        // WARNING: Might also have to account for different location types being in the circle at one time. Might cause issues
-                        //          with visibility of markers. (Works fine so far.)
-                        marker.setVisible(true);
-                    } else {
-                        marker.setVisible(false);
-                        if(parkingLotMarkers.contains(marker)){
-                            showParkingLots = false;
-                        }
-                        if(classroomLocations.contains(marker)){
-                            showClassrooms = false;
-                        }
-                        if(foodLocations.contains(marker)){
-                            showFood = false;
-                        }
-                        if(athleticLocations.contains(marker)){
-                            showAthletics = false;
-                        }
-                        if(resourceLocations.contains(marker)){
-                            showStudentResources = false;
-                        }
-                    }
-                }
             }
             else{
 
