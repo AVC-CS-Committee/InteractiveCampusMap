@@ -23,15 +23,6 @@
         android:src="@drawable/icon_map_center"
         android:contentDescription="@string/center_gps_button" />
 
-    <!--search view to search our location-->
-    <android.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="#BFBFBF"
-        android:elevation="5dp"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Here" />
+    <include layout="@layout/searchbar"/>
 
 </RelativeLayout>

@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -133,9 +134,6 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         mMap = googleMap;
 
-       // searchView = findViewById(R.id.searchView);
-
-
         markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
         parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_parking);
         classroomMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_classroom);
@@ -167,6 +165,10 @@ public class MapsFragment extends Fragment implements LocationListener {
             startActivity(intent);
         });
 
+        // Set the search view to be visible
+        searchView.setVisibility(View.VISIBLE);
+        searchView.setQueryHint("Search Locations");
+        searchView.clearFocus();
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
