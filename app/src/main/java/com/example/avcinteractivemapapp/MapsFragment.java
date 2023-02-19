@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,9 +55,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -115,6 +120,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     BitmapDescriptor markerIcon;
     ImageButton centerMapButton;
     View view;
+    SearchView searchView;
 
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
@@ -127,6 +133,9 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         mMap = googleMap;
 
+       // searchView = findViewById(R.id.searchView);
+
+
         markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
         parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_parking);
         classroomMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_classroom);
@@ -134,6 +143,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
         centerMapButton = view.findViewById(R.id.center_map);
+        searchView = view.findViewById(R.id.searchView);
 
         parseJson(googleMap);
 
@@ -155,6 +165,34 @@ public class MapsFragment extends Fragment implements LocationListener {
             intent.putExtras(bundle);
 
             startActivity(intent);
+        });
+
+        // adding on query listener for our search view.
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on below line we are getting the
+                // location name from search view.
+                String location = searchView.getQuery().toString();
+
+
+                // checking if the entered location is null or not.
+                if (location != null || location.equals("")) {
+
+                    // TESTING
+                    if(location.equals("Uhazy")){
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(classroomLocations.get(1).getPosition(), 20));
+                        classroomLocations.get(1).showInfoWindow();
+                    }
+
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
 
         // Handles map clicks (was used for the old version of the nearest lot calculator)

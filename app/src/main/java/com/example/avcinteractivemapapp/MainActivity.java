@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout actionLayout;
     NavigationView nav;
 
-    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
-
-        searchView = findViewById(R.id.searchView);
 
         //A new fragment object is created to reference the MapsFragment.java class
         fragment = new MapsFragment();
@@ -144,23 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         });
 
-        // adding on query listener for our search view.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // on below line we are getting the
-                // location name from search view.
-
-
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
 
     }
 
