@@ -104,9 +104,10 @@ public class MapsFragment extends Fragment implements LocationListener {
     public HashMap<Marker, MapLocation> locations = new HashMap<>();
 
     // Locations API Related (GPS Feature)
-    LocationManager locationManager;
-    double currentLat;
-    double currentLong;
+    private LocationManager locationManager;
+    private Location userLocation;
+    private double currentLat;
+    private double currentLong;
     private final int REQUEST_CODE = 101;
     public GoogleMap mMap;
 
@@ -294,14 +295,14 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         enableCircleFilter = !enableCircleFilter;
         getCurrentLocation();
+        circleFilterHandler();
         return enableCircleFilter;
     }
-
-
 
     public void disableCircleFilter(){
         enableCircleFilter = false;
         getCurrentLocation();
+        circleFilterHandler();
         mainActivity.toggleOffCircleFilterSwitch();
 
     }
@@ -354,7 +355,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     // Creates circle around user and contains logic for circle filter
-    private void createCircle(Location location){
+    private void createCircle(Location location) {
 
         // Removes circles from previous locations
         if (previousCircle != null) {
@@ -397,65 +398,11 @@ public class MapsFragment extends Fragment implements LocationListener {
                 }
             }
         }
-
     }
 
-    // Locations API required logic for GPS. Tutorial used for getting current location: https://javapapers.com/android/get-current-location-in-android/
-    private void getCurrentLocation() {
-
-        // Checks if the permission is not granted, if it's not then evaluates to true
-        if (ActivityCompat.checkSelfPermission(
-                this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
-        }
-        // Requests location updates. Second parameter determines how quickly the user's location is updated
-        // The quicker the location is updated the more quickly the battery drains
-        // Currently using 2500 which is the highest it can be without causing any bugs
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
-        // Makes user's current location visible
-        mMap.setMyLocationEnabled(true);
-
-
-        // Adds the locations circle filter feature (https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API)
-        if (enableCircleFilter) {
-
-
-            // Get the last known location from the network provider
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            LatLng currentUserCoords = new LatLng(location.getLatitude(), location.getLongitude());
-
-            // Checks if user is within map bounds. If false, feature is not enabled
-            if(AVC_BOUNDS.contains(currentUserCoords)) {
-
-                // Toggle switch UI on
-                mainActivity.toggleOnCircleFilterSwitch();
-                // Disables markers outside of the circle
-                mainActivity.disableNonCircleFilterMarkers();
-
-                // Not required to call createCircle() again here, however, it helps with displaying
-                // the circle more quickly
-                createCircle(location);
-
-                // Center on user
-                moveMapCamera(mMap, new LatLng(location.getLatitude(), location.getLongitude()));
-
-                mMap.setMyLocationEnabled(true);
-
-            }
-            else{
-
-                Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
-
-            }
-
-        }
-        else {
-
+    private void circleFilterHandler() {
+        // Handle turning off the circle filter
+        if (!enableCircleFilter) {
             // Remove circle
             if (previousCircle != null) {
                 previousCircle.remove();
@@ -468,22 +415,68 @@ public class MapsFragment extends Fragment implements LocationListener {
                 }
             }
 
-
+            return;
         }
 
+        // Get the last known location from the network provider
+        LatLng currentUserCoords = new LatLng(currentLat, currentLong);
 
+        // Checks if user is not within map bounds. If they aren't, show toast and return.
+        if (!AVC_BOUNDS.contains(currentUserCoords)) {
+            Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // Toggle switch UI on
+        mainActivity.toggleOnCircleFilterSwitch();
+        // Disables markers outside of the circle
+        mainActivity.disableNonCircleFilterMarkers();
+
+        // Not required to call createCircle() again here, however, it helps with displaying
+        // the circle more quickly
+        createCircle(userLocation);
+
+        // Center on user
+        moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+    }
+
+    // Locations API required logic for GPS. Tutorial used for getting current location: https://javapapers.com/android/get-current-location-in-android/
+    private void getCurrentLocation() {
+
+        // Checks if permission is not granted, evaluates to true when permissions are not granted
+        if (ActivityCompat.checkSelfPermission(
+                this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Request for location permission
+            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            return;
+        }
+        // Requests location updates. Second parameter determines how quickly the user's location is updated
+        // The quicker the location is updated the more quickly the battery drains
+        // Currently using 2500 which is the highest it can be without causing any bugs
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+        // Makes user's current location visible
+        mMap.setMyLocationEnabled(true);
+
+        // Get the last known location from the gps provider
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null) return;
+
+        // Update private fields
+        userLocation = location;
+        currentLat = location.getLatitude();
+        currentLong = location.getLongitude();
     }
 
     // Permission Request for GPS
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (REQUEST_CODE) {
-            case REQUEST_CODE:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCurrentLocation();
-                }
-                break;
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+            }
         }
     }
 
