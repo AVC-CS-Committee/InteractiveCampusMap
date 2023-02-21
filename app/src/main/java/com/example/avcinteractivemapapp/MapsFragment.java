@@ -415,7 +415,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Requests location updates. Second parameter determines how quickly the user's location is updated
         // The quicker the location is updated the more quickly the battery drains
         // Currently using 2500 which is the highest it can be without causing any bugs
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
         // Makes user's current location visible
         mMap.setMyLocationEnabled(true);
 
@@ -425,7 +425,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
 
             // Get the last known location from the network provider
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             LatLng currentUserCoords = new LatLng(location.getLatitude(), location.getLongitude());
 
