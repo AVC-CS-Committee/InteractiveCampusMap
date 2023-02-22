@@ -164,7 +164,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             startActivity(intent);
         });
-
+/*
         // Set the search view to be visible
         searchView.setVisibility(View.VISIBLE);
         searchView.setQueryHint("Search Locations");
@@ -196,7 +196,7 @@ public class MapsFragment extends Fragment implements LocationListener {
                 return false;
             }
         });
-
+*/
         // Handles map clicks (was used for the old version of the nearest lot calculator)
         googleMap.setOnMapClickListener(latLng -> {});
 

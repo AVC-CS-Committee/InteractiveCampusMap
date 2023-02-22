@@ -23,6 +23,6 @@
         android:src="@drawable/icon_map_center"
         android:contentDescription="@string/center_gps_button" />
 
-    <include layout="@layout/searchbar"/>
+    <!--<include layout="@layout/searchbar"/>-->
 
 </RelativeLayout>
