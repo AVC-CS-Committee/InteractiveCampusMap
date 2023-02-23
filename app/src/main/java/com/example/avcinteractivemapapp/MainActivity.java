@@ -31,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Switch;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout actionLayout;
     NavigationView nav;
     SearchView searchBar;
+    ImageButton hamburgerButton;
 
 
     @Override
@@ -90,6 +92,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
+        hamburgerButton = findViewById(R.id.hamburger_button);
+
+        hamburgerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
 
         // Creating hamburger button and rotating animation when clicked
         /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -98,9 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();*/
 
         searchBar = findViewById(R.id.searchView);
-        searchBar.setVisibility(View.VISIBLE);
-        searchBar.setQueryHint("Search Locations");
-        searchBar.clearFocus();
+
 
         // Opens HelpActivity when help button is clicked
         MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
