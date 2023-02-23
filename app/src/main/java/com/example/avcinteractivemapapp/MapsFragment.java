@@ -141,7 +141,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
         centerMapButton = view.findViewById(R.id.center_map);
-        searchView = view.findViewById(R.id.searchView);
+       // searchView = view.findViewById(R.id.searchView);
 
         parseJson(googleMap);
 

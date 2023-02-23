@@ -29,6 +29,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MenuItem locationsNearUserButton;
     RelativeLayout actionLayout;
     NavigationView nav;
+    SearchView searchBar;
 
 
     @Override
@@ -73,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //Telling app to use custom toolbar as actionbar replacement
-        Toolbar toolbar = findViewById(R.id.toolbar);
+       /* Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
 
         nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
@@ -90,10 +92,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
 
         // Creating hamburger button and rotating animation when clicked
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState();*/
+
+        searchBar = findViewById(R.id.searchView);
+        searchBar.setVisibility(View.VISIBLE);
+        searchBar.setQueryHint("Search Locations");
+        searchBar.clearFocus();
 
         // Opens HelpActivity when help button is clicked
         MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
