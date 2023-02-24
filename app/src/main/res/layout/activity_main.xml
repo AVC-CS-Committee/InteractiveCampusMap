@@ -70,6 +70,7 @@
                             android:elevation="4dp"
                             android:queryHint="Search campus locations"
                             android:iconifiedByDefault="false"
+                            android:searchIcon="@null"
                             android:paddingLeft="40dp"
                             android:layout_centerVertical="true" />
 
