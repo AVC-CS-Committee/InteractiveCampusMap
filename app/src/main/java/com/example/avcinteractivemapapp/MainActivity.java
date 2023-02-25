@@ -29,7 +29,9 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Switch;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MenuItem locationsNearUserButton;
     RelativeLayout actionLayout;
     NavigationView nav;
+    SearchView searchBar;
+    ImageButton hamburgerButton;
 
 
     @Override
@@ -73,9 +77,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //Telling app to use custom toolbar as actionbar replacement
-        Toolbar toolbar = findViewById(R.id.toolbar);
+       /* Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
 
         nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
@@ -88,12 +92,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Grabbing custom drawer layout from activity_main
         drawer = findViewById(R.id.drawer_layout);
+        hamburgerButton = findViewById(R.id.hamburger_button);
+
+        hamburgerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
 
         // Creating hamburger button and rotating animation when clicked
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState();*/
+
+        searchBar = findViewById(R.id.searchView);
+
 
         // Opens HelpActivity when help button is clicked
         MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
@@ -143,6 +158,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        // Set up search functionality
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            // Handle search query
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void toggleOnCircleFilterSwitch(){
         actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item_enabled, null);
