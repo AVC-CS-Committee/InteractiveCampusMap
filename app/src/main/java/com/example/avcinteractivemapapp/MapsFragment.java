@@ -175,16 +175,17 @@ public class MapsFragment extends Fragment implements LocationListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // FIXME: search only looks at the first word need to fix
                 // checking if the entered location is null or not.
                 if (query == null || query.equals("")) return false;
 
                 // Remove capital letters from query and remove whitespace
-                query.toLowerCase().replaceAll("\\s+", "");
+                query = query.toLowerCase().replaceAll("\\s+", "");
 
+                // Iterate through each entry in the HashMap
                 for (Map.Entry<Marker, MapLocation> entry : locations.entrySet()) {
                     String locationTitle = entry.getValue().getLocationTitle().toLowerCase().replaceAll("\\s+", "");
 
+                    // If matches, move camera and show marker title
                     if (locationTitle.contains(query)) {
                         moveMapCamera(mMap, entry.getValue().getLocationCoords());
                         entry.getKey().showInfoWindow();
