@@ -61,6 +61,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -165,7 +166,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             startActivity(intent);
         });
-/*
+
         // Set the search view to be visible
         searchView.setVisibility(View.VISIBLE);
         searchView.setQueryHint("Search Locations");
@@ -174,21 +175,22 @@ public class MapsFragment extends Fragment implements LocationListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // on below line we are getting the
-                // location name from search view.
-                String location = searchView.getQuery().toString();
-
-
+                // FIXME: search only looks at the first word need to fix
                 // checking if the entered location is null or not.
-                if (location != null || location.equals("")) {
+                if (query == null || query.equals("")) return false;
 
-                    // TESTING
-                    if(location.equals("Uhazy")){
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(classroomLocations.get(1).getPosition(), 20));
-                        classroomLocations.get(1).showInfoWindow();
+                // Remove capital letters from query and remove whitespace
+                query.toLowerCase().replaceAll("\\s+", "");
+
+                for (Map.Entry<Marker, MapLocation> entry : locations.entrySet()) {
+                    String locationTitle = entry.getValue().getLocationTitle().toLowerCase().replaceAll("\\s+", "");
+
+                    if (locationTitle.contains(query)) {
+                        moveMapCamera(mMap, entry.getValue().getLocationCoords());
+                        entry.getKey().showInfoWindow();
                     }
-
                 }
+
                 return false;
             }
 
@@ -197,7 +199,7 @@ public class MapsFragment extends Fragment implements LocationListener {
                 return false;
             }
         });
-*/
+
         // Handles map clicks (was used for the old version of the nearest lot calculator)
         googleMap.setOnMapClickListener(latLng -> {});
 
@@ -498,6 +500,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         if (mapFragment == null) return;
 
+        searchView = getActivity().findViewById(R.id.searchView);
         mapFragment.getMapAsync(callback);
     }
 
