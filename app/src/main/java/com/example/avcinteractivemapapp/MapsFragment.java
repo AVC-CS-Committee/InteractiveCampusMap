@@ -172,34 +172,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         searchView.setQueryHint("Search Locations");
         searchView.clearFocus();
         // adding on query listener for our search view.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // checking if the entered location is null or not.
-                if (query == null || query.equals("")) return false;
-
-                // Remove capital letters from query and remove whitespace
-                query = query.toLowerCase().replaceAll("\\s+", "");
-
-                // Iterate through each entry in the HashMap
-                for (Map.Entry<Marker, MapLocation> entry : locations.entrySet()) {
-                    String locationTitle = entry.getValue().getLocationTitle().toLowerCase().replaceAll("\\s+", "");
-
-                    // If matches, move camera and show marker title
-                    if (locationTitle.contains(query)) {
-                        moveMapCamera(mMap, entry.getValue().getLocationCoords());
-                        entry.getKey().showInfoWindow();
-                    }
-                }
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        searchView.setOnQueryTextListener(new SearchBar(locations, mMap));
 
         // Handles map clicks (was used for the old version of the nearest lot calculator)
         googleMap.setOnMapClickListener(latLng -> {});
