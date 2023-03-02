@@ -1,6 +1,7 @@
 package com.example.avcinteractivemapapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -258,16 +259,50 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     @Override
-    public void onProviderEnabled(@NonNull String provider) {
-        LocationListener.super.onProviderEnabled(provider);
+    public void onResume() {
+        super.onResume();
+
+        // Try-catch purpose: Should be catching an exception on app re-entry where MainActivity is not yet visible
+        //                    Should only be catching this exception once for every re-entry
+        // Overall purpose: Disable all GPS related features on resuming MapsFragment (i.e., app was minimized/navigated away from)
+        try{
+            // Disable all GPS related features
+            disableCircleFilter();
+        } catch(NullPointerException e) {
+            // Expected Exception
+            e.printStackTrace();
+        }
+
     }
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+        mMap.setMyLocationEnabled(true);
+    }
+
+    @SuppressLint("MissingPermission")
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
+
+        // Stop displaying location
+        mMap.setMyLocationEnabled(false);
+
+        // Turn off all GPS related features when location is disabled
+        if(enableCircleFilter){
+            disableCircleFilter();
+        }
+
     }
 
     public boolean enableCircleFilter() {
+        // Checks if GPS is enabled
+        if(!mainActivity.isMapsEnabled()){
+            // GPS is disabled, return false
+            return false;
+        }
 
         enableCircleFilter = !enableCircleFilter;
         getCurrentLocation();
@@ -283,6 +318,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     }
 
+    // TODO: Disable nearest lot calculator when circle filter is active
     public boolean enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
@@ -384,12 +420,15 @@ public class MapsFragment extends Fragment implements LocationListener {
                 previousCircle.remove();
             }
 
+            showAllMarkers();
+            // NOTE: not sure why this logic is here or what it does. using show all markers
+            //       instead since it makes more sense
             // If the marker is already visible, keep it visible, if not, ensure it's not
-            for (Marker marker : locations.keySet()) {
+            /*for (Marker marker : locations.keySet()) {
                 if(!marker.isVisible()){
                     marker.setVisible(false);
                 }
-            }
+            }*/
 
             return;
         }
