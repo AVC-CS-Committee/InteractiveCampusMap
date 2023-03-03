@@ -148,7 +148,6 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         parseJson(googleMap);
 
-        // googleMap.setOnMarkerClickListener();
 
         // Handles marker title clicks
         googleMap.setOnInfoWindowClickListener(marker -> {
@@ -184,6 +183,16 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Ensures that the user doesn't go over the max zoom amount
             if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
+        });
+
+
+        // TODO: Hide keyboard on marker click
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                SearchBar.hideKeyboard(searchView, getActivity());
+                return false;
+            }
         });
 
         // Handles center map button clicks

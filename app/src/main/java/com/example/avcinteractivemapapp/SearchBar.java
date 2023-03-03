@@ -1,5 +1,7 @@
 package com.example.avcinteractivemapapp;
 
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -41,6 +43,13 @@ public class SearchBar implements SearchView.OnQueryTextListener {
         return false;
     }
 
+    public static void hideKeyboard(SearchView searchView, Context activity){
+        // Get a reference to the InputMethodManager system service
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // Hide the keyboard for the SearchView
+        imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+    }
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
