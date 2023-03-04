@@ -183,6 +183,9 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Ensures that the user doesn't go over the max zoom amount
             if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
+
+            SearchBar.hideKeyboard(searchView, getActivity());
+
         });
 
 
