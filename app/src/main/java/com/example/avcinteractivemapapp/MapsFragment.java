@@ -468,16 +468,30 @@ public class MapsFragment extends Fragment implements LocationListener {
             ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
+
+        Location location;
         // Requests location updates. Second parameter determines how quickly the user's location is updated
         // The quicker the location is updated the more quickly the battery drains
         // Currently using 2500 which is the highest it can be without causing any bugs
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+        // Also, GPS Provider is more accurate but consumes more battery. Good rule of thumb is to always
+        // use Network Provider when accuracy is not the priority
+        if(enableCircleFilter){
+            // Use GPS Provider
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+            // Get the last known location from the network provider
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        else{
+            // Use Network Provider
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+            // Get the last known location from the network provider
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+
+        if (location == null) return;
+
         // Makes user's current location visible
         mMap.setMyLocationEnabled(true);
-
-        // Get the last known location from the network provider
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location == null) return;
 
         // Update private fields
         userLocation = location;
