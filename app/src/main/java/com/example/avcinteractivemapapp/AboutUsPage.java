@@ -22,5 +22,7 @@ public class AboutUsPage extends AppCompatActivity {
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(AboutUsPage.this, R.drawable.icon_back));
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+        // Some comments
     }
 }
