@@ -196,7 +196,7 @@
     "latitude": 34.67775573632852,
     "longitude": -118.18589961736947,
     "description": "The Math and Engineering building (ME) is designed for students pursuing degrees in engineering, mathematics, and computer science. It features a spacious computer lab equipped with the latest technology, as well as traditional classrooms that are optimized for learning. The building is the center of excellence for students who are interested in these fields, offering lectures, hands-on experience, and ample opportunities for growth and exploration. Whether you're an aspiring engineer, mathematician, or computer scientist, the Math and Engineering building provides the ideal environment for you to succeed.",
-    "images": ["me","me1","me2"],
+    "images": ["me1","me","me2"],
     "type": "classroom"
   },
   {
