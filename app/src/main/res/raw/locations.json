@@ -52,7 +52,7 @@
     "latitude": 34.6780305978796,
     "longitude": -118.18516830596049,
     "description": "Student Services (SSV) provides a one-stop-shop for students to access information and resources related to their education. Located in a convenient location on campus, the SSV houses a variety of services that aim to support students in achieving their academic and personal goals. From general information to financial aid and career counseling, the SSV has a wealth of resources to help students succeed. With information related to student programs, student work, and appointments with advisors and counselors, the SSV is the perfect place for students to get the information and support they need to excel in their studies. Whether you're a first-time college student or a returning student looking for assistance, the SSV is an essential resource for students at AVC.",
-    "images": ["ssv", "subway"],
+    "images": ["ssv","ssv1","ssv2"],
     "type": "resource"
   },
   {
@@ -60,7 +60,7 @@
     "latitude": 34.67899187744454,
     "longitude": -118.18548358738202,
     "description": "Yoshida Hall (YH) is the main location for applied arts and also includes lectures related to math and science. The first and second floors house classrooms, offices, and coffee, food, and drink vending machines.\n\nYoshida Hall is also where the STEM office (YH 121A) and STEM lab (YH 115) are located. The classrooms are designed with the latest technology and tools to provide students with a comfortable and productive learning environment, while the STEM office and lab offer centralized support and hands-on learning opportunities for students in STEM fields. Whether students are pursuing a degree in the arts or in STEM fields, Yoshida Hall is a vital resource for their academic success at Antelope Valley College.",
-    "images": ["yh"],
+    "images": ["yh","yoshidahall","yoshidahall1"],
     "type": "classroom"
   },
   {
@@ -132,7 +132,7 @@
     "latitude": 34.67687342944362,
     "longitude": -118.18512883579885,
     "description": "Mesquite Hall (MH) is a vital building on the Antelope Valley College campus, serving as the hub for technology-focused majors such as computer science. This three-story building provides students with access to a variety of resources, including computer lab classrooms and open computer labs, designed to support their studies and facilitate their learning experience. Whether students are working on projects for class, or simply looking for a place to study and collaborate with their peers, Mesquite Hall offers a comprehensive and modern environment to help them succeed in their chosen field. Additionally, the building is staffed by knowledgeable and dedicated instructors who are always available to help students with their coursework and guide them towards success. With its emphasis on technology, cutting-edge resources, and a supportive community, Mesquite Hall is an ideal destination for students who are serious about pursuing a career in the field of technology.",
-    "images": ["me"],
+    "images": ["mh"],
     "type": "classroom"
   },
   {
@@ -188,7 +188,7 @@
     "latitude": 34.67775573632852,
     "longitude": -118.18589961736947,
     "description": "The Math and Engineering building (ME) is designed for students pursuing degrees in engineering, mathematics, and computer science. It features a spacious computer lab equipped with the latest technology, as well as traditional classrooms that are optimized for learning. The building is the center of excellence for students who are interested in these fields, offering lectures, hands-on experience, and ample opportunities for growth and exploration. Whether you're an aspiring engineer, mathematician, or computer scientist, the Math and Engineering building provides the ideal environment for you to succeed.",
-    "images": ["me"],
+    "images": ["me","me1","me2"],
     "type": "classroom"
   },
   {

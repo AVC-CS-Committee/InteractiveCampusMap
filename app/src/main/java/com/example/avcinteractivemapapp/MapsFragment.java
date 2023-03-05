@@ -1,6 +1,7 @@
 package com.example.avcinteractivemapapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -61,6 +62,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -146,7 +148,6 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         parseJson(googleMap);
 
-        // googleMap.setOnMarkerClickListener();
 
         // Handles marker title clicks
         googleMap.setOnInfoWindowClickListener(marker -> {
@@ -165,39 +166,14 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             startActivity(intent);
         });
-/*
+
         // Set the search view to be visible
         searchView.setVisibility(View.VISIBLE);
         searchView.setQueryHint("Search Locations");
         searchView.clearFocus();
         // adding on query listener for our search view.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // on below line we are getting the
-                // location name from search view.
-                String location = searchView.getQuery().toString();
+        searchView.setOnQueryTextListener(new SearchBar(locations, mMap));
 
-
-                // checking if the entered location is null or not.
-                if (location != null || location.equals("")) {
-
-                    // TESTING
-                    if(location.equals("Uhazy")){
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(classroomLocations.get(1).getPosition(), 20));
-                        classroomLocations.get(1).showInfoWindow();
-                    }
-
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-*/
         // Handles map clicks (was used for the old version of the nearest lot calculator)
         googleMap.setOnMapClickListener(latLng -> {});
 
@@ -207,6 +183,19 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Ensures that the user doesn't go over the max zoom amount
             if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
+
+            SearchBar.hideKeyboard(searchView, getActivity());
+
+        });
+
+
+        // TODO: Hide keyboard on marker click
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                SearchBar.hideKeyboard(searchView, getActivity());
+                return false;
+            }
         });
 
         // Handles center map button clicks
@@ -282,16 +271,50 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     @Override
-    public void onProviderEnabled(@NonNull String provider) {
-        LocationListener.super.onProviderEnabled(provider);
+    public void onResume() {
+        super.onResume();
+
+        // Try-catch purpose: Should be catching an exception on app re-entry where MainActivity is not yet visible
+        //                    Should only be catching this exception once for every re-entry
+        // Overall purpose: Disable all GPS related features on resuming MapsFragment (i.e., app was minimized/navigated away from)
+        try{
+            // Disable all GPS related features
+            disableCircleFilter();
+        } catch(NullPointerException e) {
+            // Expected Exception
+            e.printStackTrace();
+        }
+
     }
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+        mMap.setMyLocationEnabled(true);
+    }
+
+    @SuppressLint("MissingPermission")
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
+
+        // Stop displaying location
+        mMap.setMyLocationEnabled(false);
+
+        // Turn off all GPS related features when location is disabled
+        if(enableCircleFilter){
+            disableCircleFilter();
+        }
+
     }
 
     public boolean enableCircleFilter() {
+        // Checks if GPS is enabled
+        if(!mainActivity.isMapsEnabled()){
+            // GPS is disabled, return false
+            return false;
+        }
 
         enableCircleFilter = !enableCircleFilter;
         getCurrentLocation();
@@ -307,6 +330,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     }
 
+    // TODO: Disable nearest lot calculator when circle filter is active
     public boolean enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
@@ -408,12 +432,15 @@ public class MapsFragment extends Fragment implements LocationListener {
                 previousCircle.remove();
             }
 
+            showAllMarkers();
+            // NOTE: not sure why this logic is here or what it does. using show all markers
+            //       instead since it makes more sense
             // If the marker is already visible, keep it visible, if not, ensure it's not
-            for (Marker marker : locations.keySet()) {
+            /*for (Marker marker : locations.keySet()) {
                 if(!marker.isVisible()){
                     marker.setVisible(false);
                 }
-            }
+            }*/
 
             return;
         }
@@ -453,16 +480,30 @@ public class MapsFragment extends Fragment implements LocationListener {
             ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
+
+        Location location;
         // Requests location updates. Second parameter determines how quickly the user's location is updated
         // The quicker the location is updated the more quickly the battery drains
         // Currently using 2500 which is the highest it can be without causing any bugs
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+        // Also, GPS Provider is more accurate but consumes more battery. Good rule of thumb is to always
+        // use Network Provider when accuracy is not the priority
+        if(enableCircleFilter){
+            // Use GPS Provider
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+            // Get the last known location from the network provider
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        else{
+            // Use Network Provider
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+            // Get the last known location from the network provider
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+
+        if (location == null) return;
+
         // Makes user's current location visible
         mMap.setMyLocationEnabled(true);
-
-        // Get the last known location from the network provider
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location == null) return;
 
         // Update private fields
         userLocation = location;
@@ -498,6 +539,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         if (mapFragment == null) return;
 
+        searchView = getActivity().findViewById(R.id.searchView);
         mapFragment.getMapAsync(callback);
     }
 

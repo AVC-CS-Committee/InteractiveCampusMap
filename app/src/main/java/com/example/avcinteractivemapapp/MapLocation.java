@@ -17,8 +17,16 @@ public class MapLocation {
         this.locationImages = locationImages;
     }
 
+    public String getLocationTitle() {
+        return locationTitle;
+    }
+
     public String getDescription() {
         return locationDescription;
+    }
+
+    public LatLng getLocationCoords() {
+        return locationCoords;
     }
 
     public String getImages() {

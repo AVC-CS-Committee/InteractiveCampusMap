@@ -35,6 +35,8 @@ as well as allow opportunities to explore resources available at AVC.
 - [Nasif Hossain](https://github.com/nhoss)
 - [Ryan](https://github.com/ryanreevess)
 - [Logan](https://github.com/Logsans)
+- [Harvey Freeman](https://github.com/Hjfreeman0623)
+- [Conan Nguyen](link)
 
 ## Getting Started
 

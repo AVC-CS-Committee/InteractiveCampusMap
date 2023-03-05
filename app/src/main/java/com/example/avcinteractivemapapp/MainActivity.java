@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -81,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);*/
 
+        // References current activity
+        MainActivity mainActivity = this;
+
         nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
 
@@ -94,9 +98,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         hamburgerButton = findViewById(R.id.hamburger_button);
 
+        searchBar = findViewById(R.id.searchView);
+
         hamburgerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SearchBar.hideKeyboard(searchBar, mainActivity);
+
                 drawer.openDrawer(GravityCompat.START);
             }
         });
@@ -106,9 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();*/
-
-        searchBar = findViewById(R.id.searchView);
-
 
         // Opens HelpActivity when help button is clicked
         MenuItem helpButton = nav.getMenu().findItem(R.id.nav_help);
@@ -259,6 +264,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume(){
         super.onResume();
+
+        SearchBar.hideKeyboard(searchBar, this);
+
         if(checkMapServices()){
             if(mLocationPermissionGranted){
                 //getChatRooms() (From tutorial)
