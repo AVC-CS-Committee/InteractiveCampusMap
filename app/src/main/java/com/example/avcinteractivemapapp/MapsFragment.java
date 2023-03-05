@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -123,6 +125,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     // Temporary
     BitmapDescriptor markerIcon;
     ImageButton centerMapButton;
+    ImageButton centerUserButton;
     View view;
     SearchView searchView;
 
@@ -143,7 +146,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         foodMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_food);
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
-        centerMapButton = view.findViewById(R.id.center_map);
+        centerMapButton = getActivity().findViewById(R.id.center_map);
+        centerUserButton = getActivity().findViewById(R.id.centerUserButton);
        // searchView = view.findViewById(R.id.searchView);
 
         parseJson(googleMap);
@@ -201,6 +205,14 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Handles center map button clicks
         centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS));
 
+        centerUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            }
+        });
+
         // GPS Related
         //fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -210,6 +222,14 @@ public class MapsFragment extends Fragment implements LocationListener {
         UiSettings uiSettings = googleMap.getUiSettings();
         // Removing the "Directions" and "Open in Maps" buttons
         uiSettings.setMapToolbarEnabled(false);
+        uiSettings.setMyLocationButtonEnabled(false);
+
+        // Changes position of set my location button
+//        View locationButton = ((View)  getActivity().findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+//        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+//        rlp.setMargins(0, 180, 180, 0);
 
     };
 
