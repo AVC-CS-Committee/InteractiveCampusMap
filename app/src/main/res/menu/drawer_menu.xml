@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-
     <!-- Sets so you can only select one menu item from group -->
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
 
         <!-- Creating items for menu-->
         <item
@@ -23,7 +22,7 @@
             android:title="Help"/>
     </group>
 
-    <group >
+    <group android:checkableBehavior="none" >
         <item android:title="Tools">
             <menu>
                 <item
@@ -40,7 +39,7 @@
         </item>
     </group>
 
-    <group android:checkableBehavior="all">
+    <group android:checkableBehavior="none">
         <item android:title="Filters" android:id="@+id/Filters">
 
             <!-- CheckBox Items -->
@@ -84,5 +83,4 @@
             </menu>
         </item>
     </group>
-
 </menu>
