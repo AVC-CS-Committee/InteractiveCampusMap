@@ -17,6 +17,14 @@
     ]
   },
   {
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
     "featureType": "landscape.man_made",
     "elementType": "geometry",
     "stylers": [
@@ -155,11 +163,11 @@
     ]
   },
   {
-    "featureType": "poi.sports_complex",
-    "elementType": "labels.text",
+    "featureType": "road",
+    "elementType": "labels",
     "stylers": [
       {
-        "lightness": -5
+        "visibility": "on"
       }
     ]
   }
