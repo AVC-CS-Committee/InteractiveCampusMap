@@ -78,9 +78,11 @@ import java.util.Scanner;
  */
 public class MapsFragment extends Fragment implements LocationListener {
     // Map related variables
-    final float MAX_ZOOM = 14.0f;
-    final float INITIAL_ZOOM = 17.5f;
-    final LatLng AVC_COORDS = new LatLng(34.6773, -118.1866);
+    // 17f is the max zoom before render issues occur
+    final float MAX_ZOOM = 17f;
+    // Initial zoom must be larger (more zoomed in) than max to prevent the max zoom from breaking
+    final float INITIAL_ZOOM = 17.001f;
+    final LatLng AVC_COORDS = new LatLng(34.678652329599096, -118.18616290156892);
     final LatLng SOUTHWEST_BOUND = new LatLng(34.674910, -118.192287);
     final LatLng NORTHEAST_BOUND = new LatLng(34.682133, -118.183807);
     final LatLngBounds AVC_BOUNDS = new LatLngBounds(SOUTHWEST_BOUND, NORTHEAST_BOUND);
