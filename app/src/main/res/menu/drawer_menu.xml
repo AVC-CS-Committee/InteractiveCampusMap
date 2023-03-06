@@ -13,10 +13,6 @@
             android:icon="@drawable/icon_map"
             android:title="Map" />
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/icon_home"
-            android:title="Home" />
-        <item
             android:id="@+id/nav_help"
             android:icon="@drawable/icon_help"
             android:title="Help"/>
