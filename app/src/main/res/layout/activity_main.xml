@@ -28,7 +28,7 @@
                 android:id="@+id/toolbar"
                 layout="@layout/tool_bar" />-->
 
-            <FrameLayout
+            <RelativeLayout
 
                 android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
@@ -38,6 +38,7 @@
                 <!-- The search bar and it's contents are placed in FrameLayout
                      in order to be hidden when the drawer menu is opened-->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/searchCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="1dp"
@@ -78,8 +79,31 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <ImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:elevation="4dp"
+                    android:id="@+id/centerUserButton"
+                    android:layout_below="@+id/searchCardView"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/icon_center_user"/>
 
-            </FrameLayout>
+
+                <ImageButton
+                    android:id="@+id/center_map"
+                    android:elevation="4dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_below="@+id/centerUserButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/icon_center_map"
+                    android:contentDescription="@string/center_gps_button" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView

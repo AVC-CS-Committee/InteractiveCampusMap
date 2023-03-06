@@ -1,28 +1,26 @@
 [
   {
+    "elementType": "geometry.stroke",
     "stylers": [
       {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.man_made",
-    "stylers": [
-      {
-        "color": "#8fb8c9"
+        "color": "#f78d8d"
       },
       {
-        "visibility": "on"
+        "saturation": -45
+      },
+      {
+        "lightness": 40
+      },
+      {
+        "weight": 1.5
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -31,25 +29,10 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#8fb8c9"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.man_made",
-    "elementType": "labels.text.fill",
-    "stylers": [
+        "color": "#94cbff"
+      },
       {
-        "color": "#8a1a3f"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.man_made",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#ffffff"
+        "lightness": 65
       }
     ]
   },
@@ -62,6 +45,15 @@
     ]
   },
   {
+    "featureType": "poi",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
     "featureType": "poi.school",
     "stylers": [
       {
@@ -74,7 +66,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#c2c2c2"
+        "lightness": 95
       }
     ]
   },
@@ -84,6 +76,9 @@
     "stylers": [
       {
         "color": "#6e0e2d"
+      },
+      {
+        "visibility": "on"
       }
     ]
   },
@@ -101,7 +96,7 @@
     "elementType": "labels.icon",
     "stylers": [
       {
-        "color": "#f18a20"
+        "visibility": "off"
       }
     ]
   },
@@ -119,7 +114,7 @@
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#f18802"
+        "visibility": "off"
       }
     ]
   },
@@ -128,7 +123,7 @@
     "elementType": "labels.text.stroke",
     "stylers": [
       {
-        "color": "#000000"
+        "visibility": "off"
       }
     ]
   },
@@ -136,7 +131,22 @@
     "featureType": "poi.sports_complex",
     "stylers": [
       {
+        "lightness": 60
+      },
+      {
         "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.sports_complex",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#a8ffbe"
+      },
+      {
+        "saturation": -25
       }
     ]
   },
@@ -145,98 +155,16 @@
     "elementType": "labels",
     "stylers": [
       {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.sports_complex",
-    "elementType": "labels.icon",
-    "stylers": [
+        "lightness": -5
+      },
       {
-        "color": "#f18802"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.sports_complex",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#f18802"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.sports_complex",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#000000"
+        "visibility": "on"
       }
     ]
   },
   {
     "featureType": "road",
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
-    "stylers": [
-      {
-        "visibility": "on"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
     "elementType": "labels",
-    "stylers": [
-      {
-        "visibility": "simplified"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "labels",
-    "stylers": [
-      {
-        "visibility": "on"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "stylers": [
-      {
-        "visibility": "on"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "stylers": [
-      {
-        "visibility": "on"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station.bus",
     "stylers": [
       {
         "visibility": "on"
