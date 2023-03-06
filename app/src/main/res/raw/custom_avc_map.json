@@ -129,5 +129,38 @@
         "visibility": "on"
       }
     ]
+  },
+  {
+    "featureType": "poi.sports_complex",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#a8ffbe"
+      },
+      {
+        "saturation": -25
+      }
+    ]
+  },
+  {
+    "featureType": "poi.sports_complex",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "lightness": -5
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.sports_complex",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "lightness": -5
+      }
+    ]
   }
 ]
