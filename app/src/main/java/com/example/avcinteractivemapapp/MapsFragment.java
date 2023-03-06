@@ -22,6 +22,7 @@ import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -133,6 +134,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
+    @SuppressLint("ClickableViewAccessibility")
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
@@ -205,13 +207,43 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         // Handles center map button clicks
-        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS));
+        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS) );
+
+        centerMapButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.icon_center_map_pressed);
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    v.setBackgroundResource(R.drawable.icon_center_map);
+                }
+                return false;
+
+            }
+        });
 
         centerUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            }
+        });
+        centerUserButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.icon_center_user_pressed);
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    v.setBackgroundResource(R.drawable.icon_center_user);
+                }
+                return false;
             }
         });
 
