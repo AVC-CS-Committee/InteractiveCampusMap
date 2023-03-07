@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -174,6 +175,10 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             startActivity(intent);
         });
+
+        // TODO: Setup Custom Info Windows for Markers
+        CustomInfoWindowAdapter infoWindowAdapter = new CustomInfoWindowAdapter(getActivity());
+        mMap.setInfoWindowAdapter(infoWindowAdapter);
 
         // Set the search view to be visible
         searchView.setVisibility(View.VISIBLE);

@@ -6,7 +6,7 @@
     <color name="pink_200">#FDCFDE</color>
     <color name="pink_700">#BA617F</color>
     <color name="black">#FF000000</color>
-    <color name="grey">#2B2B2B</color>
+    <color name="grey">#192B2B2B</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_bg">#F2F3F8</color>
     <color name="white_item">#FFFEFE</color>
@@ -18,6 +18,8 @@
     <color name="avc_lighter_red">#C4265A</color>
     <color name="status_bar">#120006</color>
     <color name="blue">#68D3FF</color>
-    <color name="light_blue">#5C92E0FF</color>
+    <color name="lighter_blue">#D9ECFE</color>
+    <color name="lighter_blue_transparent">#EDD9ECFE</color>
+    <color name="light_blue">#A8D5FF</color>
 
 </resources>
