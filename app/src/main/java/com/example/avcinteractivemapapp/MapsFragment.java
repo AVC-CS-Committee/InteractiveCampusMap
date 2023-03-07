@@ -449,7 +449,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         CircleOptions circleOptions = new CircleOptions()
                 .center(new LatLng(location.getLatitude(), location.getLongitude()))
                 .radius(100)  // radius in meters
-                .fillColor(getResources().getColor(R.color.light_blue))
+                .fillColor(getResources().getColor(R.color.circle_filter_blue))
                 .strokeColor(Color.TRANSPARENT)
                 .strokeWidth(2);
 
