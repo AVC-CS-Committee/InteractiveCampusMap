@@ -491,15 +491,15 @@ public class MapsFragment extends Fragment implements LocationListener {
                 previousCircle.remove();
             }
 
-            showAllMarkers();
-            // NOTE: not sure why this logic is here or what it does. using show all markers
-            //       instead since it makes more sense
             // If the marker is already visible, keep it visible, if not, ensure it's not
-            /*for (Marker marker : locations.keySet()) {
+            // This logic is needed to "save" marker states whenever this activity is resumed
+            // (i.e., filtering a location, entering a location description, and returning to
+            // the fragment activity will have the filtered marker states "saved")
+            for (Marker marker : locations.keySet()) {
                 if(!marker.isVisible()){
                     marker.setVisible(false);
                 }
-            }*/
+            }
 
             return;
         }
