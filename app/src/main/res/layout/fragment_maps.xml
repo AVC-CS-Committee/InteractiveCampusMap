@@ -12,17 +12,4 @@
         android:id="@+id/google_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
-    <ImageButton
-        android:id="@+id/center_map"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="15dp"
-        android:background="@drawable/center_map_background"
-        android:src="@drawable/icon_map_center"
-        android:contentDescription="@string/center_gps_button" />
-
-    <!--<include layout="@layout/searchbar"/>-->
-
 </RelativeLayout>

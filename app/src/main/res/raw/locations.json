@@ -16,6 +16,14 @@
     "type": "classroom"
   },
   {
+    "title": "Auto Lab",
+    "latitude": 34.67882218077683,
+    "longitude": -118.18719722438767,
+    "description": "The Antelope Valley College Auto Lab is a modern facility situated on the campus of Antelope Valley College in Lancaster, California. It is designed to provide students with hands-on training in the field of automotive technology. The lab boasts an impressive collection of diagnostic equipment, including computerized diagnostic scanners, digital oscilloscopes, and emission testing equipment. Students can practice their skills in a fully functional shop area that includes vehicle lifts, tire mounting and balancing equipment, and a variety of hand and power tools. The lab is staffed by experienced instructors who provide students with practical instruction and guidance. Overall, the Antelope Valley College Auto Lab is a top-notch facility that offers students the opportunity to receive a comprehensive automotive education.",
+    "images": ["autolab"],
+    "type": "classroom"
+  },
+  {
     "title": "Tennis Courts",
     "latitude": 34.67814023222777,
     "longitude": -118.18848748454626,
@@ -41,8 +49,8 @@
   },
   {
     "title": "Uhazy Hall",
-    "latitude": 34.6787345742857,
-    "longitude": -118.18635845710243,
+    "latitude": 34.6788359665366,
+    "longitude": -118.18640225876932,
     "description": "Uhazy Hall (UH) hosts lectures related to health and sciences. It’s two stories of classrooms, laboratory spaces, and professor offices.\n\nOn the first floor, there is a Subway and food court to cater to students' dining needs. The second floor houses the S.T.E.M. center, which is available to all students and faculty with an AVC ID card. It's equipped with all the essentials, including computers, a WEPA printer, whiteboards, and plenty of study spaces to support student learning and academic pursuits.",
     "images": ["uhazyhall", "ssv", "yh"],
     "type": "classroom"
@@ -89,8 +97,8 @@
   },
   {
     "title": "Marauder Stadium",
-    "latitude": 34.67634068573699,
-    "longitude": -118.19008554556989,
+    "latitude": 34.67617774332698,
+    "longitude": -118.19030328867781,
     "description": "The Marauder Stadium is a versatile athletic venue, hosting events for soccer, football, and more. This stadium provides students with a premier playing surface, complete with all the necessary equipment and facilities to perform at their peak. The Marauder Stadium is a critical component of AVC's athletics program, affording students the chance to exhibit their abilities and represent the college on the field.",
     "images": ["stadium"],
     "type": "athletic"
@@ -113,16 +121,16 @@
   },
   {
     "title": "Administration Building",
-    "latitude": 34.6755201268822,
-    "longitude": -118.18459238195355,
+    "latitude": 34.67538350196646,
+    "longitude": -118.18461596643002,
     "description": "The Administration Building facilitates the efficient application of Antelope Valley College resources to support student success and the District's mission. Administrative Services works proactively with all college components to integrate our professional knowledge and skills amongst Business Services, Facilities, and Information Technology to conquer operational and academic challenges. Strives to meet students, faculty, staff, and community members' needs while empowering their goal achievements in an evolving environment.",
     "images": ["admissions"],
     "type": "resource"
   },
   {
     "title": "Future Cedar Hall",
-    "latitude": 34.67638480157416,
-    "longitude": -118.18531121391118,
+    "latitude": 34.67627027614855,
+    "longitude": -118.18529089026863,
     "description": "Currently under construction.",
     "images": ["admissions"],
     "type": "resource"
@@ -156,7 +164,7 @@
     "latitude": 34.67629459108602,
     "longitude": -118.18624842173183,
     "description": "The campus cafeteria is the perfect place for students to take a break from their busy schedules and enjoy a delicious meal. With a wide variety of food options and plenty of indoor seating, students can sit down and enjoy a hot meal or grab something quick from the vending machines. Whether you're grabbing a quick bite between classes or sitting down for a leisurely lunch, the cafeteria offers everything you need to fuel up and keep going throughout the day.",
-    "images": [""],
+    "images": [],
     "type": "food"
   },
   {
@@ -169,8 +177,8 @@
   },
   {
     "title": "Lecture Hall",
-    "latitude": 34.67709130468547,
-    "longitude": -118.18756250227011,
+    "latitude": 34.67705960742068,
+    "longitude": -118.18757503639924,
     "description": "The Lecture Hall provides students with a space to attend lectures and learn in a traditional college room setting. The building houses classrooms that cater to a wide range of subjects and are designed to facilitate learning through presentations, discussions, and other interactive methods. With its spacious auditorium-style layout, students can enjoy an immersive educational experience as they delve into new topics and ideas.",
     "images": [""],
     "type": "classroom"
