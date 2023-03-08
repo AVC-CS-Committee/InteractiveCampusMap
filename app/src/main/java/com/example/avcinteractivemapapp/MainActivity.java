@@ -267,26 +267,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SearchBar.hideKeyboard(searchBar, this);
 
-        if(checkMapServices()){
-            if(mLocationPermissionGranted){
-                //getChatRooms() (From tutorial)
-                //Can use map
-            }
-            else{
-                getLocationPermission();
-            }
-        }
+//        if(checkMapServices()){
+//            if(mLocationPermissionGranted){
+//                //getChatRooms() (From tutorial)
+//                //Can use map
+//            }
+//            else{
+//                getLocationPermission();
+//            }
+//        }
     }
 
     private void openHelpActivity(){
         Intent intent = new Intent(MainActivity.this, HelpActivity.class);
         startActivity(intent);
     }
-
-    private boolean checkMapServices(){
-        if (!isServicesOK()) return false;
-        return isMapsEnabled();
-    }
+//
+//    private boolean checkMapServices(){
+//        if (!isServicesOK()) return false;
+//        return isMapsEnabled();
+//    }
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -314,82 +314,82 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return true;
     }
-
-    //TODO: Bug; whenever user denies location permissions twice, it still lets them in/breaks app
-    //INFO: This method is responsible for the location permission popup. Maybe have to just close
-    //      the app if denied? Also not sure why popup comes up twice after clicking deny.
-    private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mLocationPermissionGranted = true;
-            //getMap
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
-    }
-
-    //Step 1: Determines whether or not the device is able to use Google Services
-    public boolean isServicesOK(){
-        Log.d(TAG, "isServicesOK: checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
-
-        if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
-            return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //an error occurred but we can resolve it
-            Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else{
-            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults); //super was required??
-        mLocationPermissionGranted = false;
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
-                }
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: called.");
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ENABLE_GPS: {
-                if(mLocationPermissionGranted){
-                    //getChatrooms();
-                }
-                else{
-                    getLocationPermission();
-                }
-            }
-        }
-
-    }
+//
+//    //TODO: Bug; whenever user denies location permissions twice, it still lets them in/breaks app
+//    //INFO: This method is responsible for the location permission popup. Maybe have to just close
+//    //      the app if denied? Also not sure why popup comes up twice after clicking deny.
+//    private void getLocationPermission() {
+//        /*
+//         * Request location permission, so that we can get the location of the
+//         * device. The result of the permission request is handled by a callback,
+//         * onRequestPermissionsResult.
+//         */
+//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+//                android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            mLocationPermissionGranted = true;
+//            //getMap
+//        } else {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+//                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+//        }
+//    }
+//
+//    //Step 1: Determines whether or not the device is able to use Google Services
+//    public boolean isServicesOK(){
+//        Log.d(TAG, "isServicesOK: checking google services version");
+//
+//        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+//
+//        if(available == ConnectionResult.SUCCESS){
+//            //everything is fine and the user can make map requests
+//            Log.d(TAG, "isServicesOK: Google Play Services is working");
+//            return true;
+//        }
+//        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+//            //an error occurred but we can resolve it
+//            Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
+//            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+//            dialog.show();
+//        }else{
+//            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           @NonNull String[] permissions,
+//                                           @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults); //super was required??
+//        mLocationPermissionGranted = false;
+//        switch (requestCode) {
+//            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    mLocationPermissionGranted = true;
+//                }
+//            }
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Log.d(TAG, "onActivityResult: called.");
+//        switch (requestCode) {
+//            case PERMISSIONS_REQUEST_ENABLE_GPS: {
+//                if(mLocationPermissionGranted){
+//                    //getChatrooms();
+//                }
+//                else{
+//                    getLocationPermission();
+//                }
+//            }
+//        }
+//
+//    }
     //END of code from tutorial
 }
