@@ -2,9 +2,9 @@ package com.example.avcinteractivemapapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -216,13 +215,12 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         centerUserButton.setOnClickListener(v -> {
-            // FIXME: Rationale doesn't display when also checking userLocation != null
-            if (mainActivity.hasLocationPermission() && userLocation != null) {
+            if (mainActivity.hasLocationPermission() && getCurrentLocation() != null) {
                 moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
             }
             else {
                 // Not displaying
-                EasyPermissions.requestPermissions(this, "Location permissions required", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
+                EasyPermissions.requestPermissions(this, "Location services is disabled. Some features may not work properly", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
             }
         });
 
@@ -238,9 +236,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         // GPS Related
-        //fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
         locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-        getCurrentLocation();
 
         // The uiSettings object removes default Google Maps hover buttons
         UiSettings uiSettings = googleMap.getUiSettings();
@@ -303,6 +299,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     public void onLocationChanged(@NonNull Location location) {
 
         // Set the current lat and long
+        userLocation = location;
         currentLat = location.getLatitude();
         currentLong = location.getLongitude();
 
@@ -346,6 +343,9 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Stop displaying location
         mMap.setMyLocationEnabled(false);
 
+        // Set location to null
+        userLocation = null;
+
         // Turn off all GPS related features when location is disabled
         if(enableCircleFilter){
             disableCircleFilter();
@@ -354,9 +354,11 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     public boolean enableCircleFilter() {
-        enableCircleFilter = !enableCircleFilter;
-        getCurrentLocation();
-        circleFilterHandler();
+        if (getCurrentLocation() != null) {
+            enableCircleFilter = !enableCircleFilter;
+            circleFilterHandler();
+
+        }
         return enableCircleFilter;
     }
 
@@ -369,12 +371,12 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     // TODO: Disable nearest lot calculator when circle filter is active
-    public boolean enableParkingCalculator() {
+    public void enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
 
         // Check if the current location exists. If it doesn't, return false
-        if (userLocation == null) return false;
+        if (userLocation == null) return;
 
         // Convert current user's location into a marker
         Marker userLocation = mMap.addMarker(new MarkerOptions()
@@ -413,7 +415,6 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         // Show the marker title
         nearestLotMarker.showInfoWindow();
-        return true;
     }
 
     // Creates circle around user and contains logic for circle filter
@@ -507,19 +508,35 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // TODO: figure out a way to not use SuppressLint
     @SuppressLint("MissingPermission")
-    private void getCurrentLocation() {
+    private Location getCurrentLocation() {
         if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Location Services");
+                builder.setMessage("Enable location services to use certain features of this app.");
+                builder.setPositiveButton("OK", (dialog, which) -> {});
+
+                // Create and show the alert dialog
+                builder.create().show();
+                return null;
+            }
+
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
 
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            if (location == null) return;
+            if (userLocation == null) return null;
 
-            userLocation = location;
-            currentLat = location.getLatitude();
-            currentLong = location.getLongitude();
+            currentLat = userLocation.getLatitude();
+            currentLong = userLocation.getLongitude();
+
+            mMap.setMyLocationEnabled(true);
+
+            return userLocation;
         }
+        return null;
     }
 
     // Permission Request for GPS
@@ -551,7 +568,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         if (mapFragment == null) return;
 
-        searchView = getActivity().findViewById(R.id.searchView);
+        searchView = requireActivity().findViewById(R.id.searchView);
         mapFragment.getMapAsync(callback);
     }
 
@@ -559,7 +576,7 @@ public class MapsFragment extends Fragment implements LocationListener {
          // Adds custom JSON file which uses AVC colors for Google Maps
          try {
              googleMap.setMapStyle(
-                     MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.custom_avc_map));
+                     MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map));
          } catch(Resources.NotFoundException e){
              Log.e("JSON", "Can't find style. Error: ", e);
          }

@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void locationPermissionsRationale(){
-        EasyPermissions.requestPermissions(this, "Location permissions required", RC_PERMISSIONS, REQUIRED_PERMISSIONS);
+        EasyPermissions.requestPermissions(this, "This app requires location access in order to use some features.", RC_PERMISSIONS, REQUIRED_PERMISSIONS);
     }
 
     @Override
@@ -272,6 +271,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
+        }
+        else {
+            locationPermissionsRationale();
         }
     }
 
