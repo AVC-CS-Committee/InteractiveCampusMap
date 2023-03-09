@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SearchBar implements SearchView.OnQueryTextListener {
-    private HashMap<Marker, MapLocation> locations;
-    private GoogleMap mMap;
-    private MapsFragment fragment;
+    private final HashMap<Marker, MapLocation> locations;
+    private final GoogleMap mMap;
+    private final MapsFragment fragment;
 
     public SearchBar(HashMap<Marker, MapLocation> locations, GoogleMap mMap) {
         this.locations = locations;

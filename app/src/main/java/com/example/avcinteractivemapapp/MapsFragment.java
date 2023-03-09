@@ -29,7 +29,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -83,12 +82,12 @@ public class MapsFragment extends Fragment implements LocationListener {
 
 
     // Marker Lists
-    private ArrayList<Marker> userLocationMarkers = new ArrayList<>();
-    private ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
-    private ArrayList<Marker> classroomLocations = new ArrayList<>();
-    private ArrayList<Marker> foodLocations = new ArrayList<>();
-    private ArrayList<Marker> athleticLocations = new ArrayList<>();
-    private ArrayList<Marker> resourceLocations = new ArrayList<>();
+    private final ArrayList<Marker> userLocationMarkers = new ArrayList<>();
+    private final ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+    private final ArrayList<Marker> classroomLocations = new ArrayList<>();
+    private final ArrayList<Marker> foodLocations = new ArrayList<>();
+    private final ArrayList<Marker> athleticLocations = new ArrayList<>();
+    private final ArrayList<Marker> resourceLocations = new ArrayList<>();
 
     // Booleans for determining the visibility of markers
     public boolean showParkingLots = false;
@@ -105,12 +104,10 @@ public class MapsFragment extends Fragment implements LocationListener {
     private Location userLocation;
     private double currentLat;
     private double currentLong;
-    private final int REQUEST_CODE = 101;
     public GoogleMap mMap;
 
     // GPS Related
     private Circle previousCircle;
-    private LocationRequest mLocationRequest;
     public static boolean enableCircleFilter = false;
 
     // Icons for markers
@@ -197,9 +194,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         // Handles center map button clicks
-        centerMapButton.setOnClickListener(view -> {
-            moveMapCamera(googleMap, AVC_COORDS);
-        });
+        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS));
 
         centerMapButton.setOnTouchListener((v, event) -> {
 
@@ -243,14 +238,6 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Removing the "Directions" and "Open in Maps" buttons
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setMyLocationButtonEnabled(false);
-
-        // Changes position of set my location button
-//        View locationButton = ((View)  getActivity().findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-//        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-//        rlp.setMargins(0, 180, 180, 0);
-
     };
 
     // Filter the markers based on the boolean values of each marker type's visibility
@@ -272,18 +259,6 @@ public class MapsFragment extends Fragment implements LocationListener {
     // Helper method that toggles all markers to be visible
     public void showAllMarkers() {
         for (Marker marker : locations.keySet()) marker.setVisible(true);
-    }
-
-    // Toggles all markers to be invisible
-    public void disableAllMarkers() {
-        for (Marker marker : locations.keySet()) marker.setVisible(false);
-    }
-
-    // Show specific markers
-    public void showSpecificMarkers(ArrayList<Marker> markers) {
-        for (Marker marker : markers) {
-            marker.setVisible(true);
-        }
     }
 
     // Helper method that checks if all the filters are set to false (unchecked)
@@ -379,15 +354,15 @@ public class MapsFragment extends Fragment implements LocationListener {
         if (userLocation == null) return;
 
         // Convert current user's location into a marker
-        Marker userLocation = mMap.addMarker(new MarkerOptions()
+        Marker userMarker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(currentLat, currentLong)));
 
         // Calculate the nearest lot to the user then grab the lot marker
-        Pair<Integer, Double> nearestLot = calculateNearestLot(userLocation);
+        Pair<Integer, Double> nearestLot = calculateNearestLot(userMarker);
         Marker nearestLotMarker = parkingLotMarkers.get(nearestLot.first);
 
         // Remove the temporary marker
-        userLocation.remove();
+        if (userMarker != null) userMarker.remove();
 
         // Get the lot's coordinates
         LatLng nearestLotCoords = nearestLotMarker.getPosition();
@@ -631,6 +606,8 @@ public class MapsFragment extends Fragment implements LocationListener {
                 // All markers are stored in the locations hashmap with a MapLocation object.
                 locations.put(tmpMarker, new MapLocation(title, description, coords, locationImages));
 
+                if (tmpMarker == null) return;
+
                 // Location types are sorted into their respective ArrayLists
                 if (locationType.equals("parking")) {
                     tmpMarker.setIcon(parkingMarkerIcon);
@@ -705,6 +682,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
 
         // below line is use to set bounds to our vector drawable.
+        if (vectorDrawable == null) return null;
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
 
         // below line is use to create a bitmap for our

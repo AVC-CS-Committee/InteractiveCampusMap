@@ -1,7 +1,7 @@
 package com.example.avcinteractivemapapp;
 
 public class HelpItems {
-    private String helpItem;
+    private final String helpItem;
 
     public HelpItems(String helpItem) {
         this.helpItem = helpItem;
@@ -9,9 +9,5 @@ public class HelpItems {
 
     public String getHelpItem() {
         return helpItem;
-    }
-
-    public void setHelpItem(String helpItem) {
-        this.helpItem = helpItem;
     }
 }

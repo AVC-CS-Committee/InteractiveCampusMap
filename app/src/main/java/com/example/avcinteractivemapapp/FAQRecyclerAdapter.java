@@ -27,8 +27,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.faq_items, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     //Sets the value of the title and description textViews to whatever values the current position in faqList holds
@@ -65,10 +64,10 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
         return faqList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleTextView, descriptionTextView;
-        private ImageView expandIcon;
+        private final ImageView expandIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,9 +75,6 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
             titleTextView = itemView.findViewById(R.id.textView);
             descriptionTextView = itemView.findViewById(R.id.textView4);
             expandIcon = itemView.findViewById(R.id.spinner);
-
         }
-
     }
-
 }

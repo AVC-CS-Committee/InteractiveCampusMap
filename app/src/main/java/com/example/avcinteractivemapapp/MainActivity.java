@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Initiates method to determine the nearest markers based on the user's current location
         locationsNearUserButton = nav.getMenu().findItem(R.id.locations_near_me);
         // Sets initial state of switch as unchecked
-        locationsNearUserButton.setActionView(getLayoutInflater().inflate(R.layout.switch_item, null));
+        locationsNearUserButton.setActionView(View.inflate(this, R.layout.switch_item, null));
         // Change state of switch when clicked and enable/disable circle filter
         locationsNearUserButton.setOnMenuItemClickListener(item -> {
             circleFilterTask();
@@ -159,12 +160,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void toggleOnCircleFilterSwitch(){
-        actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item_enabled, null);
+        actionLayout = (RelativeLayout) View.inflate(this, R.layout.switch_item_enabled, null);
         locationsNearUserButton.setActionView(actionLayout);
     }
 
     public void toggleOffCircleFilterSwitch(){
-        actionLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.switch_item, null);
+        actionLayout = (RelativeLayout) View.inflate(this, R.layout.switch_item, null);
         locationsNearUserButton.setActionView(actionLayout);
     }
 
