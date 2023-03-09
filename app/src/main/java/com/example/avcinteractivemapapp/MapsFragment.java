@@ -10,25 +10,17 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -54,20 +46,18 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.navigation.NavigationView;
 import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * DESCRIPTION:
@@ -141,7 +131,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         setMapBounds(googleMap);
         moveMapCamera(googleMap, AVC_COORDS);
 
-        mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) requireActivity();
 
         mMap = googleMap;
 
@@ -151,8 +141,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         foodMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_food);
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
-        centerMapButton = getActivity().findViewById(R.id.center_map);
-        centerUserButton = getActivity().findViewById(R.id.centerUserButton);
+        centerMapButton = requireActivity().findViewById(R.id.center_map);
+        centerUserButton = requireActivity().findViewById(R.id.centerUserButton);
        // searchView = view.findViewById(R.id.searchView);
 
         parseJson(googleMap);
@@ -197,64 +187,57 @@ public class MapsFragment extends Fragment implements LocationListener {
             // Ensures that the user doesn't go over the max zoom amount
             if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
 
-            SearchBar.hideKeyboard(searchView, getActivity());
+            SearchBar.hideKeyboard(searchView, requireActivity());
 
         });
 
-
         // TODO: Hide keyboard on marker click
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(@NonNull Marker marker) {
-                SearchBar.hideKeyboard(searchView, getActivity());
-                return false;
-            }
+        mMap.setOnMarkerClickListener(marker -> {
+            SearchBar.hideKeyboard(searchView, requireActivity());
+            return false;
         });
 
         // Handles center map button clicks
-        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS) );
-
-        centerMapButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.icon_center_map_pressed);
-                }
-
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    v.setBackgroundResource(R.drawable.icon_center_map);
-                }
-                return false;
-
-            }
+        centerMapButton.setOnClickListener(view -> {
+            moveMapCamera(googleMap, AVC_COORDS);
         });
 
-        centerUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        centerMapButton.setOnTouchListener((v, event) -> {
 
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setBackgroundResource(R.drawable.icon_center_map_pressed);
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setBackgroundResource(R.drawable.icon_center_map);
+            }
+            return false;
+
+        });
+
+        centerUserButton.setOnClickListener(v -> {
+            if (mainActivity.hasLocationPermission()) {
                 moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
             }
-        });
-        centerUserButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.icon_center_user_pressed);
-                }
-
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    v.setBackgroundResource(R.drawable.icon_center_user);
-                }
-                return false;
+            else {
+                EasyPermissions.requestPermissions(this, "Rationale", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
             }
+        });
+
+        centerUserButton.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setBackgroundResource(R.drawable.icon_center_user_pressed);
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setBackgroundResource(R.drawable.icon_center_user);
+            }
+            return false;
         });
 
         // GPS Related
         //fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
         getCurrentLocation();
 
         // The uiSettings object removes default Google Maps hover buttons
@@ -300,7 +283,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // Show specific markers
     public void showSpecificMarkers(ArrayList<Marker> markers) {
-        for(Marker marker : markers) {
+        for (Marker marker : markers) {
             marker.setVisible(true);
         }
     }
@@ -324,7 +307,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         // For circle filter. If active and user is in bounds, create the circle
         // Circle is created here in order to remove the previously created circle more quickly.
         // Without this, the circle will not update properly
-        if(enableCircleFilter && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))){
+        if (enableCircleFilter && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))) {
             createCircle(location);
         }
     }
@@ -336,10 +319,10 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Try-catch purpose: Should be catching an exception on app re-entry where MainActivity is not yet visible
         //                    Should only be catching this exception once for every re-entry
         // Overall purpose: Disable all GPS related features on resuming MapsFragment (i.e., app was minimized/navigated away from)
-        try{
+        try {
             // Disable all GPS related features
             disableCircleFilter();
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             // Expected Exception
             e.printStackTrace();
         }
@@ -369,12 +352,6 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     public boolean enableCircleFilter() {
-        // Checks if GPS is enabled
-        if(!mainActivity.isMapsEnabled()){
-            // GPS is disabled, return false
-            return false;
-        }
-
         enableCircleFilter = !enableCircleFilter;
         getCurrentLocation();
         circleFilterHandler();
@@ -526,64 +503,38 @@ public class MapsFragment extends Fragment implements LocationListener {
         moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
     }
 
-    // Locations API required logic for GPS. Tutorial used for getting current location: https://javapapers.com/android/get-current-location-in-android/
+    // TODO: figure out a way to not use SuppressLint
+    @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
-
-        // Checks if permission is not granted, evaluates to true when permissions are not granted
-        if (ActivityCompat.checkSelfPermission(
-                this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Request for location permission
-            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
-        }
-
-        Location location;
-        // Requests location updates. Second parameter determines how quickly the user's location is updated
-        // The quicker the location is updated the more quickly the battery drains
-        // Currently using 2500 which is the highest it can be without causing any bugs
-        // Also, GPS Provider is more accurate but consumes more battery. Good rule of thumb is to always
-        // use Network Provider when accuracy is not the priority
-        if(enableCircleFilter){
-            // Use GPS Provider
+        if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
-            // Get the last known location from the network provider
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (location == null) return;
+
+            userLocation = location;
+            currentLat = location.getLatitude();
+            currentLong = location.getLongitude();
         }
-        else{
-            // Use Network Provider
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
-            // Get the last known location from the network provider
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-
-        if (location == null) return;
-
-        // Makes user's current location visible
-        mMap.setMyLocationEnabled(true);
-
-        // Update private fields
-        userLocation = location;
-        currentLat = location.getLatitude();
-        currentLong = location.getLongitude();
     }
 
     // Permission Request for GPS
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
-            }
-        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
