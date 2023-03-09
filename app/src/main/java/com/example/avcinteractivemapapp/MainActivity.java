@@ -122,21 +122,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         else {
-            EasyPermissions.requestPermissions(this, "Rationale", RC_PERMISSIONS, REQUIRED_PERMISSIONS);
+            locationPermissionsRationale();
         }
     }
 
     @AfterPermissionGranted(RC_PERMISSIONS)
     public void nearestParkingTask() {
         if (hasLocationPermission()) {
-            Toast.makeText(this, "nearestParkingTask", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "nearestParkingTask", Toast.LENGTH_SHORT).show();
             fragment.enableParkingCalculator();
             drawer.closeDrawer(GravityCompat.START);
         }
         else {
-            EasyPermissions.requestPermissions(this, "Rationale", RC_PERMISSIONS, REQUIRED_PERMISSIONS);
+            locationPermissionsRationale();
         }
 
+    }
+
+    private void locationPermissionsRationale(){
+        EasyPermissions.requestPermissions(this, "Location permissions required", RC_PERMISSIONS, REQUIRED_PERMISSIONS);
     }
 
     @Override
@@ -270,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             new AppSettingsDialog.Builder(this).build().show();
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -216,11 +216,13 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         centerUserButton.setOnClickListener(v -> {
-            if (mainActivity.hasLocationPermission()) {
+            // FIXME: Rationale doesn't display when also checking userLocation != null
+            if (mainActivity.hasLocationPermission() && userLocation != null) {
                 moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
             }
             else {
-                EasyPermissions.requestPermissions(this, "Rationale", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
+                // Not displaying
+                EasyPermissions.requestPermissions(this, "Location permissions required", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
             }
         });
 
@@ -372,7 +374,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         getCurrentLocation();
 
         // Check if the current location exists. If it doesn't, return false
-        if (currentLong == 0.0 && currentLat == 0.0) return false;
+        if (userLocation == null) return false;
 
         // Convert current user's location into a marker
         Marker userLocation = mMap.addMarker(new MarkerOptions()
