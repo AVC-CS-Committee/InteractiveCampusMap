@@ -339,7 +339,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     public void disableCircleFilter(){
         enableCircleFilter = false;
-        getCurrentLocation();
+        //getCurrentLocation();
         circleFilterHandler();
         mainActivity.toggleOffCircleFilterSwitch();
 
