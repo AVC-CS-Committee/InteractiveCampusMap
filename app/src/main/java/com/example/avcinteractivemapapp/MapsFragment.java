@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -206,7 +205,19 @@ public class MapsFragment extends Fragment implements LocationListener {
         // TODO: Hide keyboard on marker click
         mMap.setOnMarkerClickListener(marker -> {
             SearchBar.hideKeyboard(searchView, requireActivity());
-            return false;
+
+            // Zoom into the marker
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(marker.getPosition())
+                    .zoom(19)
+                    .bearing(0)
+                    .build();
+
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+            // Show info window
+            marker.showInfoWindow();
+            return true;
         });
 
         // Handles center map button clicks
