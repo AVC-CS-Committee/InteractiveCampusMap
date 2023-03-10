@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +114,10 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // Icons for markers
     BitmapDescriptor parkingMarkerIcon, classroomMarkerIcon, foodMarkerIcon, athleticsMarkerIcon, resourceMarkerIcon;
+
+    // Checkboxes
+    MenuItem lots, classes, studentRes, food, athletics;
+
     // Temporary
     BitmapDescriptor markerIcon;
     ImageButton centerMapButton;
@@ -131,18 +137,28 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         mMap = googleMap;
 
+        // Setting Marker Icons
         markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
         parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_parking);
         classroomMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_classroom);
         foodMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_food);
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
+
+        // Setting Map Button Icons
         centerMapButton = requireActivity().findViewById(R.id.center_map);
         centerUserButton = requireActivity().findViewById(R.id.centerUserButton);
+
+        // Setting Nav View Items (Checkboxes)
+        lots = mainActivity.nav.getMenu().findItem(R.id.lots);
+        classes = mainActivity.nav.getMenu().findItem(R.id.classrooms);
+        studentRes = mainActivity.nav.getMenu().findItem(R.id.studentResources);
+        food = mainActivity.nav.getMenu().findItem(R.id.food);
+        athletics = mainActivity.nav.getMenu().findItem(R.id.athletics);
+
        // searchView = view.findViewById(R.id.searchView);
 
         parseJson(googleMap);
-
 
         // Handles marker title clicks
         googleMap.setOnInfoWindowClickListener(marker -> {
@@ -326,14 +342,45 @@ public class MapsFragment extends Fragment implements LocationListener {
             disableCircleFilter();
         }
 
+        // Reset all filters
+        disableAllFilters();
+        showAllMarkers();
+
+    }
+
+    // Disables all locations types and their checkboxes (filters)
+    public void disableAllFilters() {
+        // Disable checkboxes
+        lots.setChecked(false);
+        classes.setChecked(false);
+        studentRes.setChecked(false);
+        food.setChecked(false);
+        athletics.setChecked(false);
+
+        // Disable location types
+        showParkingLots = false;
+        showClassrooms = false;
+        showFood = false;
+        showAthletics = false;
+        showStudentResources = false;
     }
 
     public boolean enableCircleFilter() {
+        // Check 1: Is Location Enabled
         if (getCurrentLocation() != null) {
+
+            // Check 2: Is User at AVC
+            LatLng currentUserCoords = new LatLng(currentLat, currentLong);
+            if (!AVC_BOUNDS.contains(currentUserCoords)) {
+                Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
+                return enableCircleFilter;
+            }
+
+            // Continue with circle filter logic
             enableCircleFilter = !enableCircleFilter;
             circleFilterHandler();
-
         }
+
         return enableCircleFilter;
     }
 
@@ -456,15 +503,6 @@ public class MapsFragment extends Fragment implements LocationListener {
                 }
             }
 
-            return;
-        }
-
-        // Get the last known location from the network provider
-        LatLng currentUserCoords = new LatLng(currentLat, currentLong);
-
-        // Checks if user is not within map bounds. If they aren't, show toast and return.
-        if (!AVC_BOUNDS.contains(currentUserCoords)) {
-            Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
             return;
         }
 

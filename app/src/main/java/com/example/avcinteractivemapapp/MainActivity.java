@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     MenuItem locationsNearUserButton;
     RelativeLayout actionLayout;
-    NavigationView nav;
+    public NavigationView nav;
     SearchView searchBar;
     ImageButton hamburgerButton;
 
@@ -114,12 +114,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void circleFilterTask() {
         if (hasLocationPermission()) {
             if (fragment.enableCircleFilter()) {
-                drawer.closeDrawer(GravityCompat.START);
+                // Handled by circleFilterHandler() in MapsFragment
             }
             else {
+                // Set "Locations Near Me" switch to off
                 toggleOffCircleFilterSwitch();
+                // Disable all active filters
+                fragment.disableAllFilters();
+                // Show all markers
                 fragment.showAllMarkers();
             }
+            drawer.closeDrawer(GravityCompat.START);
         }
         else {
             locationPermissionsRationale();
