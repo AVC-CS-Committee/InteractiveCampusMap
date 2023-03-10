@@ -35,7 +35,7 @@ public class SearchBar implements SearchView.OnQueryTextListener {
 
             // If matches, move camera and show marker title
             if (locationTitle.contains(query)) {
-                fragment.moveMapCamera(mMap, entry.getValue().getLocationCoords());
+                fragment.moveMapCamera(mMap, entry.getValue().getLocationCoords(), fragment.MARKER_ZOOM);
                 entry.getKey().showInfoWindow();
             }
         }
