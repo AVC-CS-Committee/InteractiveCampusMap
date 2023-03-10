@@ -73,6 +73,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     final float MAX_ZOOM = 17f;
     // Initial zoom must be larger (more zoomed in) than max to prevent the max zoom from breaking
     final float INITIAL_ZOOM = 17.001f;
+    final float MARKER_ZOOM = 17.7f;
     final LatLng AVC_COORDS = new LatLng(34.678652329599096, -118.18616290156892);
     final LatLng SOUTHWEST_BOUND = new LatLng(34.674910, -118.192287);
     final LatLng NORTHEAST_BOUND = new LatLng(34.682133, -118.183807);
@@ -130,7 +131,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
-        moveMapCamera(googleMap, AVC_COORDS);
+        moveMapCamera(googleMap, AVC_COORDS, INITIAL_ZOOM);
 
         mainActivity = (MainActivity) requireActivity();
 
@@ -188,8 +189,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new SearchBar(locations, mMap));
 
-        // Handles map clicks (was used for the old version of the nearest lot calculator)
-        googleMap.setOnMapClickListener(latLng -> {});
+        // Handles map clicks
+        googleMap.setOnMapClickListener(latLng -> SearchBar.hideKeyboard(searchView, requireActivity()));
 
         // Handle map camera movement
         googleMap.setOnCameraMoveListener(() -> {
@@ -207,13 +208,7 @@ public class MapsFragment extends Fragment implements LocationListener {
             SearchBar.hideKeyboard(searchView, requireActivity());
 
             // Zoom into the marker
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(marker.getPosition())
-                    .zoom(19)
-                    .bearing(0)
-                    .build();
-
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            moveMapCamera(googleMap, marker.getPosition(), MARKER_ZOOM);
 
             // Show info window
             marker.showInfoWindow();
@@ -221,7 +216,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         // Handles center map button clicks
-        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS));
+        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS, INITIAL_ZOOM));
 
         centerMapButton.setOnTouchListener((v, event) -> {
 
@@ -238,7 +233,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         centerUserButton.setOnClickListener(v -> {
             if (mainActivity.hasLocationPermission() && getCurrentLocation() != null) {
-                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), INITIAL_ZOOM);
             }
             else {
                 // Not displaying
@@ -426,7 +421,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         LatLng nearestLotCoords = nearestLotMarker.getPosition();
 
         // Move the map camera to the coords
-        moveMapCamera(mMap, nearestLotCoords);
+        moveMapCamera(mMap, nearestLotCoords, MARKER_ZOOM);
 
         // Check if the marker is visible, if it isn't, make it visible
         if (!nearestLotMarker.isVisible() && userLocationMarkers.size() == 0) {
@@ -527,7 +522,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         createCircle(userLocation);
 
         // Center on user
-        moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+        moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), INITIAL_ZOOM);
     }
 
     // TODO: figure out a way to not use SuppressLint
@@ -612,10 +607,10 @@ public class MapsFragment extends Fragment implements LocationListener {
         googleMap.setLatLngBoundsForCameraTarget(AVC_BOUNDS);
     }
 
-    public void moveMapCamera(GoogleMap googleMap, LatLng coords) {
+    public void moveMapCamera(GoogleMap googleMap, LatLng coords, float zoomLevel) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(coords)
-                .zoom(INITIAL_ZOOM)
+                .zoom(zoomLevel)
                 .bearing(0)
                 .build();
 
