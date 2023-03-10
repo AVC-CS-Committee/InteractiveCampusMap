@@ -2,9 +2,9 @@ package com.example.avcinteractivemapapp;
 
 public class ContactItems {
 
-    private String contactTitle;
-    private String contactDescription;
-    private String contactNumber;
+    private final String contactTitle;
+    private final String contactDescription;
+    private final String contactNumber;
 
     public ContactItems(String contactTitle, String contactDescription, String contactNumber) {
 
@@ -25,9 +25,4 @@ public class ContactItems {
     public String getContactNumber() {
         return contactNumber;
     }
-
-   /* public void setContactItem(String ContactItem) {
-        this.ContactItem = ContactItem;
-    }*/
-
 }
