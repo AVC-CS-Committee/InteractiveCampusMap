@@ -49,6 +49,7 @@ public class SearchBar implements SearchView.OnQueryTextListener {
 
         // Hide the keyboard for the SearchView
         imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+        searchView.clearFocus();
     }
     @Override
     public boolean onQueryTextChange(String newText) {
