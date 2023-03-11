@@ -12,7 +12,7 @@
         android:id="@+id/windowTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:text="Testing"
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans_bold"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Tap for more info"
         android:layout_gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="italic"
         android:textSize="14sp"/>
 

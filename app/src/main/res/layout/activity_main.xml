@@ -73,7 +73,6 @@
                             android:iconifiedByDefault="false"
                             android:searchIcon="@null"
                             android:paddingLeft="40dp"
-                            android:theme="@style/MySearchView"
                             android:layout_centerVertical="true" />
 
                     </RelativeLayout>
@@ -88,7 +87,8 @@
                     android:layout_below="@+id/searchCardView"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/icon_center_user"/>
 
 
                 <ImageButton
@@ -100,6 +100,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
+                    android:background="@drawable/icon_center_map"
                     android:contentDescription="@string/center_gps_button" />
 
             </RelativeLayout>

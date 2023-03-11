@@ -19,15 +19,11 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="Antelope Valley College"
-        android:textColor="@color/white"
-        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textStyle="bold"
         android:text="3041 W Ave K, Lancaster, CA 93536" />
 
 </LinearLayout>

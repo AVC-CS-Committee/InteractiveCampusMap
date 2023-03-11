@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -146,23 +145,9 @@ public class MapsFragment extends Fragment implements LocationListener {
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
 
-        int currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-
         // Setting Map Button Icons
         centerMapButton = requireActivity().findViewById(R.id.center_map);
         centerUserButton = requireActivity().findViewById(R.id.centerUserButton);
-
-        switch (currentNightMode) {
-            case Configuration.UI_MODE_NIGHT_NO:
-                // Night mode is not active on device
-                centerMapButton.setBackgroundResource(R.drawable.icon_center_map_light);
-                centerUserButton.setBackgroundResource(R.drawable.icon_center_user_light);
-                break;
-            case Configuration.UI_MODE_NIGHT_YES:
-                centerMapButton.setBackgroundResource(R.drawable.icon_center_map_dark);
-                centerUserButton.setBackgroundResource(R.drawable.icon_center_user_dark);
-                break;
-        }
 
         // Setting Nav View Items (Checkboxes)
         lots = mainActivity.nav.getMenu().findItem(R.id.lots);
@@ -234,28 +219,13 @@ public class MapsFragment extends Fragment implements LocationListener {
         centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS, INITIAL_ZOOM));
 
         centerMapButton.setOnTouchListener((v, event) -> {
-            switch (currentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    // Night mode is not active on device
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        v.setBackgroundResource(R.drawable.icon_center_map_pressed_light);
-                    }
 
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        v.setBackgroundResource(R.drawable.icon_center_map_light);
-                    }
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    // Night mode is active on device
-                    // Night mode is not active on device
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        v.setBackgroundResource(R.drawable.icon_center_map_pressed_dark);
-                    }
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setBackgroundResource(R.drawable.icon_center_map_pressed);
+            }
 
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        v.setBackgroundResource(R.drawable.icon_center_map_dark);
-                    }
-                    break;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setBackgroundResource(R.drawable.icon_center_map);
             }
             return false;
 
@@ -272,28 +242,12 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         centerUserButton.setOnTouchListener((v, event) -> {
-            switch (currentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    // Night mode is not active on device
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        v.setBackgroundResource(R.drawable.icon_center_user_pressed_light);
-                    }
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setBackgroundResource(R.drawable.icon_center_user_pressed);
+            }
 
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        v.setBackgroundResource(R.drawable.icon_center_user_light);
-                    }
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    // Night mode is active on device
-                    // Night mode is not active on device
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        v.setBackgroundResource(R.drawable.icon_center_user_pressed_dark);
-                    }
-
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        v.setBackgroundResource(R.drawable.icon_center_user_dark);
-                    }
-                    break;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setBackgroundResource(R.drawable.icon_center_user);
             }
             return false;
         });

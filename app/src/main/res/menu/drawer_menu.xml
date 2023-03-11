@@ -6,6 +6,7 @@
 
     <!-- Sets so you can only select one menu item from group -->
     <group android:checkableBehavior="none">
+
         <!-- Creating items for menu-->
         <item
             android:id="@+id/nav_map"
