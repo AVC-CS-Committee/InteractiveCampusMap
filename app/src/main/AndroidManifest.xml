@@ -16,7 +16,7 @@
         android:label="AVC Interactive Map"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AVCInteractiveMapApp.NoActionBar"
+        android:theme="@style/Theme.AVCInteractiveMapApp"
         tools:targetApi="31">
         <activity
             android:name=".TemplateMarkerDescriptions"
@@ -45,6 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorPortrait"
+            android:theme="@style/Theme.AVCInteractiveMapApp"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

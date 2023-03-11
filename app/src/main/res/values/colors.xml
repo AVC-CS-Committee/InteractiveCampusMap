@@ -21,6 +21,6 @@
     <color name="lighter_blue">#D9ECFE</color>
     <color name="lighter_blue_transparent">#EDD9ECFE</color>
     <color name="light_blue">#A8D5FF</color>
-    <color name="circle_filter_blue">#5C92E0FF</color>
+    <color name="circle_filter_blue">#5CFF9292</color>
 
 </resources>
