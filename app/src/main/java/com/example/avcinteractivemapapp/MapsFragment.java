@@ -267,7 +267,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         centerUserButton.setOnClickListener(v -> {
             if (mainActivity.hasLocationPermission() && getCurrentLocation() != null) {
-                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), INITIAL_ZOOM);
+                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), MARKER_ZOOM);
             }
             else {
                 // Not displaying
