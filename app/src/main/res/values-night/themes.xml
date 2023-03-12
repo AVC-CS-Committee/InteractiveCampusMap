@@ -9,6 +9,12 @@
         <item name="colorSecondary">@color/pink_200</item>
         <item name="colorSecondaryVariant">@color/pink_700</item>
         <item name="colorOnSecondary">@color/white</item>
+
+        <item name="colorOnTertiary">#FFBA74</item>
+
+        <!--Changes color of nav menu items-->
+        <!--        <item name="colorOnSurface">#FFBA74</item>-->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

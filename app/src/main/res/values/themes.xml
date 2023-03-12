@@ -10,6 +10,12 @@
         <item name="colorSecondary">@color/pink_200</item>
         <item name="colorSecondaryVariant">@color/pink_700</item>
         <item name="colorOnSecondary">@color/black_txt</item>
+
+        <item name="colorOnTertiary">@color/gold</item>
+
+        <!--Changes color of nav menu items-->
+        <!--<item name="colorOnSurface">@color/gold</item>-->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/avc_menu</item>
         <!-- Customize your theme here. -->
