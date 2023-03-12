@@ -126,6 +126,8 @@ public class MapsFragment extends Fragment implements LocationListener {
     View view;
     SearchView searchView;
 
+    int currentNightMode;
+
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
     @SuppressLint("ClickableViewAccessibility")
@@ -146,7 +148,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
 
-        int currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        // Determines whether in light or dark mode
+        currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         // Setting Map Button Icons
         centerMapButton = requireActivity().findViewById(R.id.center_map);
@@ -640,9 +643,18 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     private void setMapStyle(@NonNull GoogleMap googleMap) {
          // Adds custom JSON file which uses AVC colors for Google Maps
-         try {
-             googleMap.setMapStyle(
-                     MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map));
+        currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        try {
+
+             switch (currentNightMode) {
+                 case Configuration.UI_MODE_NIGHT_NO:
+                     // Night mode is not active on device
+                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_light));
+                     break;
+                 case Configuration.UI_MODE_NIGHT_YES:
+                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_dark));
+                     break;
+             }
          } catch(Resources.NotFoundException e){
              Log.e("JSON", "Can't find style. Error: ", e);
          }
