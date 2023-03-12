@@ -5,7 +5,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_500</item>
         <item name="colorPrimaryVariant">@color/red_700</item>
-        <item name="colorOnPrimary">@color/avc_light_red</item>
+        <item name="colorOnPrimary">@color/grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/avc_lighter_red</item>
         <item name="colorSecondaryVariant">@color/pink_700</item>

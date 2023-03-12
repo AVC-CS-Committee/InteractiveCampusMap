@@ -73,7 +73,6 @@
                             android:iconifiedByDefault="false"
                             android:searchIcon="@null"
                             android:paddingLeft="40dp"
-                            android:theme="@style/MySearchView"
                             android:layout_centerVertical="true" />
 
                     </RelativeLayout>
