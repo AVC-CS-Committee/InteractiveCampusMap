@@ -29,7 +29,10 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#8d0137"
+        "color": "#94cbff"
+      },
+      {
+        "lightness": 65
       }
     ]
   },
@@ -72,10 +75,7 @@
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#94cbff"
-      },
-      {
-        "saturation": -80
+        "color": "#6e0e2d"
       },
       {
         "visibility": "on"
