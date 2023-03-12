@@ -16,7 +16,7 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="icon">@color/avc_light_red</item>
+        <item name="icon">@color/grey</item>
         <item name="itemTextColor">@color/avc_light_red</item>
     </style>
 
