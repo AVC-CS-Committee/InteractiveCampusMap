@@ -20,10 +20,19 @@
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#e3dede"
+        "color": "#aaa7a7"
       },
       {
         "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.school",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#d6d1d1"
       }
     ]
   },
