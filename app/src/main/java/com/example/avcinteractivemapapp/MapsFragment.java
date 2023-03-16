@@ -108,6 +108,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     private double currentLat;
     private double currentLong;
     public GoogleMap mMap;
+    boolean locationIsEnabled = false;
 
     // GPS Related
     private Circle previousCircle;
@@ -130,7 +131,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility"})
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
@@ -266,11 +267,21 @@ public class MapsFragment extends Fragment implements LocationListener {
         });
 
         centerUserButton.setOnClickListener(v -> {
-            if (mainActivity.hasLocationPermission() && getCurrentLocation() != null) {
-                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), MARKER_ZOOM);
+            // Goes through 3 checks, each with its own informational message (prevents dead button)
+            // 1: Are permissions enabled on the device
+            if (mainActivity.hasLocationPermission()) {
+                // 2: Does the user's location exist
+                if(getCurrentLocation() != null) {
+                    // 3: Is the user on campus (message handled by isUserInCampusBounds())
+                    if(isUserInCampusBounds()) {
+                        moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), MARKER_ZOOM);
+                    }
+                }
+                else if(locationIsEnabled) {
+                    Toast.makeText(this.getActivity(), "Oops! Something went wrong. Please wait a few seconds and try again.", Toast.LENGTH_SHORT).show();
+                }
             }
             else {
-                // Not displaying
                 EasyPermissions.requestPermissions(this, "Location services is disabled. Some features may not work properly", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
             }
         });
@@ -421,14 +432,21 @@ public class MapsFragment extends Fragment implements LocationListener {
         showStudentResources = false;
     }
 
+    boolean isUserInCampusBounds() {
+        LatLng currentUserCoords = new LatLng(currentLat, currentLong);
+        if (!AVC_BOUNDS.contains(currentUserCoords)) {
+            Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     public boolean enableCircleFilter() {
         // Check 1: Is Location Enabled
         if (getCurrentLocation() != null) {
 
             // Check 2: Is User at AVC
-            LatLng currentUserCoords = new LatLng(currentLat, currentLong);
-            if (!AVC_BOUNDS.contains(currentUserCoords)) {
-                Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
+            if(!isUserInCampusBounds()) {
                 return enableCircleFilter;
             }
 
@@ -453,8 +471,18 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Update the current user's location
         getCurrentLocation();
 
-        // Check if the current location exists. If it doesn't, return false
+        // Disable if the user's location doesn't exist
+        // Error message handled by hasLocationServicesEnabled()
         if (userLocation == null) return;
+
+        // Disable if circle filter is in use
+        if(enableCircleFilter) {
+            Toast.makeText(this.getActivity(), "Unavailable. Please turn off other tools before using this one.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Disable if user is not at AVC
+        if(!isUserInCampusBounds()) return;
 
         // Convert current user's location into a marker
         Marker userMarker = mMap.addMarker(new MarkerOptions()
@@ -575,26 +603,37 @@ public class MapsFragment extends Fragment implements LocationListener {
         moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), INITIAL_ZOOM);
     }
 
+    boolean hasLocationServicesEnabled(){
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Location Services");
+            builder.setMessage("Enable location services to use certain features of this app.");
+            builder.setPositiveButton("OK", (dialog, which) -> {});
+
+            // Create and show the alert dialog
+            builder.create().show();
+            locationIsEnabled = false;
+            return false;
+        }
+        locationIsEnabled = true;
+        return true;
+    }
+
     // TODO: figure out a way to not use SuppressLint
+    // Is only called when a Location related feature is trying to be used
+    // i.e., whenever that location related feature's button is pressed (center user,
+    // nearest lot, circle filter)
     @SuppressLint("MissingPermission")
     private Location getCurrentLocation() {
+        // Checks if location permissions are enabled
         if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setTitle("Location Services");
-                builder.setMessage("Enable location services to use certain features of this app.");
-                builder.setPositiveButton("OK", (dialog, which) -> {});
-
-                // Create and show the alert dialog
-                builder.create().show();
-                return null;
-            }
+            // Checks if location is enabled
+            if(!hasLocationServicesEnabled()) return null;
 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
-
-            userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             if (userLocation == null) return null;
 
