@@ -175,8 +175,6 @@ public class MapsFragment extends Fragment implements LocationListener {
         food = mainActivity.nav.getMenu().findItem(R.id.food);
         athletics = mainActivity.nav.getMenu().findItem(R.id.athletics);
 
-       // searchView = view.findViewById(R.id.searchView);
-
         parseJson(googleMap);
 
         // Handles marker title clicks
@@ -321,6 +319,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Removing the "Directions" and "Open in Maps" buttons
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setMyLocationButtonEnabled(false);
+        uiSettings.setCompassEnabled(false);
     };
 
     // Filter the markers based on the boolean values of each marker type's visibility
@@ -633,6 +632,12 @@ public class MapsFragment extends Fragment implements LocationListener {
             if(!hasLocationServicesEnabled()) return null;
 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+
+            // TODO: user automatically is visible only when using getLastKnownLocation(), want to change
+            //       so that they're visible all the time without using getLastKnownLocation().
+            //       Having it commented out, however, leads to bug where any location related button must be pressed
+            //       at least twice to have the user appear.
+
             //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             if (userLocation == null) return null;
