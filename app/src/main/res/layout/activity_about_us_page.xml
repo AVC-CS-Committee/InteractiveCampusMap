@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         layout="@layout/tool_bar" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -37,6 +37,34 @@
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/contributors_title"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content"
+                android:text="Contributors"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contributors_names"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+
+                android:text="Peter Kallos - Project Manager ('23)
+                              \nCristian Herrera
+                              \nSebastian Ala Torre ('23)
+                              \nNick
+                              \nTyler Carter-Mills ('23)
+                              \nNasif Hossain ('23)
+                              \nRyan
+                              \nLogan
+                              \nHarvey Freeman
+                              \nConan Nguyen ('23)"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:/>
 
             <TextView
                 android:layout_width="wrap_content"

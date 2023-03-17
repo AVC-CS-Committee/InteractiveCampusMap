@@ -4,7 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,7 +27,5 @@ public class AboutUsPage extends AppCompatActivity {
         toolbar.setNavigationIcon(AppCompatResources.getDrawable(AboutUsPage.this, R.drawable.icon_back));
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-
-        // Some comments
     }
 }
