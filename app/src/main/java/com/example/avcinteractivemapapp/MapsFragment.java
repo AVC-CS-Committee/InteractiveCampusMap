@@ -31,6 +31,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -155,6 +157,11 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Setting Map Button Icons
         centerMapButton = requireActivity().findViewById(R.id.center_map);
         centerUserButton = requireActivity().findViewById(R.id.centerUserButton);
+
+        // START TO RECIEVE LOCATION UPDATES ON MAP CREATION
+        // (if this isn't here, location updates will only start
+        // happening when a location related button is pressed)
+        getCurrentLocation();
 
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
@@ -352,9 +359,11 @@ public class MapsFragment extends Fragment implements LocationListener {
         return !showAthletics;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
+        mMap.setMyLocationEnabled(true);
         // Set the current lat and long
         userLocation = location;
         currentLat = location.getLatitude();
@@ -619,9 +628,10 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     // TODO: figure out a way to not use SuppressLint
-    // Is only called when a Location related feature is trying to be used
+    // Is only called when a Location related feature is trying to be used and on map creation
     // i.e., whenever that location related feature's button is pressed (center user,
     // nearest lot, circle filter)
+    // Both starts to request location updates and returns user's position
     @SuppressLint("MissingPermission")
     private Location getCurrentLocation() {
         // Checks if location permissions are enabled
@@ -631,21 +641,18 @@ public class MapsFragment extends Fragment implements LocationListener {
             // Checks if location is enabled
             if(!hasLocationServicesEnabled()) return null;
 
+            // Initiates location updates. Causes location related methods to be called
+            // (i.e., onLocationChanged())
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
-
-            // TODO: user automatically is visible only when using getLastKnownLocation(), want to change
-            //       so that they're visible all the time without using getLastKnownLocation().
-            //       Having it commented out, however, leads to bug where any location related button must be pressed
-            //       at least twice to have the user appear.
 
             //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            if (userLocation == null) return null;
+//            if (userLocation == null) return null;
+//
+//            currentLat = userLocation.getLatitude();
+//            currentLong = userLocation.getLongitude();
 
-            currentLat = userLocation.getLatitude();
-            currentLong = userLocation.getLongitude();
-
-            mMap.setMyLocationEnabled(true);
+//            mMap.setMyLocationEnabled(true);
 
             return userLocation;
         }
