@@ -63,8 +63,7 @@
                               \nHarvey Freeman
                               \nConan Nguyen ('23)"
                 android:textSize="16sp"
-                android:textStyle="normal"
-                android:/>
+                android:textStyle="normal"/>
 
             <TextView
                 android:layout_width="wrap_content"
