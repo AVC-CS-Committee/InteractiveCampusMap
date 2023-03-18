@@ -31,8 +31,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -643,16 +641,9 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Initiates location updates. Causes location related methods to be called
             // (i.e., onLocationChanged())
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
 
             //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-//            if (userLocation == null) return null;
-//
-//            currentLat = userLocation.getLatitude();
-//            currentLong = userLocation.getLongitude();
-
-//            mMap.setMyLocationEnabled(true);
 
             return userLocation;
         }
