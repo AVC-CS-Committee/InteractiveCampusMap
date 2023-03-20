@@ -43,8 +43,10 @@ public class TemplateMarkerDescriptions extends AppCompatActivity {
     }
 
     private void setTitle(String title) {
-        TextView titleText = findViewById(R.id.location_title_textView);
-        titleText.setText(title);
+//        TextView titleText = findViewById(R.id.location_title_textView);
+//        titleText.setText(title);
+        TextView toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(title);
     }
 
     private void setDescription(String description) {

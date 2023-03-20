@@ -206,7 +206,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         // Set the search view to be visible
         searchView.setVisibility(View.VISIBLE);
-        searchView.setQueryHint("Search Locations");
+        searchView.setQueryHint("Search Campus Locations");
         searchView.clearFocus();
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new SearchBar(locations, mMap));
