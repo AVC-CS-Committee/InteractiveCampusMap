@@ -4,7 +4,7 @@
 
     <stroke
         android:width="5dp"
-        android:color="@color/avc_menu"/>
+        android:color="?colorOnSecondary"/>
 
     <padding
         android:left="4dp"

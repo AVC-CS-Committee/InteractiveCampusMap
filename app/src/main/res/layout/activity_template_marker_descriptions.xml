@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_bg">
+    android:background="?colorOnPrimary">
 
     <include
         android:id="@+id/toolbar"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:textColor="@color/avc_light_red"
+            android:textColor="?colorOnSecondary"
             android:textSize="25sp"
             android:textStyle="bold"
             android:paddingTop="10dp"
@@ -111,7 +111,7 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/avc_light_red"
+                android:background="?colorOnSecondary"
                 android:layout_marginTop="1dp"
                 app:layout_constraintTop_toBottomOf="@id/description_title" />
 
@@ -137,7 +137,7 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/campus_safety_escort_description"
-                android:textColor="@color/black"
+                android:textColor="?colorOnTertiary"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
