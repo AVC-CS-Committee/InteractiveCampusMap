@@ -26,25 +26,58 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About Us"
+                android:text="@string/about_us_title"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingExtra="10dp"
+                android:padding="8dp"
                 android:text="@string/about_us_description"
+                android:textIsSelectable="true"
                 android:textSize="16sp"
-                android:textStyle="normal"
-                android:padding="8dp" />
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/contributors_title"
                 android:layout_width="226dp"
                 android:layout_height="wrap_content"
-                android:text="Contributors"
+                android:text="@string/contributors_title"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="250dp">
+                <ImageView
+                    android:id="@+id/conan_picture"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    app:srcCompat="@drawable/conan_picture"/>
+
+                <TextView
+                    android:id="@+id/conan_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Name: Conan Nguyen"
+                    android:layout_below="@+id/conan_picture"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="30dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="cnguyen17@avc.edu"
+                    android:layout_below="@+id/conan_name"
+                    android:paddingLeft="30dp"/>
+
+            </RelativeLayout>
+            
 
             <TextView
                 android:id="@+id/contributors_names"
@@ -52,42 +85,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
 
-                android:text="Peter Kallos - Project Manager ('23)
-                              \nCristian Herrera
-                              \nSebastian Ala Torre ('23)
-                              \nNick
-                              \nTyler Carter-Mills ('23)
-                              \nNasif Hossain ('23)
-                              \nRyan
-                              \nLogan
-                              \nHarvey Freeman
-                              \nConan Nguyen ('23)"
+                android:text="@string/contributors_names"
                 android:textSize="16sp"
                 android:textStyle="normal"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contact"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:paddingTop="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_us_phone"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                android:padding="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_us_email"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                android:padding="8dp" />
 
         </LinearLayout>
     </ScrollView>
