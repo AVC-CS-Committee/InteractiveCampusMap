@@ -379,16 +379,18 @@ public class MapsFragment extends Fragment implements LocationListener {
     public void onResume() {
         super.onResume();
 
+        // Not sure why this try catch was here, keeping just in case
+
         // Try-catch purpose: Should be catching an exception on app re-entry where MainActivity is not yet visible
         //                    Should only be catching this exception once for every re-entry
         // Overall purpose: Disable all GPS related features on resuming MapsFragment (i.e., app was minimized/navigated away from)
-        try {
-            // Disable all GPS related features
-            disableCircleFilter();
-        } catch (NullPointerException e) {
-            // Expected Exception
-            e.printStackTrace();
-        }
+//        try {
+//            // Disable all GPS related features
+//            disableCircleFilter();
+//        } catch (NullPointerException e) {
+//            // Expected Exception
+//            e.printStackTrace();
+//        }
 
     }
 
