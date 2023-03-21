@@ -41,7 +41,6 @@
                     android:id="@+id/searchCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="25dp"
                     app:cardUseCompatPadding="true">
