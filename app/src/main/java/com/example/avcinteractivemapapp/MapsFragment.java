@@ -85,7 +85,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
 
     // Marker Lists
-    private final ArrayList<Marker> userLocationMarkers = new ArrayList<>();
+//    private final ArrayList<Marker> userLocationMarkers = new ArrayList<>();
     private final ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
     private final ArrayList<Marker> classroomLocations = new ArrayList<>();
     private final ArrayList<Marker> foodLocations = new ArrayList<>();
@@ -340,7 +340,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         for (Marker marker : resourceLocations) marker.setVisible(showStudentResources);
         for (Marker marker : foodLocations) marker.setVisible(showFood);
         for (Marker marker : athleticLocations) marker.setVisible(showAthletics);
-        for (Marker marker : userLocationMarkers) marker.setVisible(true);
+       // for (Marker marker : userLocationMarkers) marker.setVisible(true);
     }
 
     // Helper method that toggles all markers to be visible
@@ -474,7 +474,6 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     }
 
-    // TODO: Disable nearest lot calculator when circle filter is active
     public void enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
@@ -510,22 +509,22 @@ public class MapsFragment extends Fragment implements LocationListener {
         moveMapCamera(mMap, nearestLotCoords, MARKER_ZOOM);
 
         // Check if the marker is visible, if it isn't, make it visible
-        if (!nearestLotMarker.isVisible() && userLocationMarkers.size() == 0) {
-            userLocationMarkers.add(nearestLotMarker);
+        if (!nearestLotMarker.isVisible() /*&& userLocationMarkers.size() == 0*/) {
+            //userLocationMarkers.add(nearestLotMarker);
             nearestLotMarker.setVisible(true);
         }
-        else if(userLocationMarkers.size() >= 1 ){
-            if(showParkingLots) {
-                userLocationMarkers.clear();
-                userLocationMarkers.add(nearestLotMarker);
-            }
-            else{
-                userLocationMarkers.get(0).setVisible(false);
-                userLocationMarkers.clear();
-                userLocationMarkers.add(nearestLotMarker);
-                nearestLotMarker.setVisible(true);
-            }
-        }
+//        else if(userLocationMarkers.size() >= 1 ){
+//            if(showParkingLots) {
+//                userLocationMarkers.clear();
+//                userLocationMarkers.add(nearestLotMarker);
+//            }
+//            else{
+//                userLocationMarkers.get(0).setVisible(false);
+//                userLocationMarkers.clear();
+//                userLocationMarkers.add(nearestLotMarker);
+//                nearestLotMarker.setVisible(true);
+//            }
+//        }
 
         // Show the marker title
         nearestLotMarker.showInfoWindow();
