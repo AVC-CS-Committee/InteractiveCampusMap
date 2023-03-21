@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
         }
 
         // Animates the dropdown arrow and expands the CardView when clicked
-        holder.expandIcon.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             // handle expand/collapse functionality
             if(holder.descriptionTextView.getVisibility() == View.GONE){
                 holder.descriptionTextView.setVisibility(View.VISIBLE);
@@ -68,6 +69,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
 
         TextView titleTextView, descriptionTextView;
         private final ImageView expandIcon;
+        private final CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +77,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
             titleTextView = itemView.findViewById(R.id.textView);
             descriptionTextView = itemView.findViewById(R.id.textView4);
             expandIcon = itemView.findViewById(R.id.spinner);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 }
