@@ -9,7 +9,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:cardBackgroundColor="?colorOnPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/avc_light_red"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,15 +27,16 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="35dp"
                 android:layout_marginTop="16dp"
                 android:textSize="16sp"
                 android:text="Question"
+                android:lineSpacingMultiplier="1.2"
+                android:letterSpacing="0.01"
                 android:ellipsize="end"
-                android:textColor="?colorOnSecondary"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/spinner"
-                android:paddingRight="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -42,12 +45,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_spinner"
-                android:rotation="0"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:scaleType="center"
-                android:adjustViewBounds="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView"
+                android:layout_marginTop="15dp"
                 android:paddingRight="5dp"/>
 
             <TextView
@@ -59,7 +60,9 @@
                 android:layout_marginTop="8dp"
                 android:textSize="14sp"
                 android:text="Answer"
-                android:textColor="?colorOnSecondary"
+                android:lineSpacingMultiplier="1.2"
+                android:letterSpacing="0.01"
+                android:textColor="@color/white"
                 android:textColorLink="@color/gold"
                 android:visibility="gone"
                 android:maxLines="3"

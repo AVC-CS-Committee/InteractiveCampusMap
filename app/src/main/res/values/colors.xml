@@ -18,6 +18,9 @@
     <color name="avc_lighter_red">#C4265A</color>
     <color name="status_bar">#120006</color>
     <color name="blue">#68D3FF</color>
-    <color name="light_blue">#5C92E0FF</color>
+    <color name="lighter_blue">#D9ECFE</color>
+    <color name="lighter_blue_transparent">#EDD9ECFE</color>
+    <color name="light_blue">#A8D5FF</color>
+    <color name="circle_filter_blue">#5C92E0FF</color>
 
 </resources>

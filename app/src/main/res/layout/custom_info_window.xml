@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/info_window_background"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- Customize the content of the info window layout as needed -->
+    <TextView
+        android:id="@+id/windowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Testing"
+        android:layout_gravity="center"
+        android:fontFamily="@font/open_sans_bold"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/windowDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap for more info"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        android:textSize="14sp"/>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/windowImage"-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:src="@color/avc_light_red"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:scaleType="fitCenter"/>-->
+
+</LinearLayout>

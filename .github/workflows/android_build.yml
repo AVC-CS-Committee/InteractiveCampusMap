@@ -14,9 +14,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-
-      - name: Run Tests
-        run: ./gradlew test
+          
+      - name: Load API Token from secrets
+        env: 
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+        run: echo MAPS_API_KEY=\"$MAPS_API_KEY\" > ./local.properties
+        
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
       - name: Build Project
         run: ./gradlew assemble

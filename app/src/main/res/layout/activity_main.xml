@@ -88,7 +88,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/icon_center_user"/>
+                    android:background="@drawable/icon_center_user_light"/>
 
 
                 <ImageButton
@@ -100,7 +100,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/icon_center_map"
+                    android:background="@drawable/icon_center_map_light"
                     android:contentDescription="@string/center_gps_button" />
 
             </RelativeLayout>

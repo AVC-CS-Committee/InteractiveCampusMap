@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -27,8 +28,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.faq_items, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     //Sets the value of the title and description textViews to whatever values the current position in faqList holds
@@ -48,7 +48,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
         }
 
         // Animates the dropdown arrow and expands the CardView when clicked
-        holder.expandIcon.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             // handle expand/collapse functionality
             if(holder.descriptionTextView.getVisibility() == View.GONE){
                 holder.descriptionTextView.setVisibility(View.VISIBLE);
@@ -65,10 +65,11 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
         return faqList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleTextView, descriptionTextView;
-        private ImageView expandIcon;
+        private final ImageView expandIcon;
+        private final CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,9 +77,7 @@ public class FAQRecyclerAdapter extends RecyclerView.Adapter<FAQRecyclerAdapter.
             titleTextView = itemView.findViewById(R.id.textView);
             descriptionTextView = itemView.findViewById(R.id.textView4);
             expandIcon = itemView.findViewById(R.id.spinner);
-
+            cardView = itemView.findViewById(R.id.cardView);
         }
-
     }
-
 }

@@ -5,11 +5,17 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_500</item>
         <item name="colorPrimaryVariant">@color/red_700</item>
-        <item name="colorOnPrimary">@color/white_item</item>
+        <item name="colorOnPrimary">@color/white_bg</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/pink_200</item>
-        <item name="colorSecondaryVariant">@color/pink_700</item>
-        <item name="colorOnSecondary">@color/black_txt</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/avc_light_red</item>
+
+        <item name="colorOnTertiary">@color/black</item>
+
+        <!--Changes color of nav menu items-->
+        <!--<item name="colorOnSurface">@color/gold</item>-->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/avc_menu</item>
         <!-- Customize your theme here. -->

@@ -2,41 +2,35 @@ package com.example.avcinteractivemapapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,20 +46,18 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.navigation.NavigationView;
 import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * DESCRIPTION:
@@ -82,6 +74,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     final float MAX_ZOOM = 17f;
     // Initial zoom must be larger (more zoomed in) than max to prevent the max zoom from breaking
     final float INITIAL_ZOOM = 17.001f;
+    final float MARKER_ZOOM = 19f;
     final LatLng AVC_COORDS = new LatLng(34.678652329599096, -118.18616290156892);
     final LatLng SOUTHWEST_BOUND = new LatLng(34.674910, -118.192287);
     final LatLng NORTHEAST_BOUND = new LatLng(34.682133, -118.183807);
@@ -92,12 +85,12 @@ public class MapsFragment extends Fragment implements LocationListener {
 
 
     // Marker Lists
-    private ArrayList<Marker> userLocationMarkers = new ArrayList<>();
-    private ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
-    private ArrayList<Marker> classroomLocations = new ArrayList<>();
-    private ArrayList<Marker> foodLocations = new ArrayList<>();
-    private ArrayList<Marker> athleticLocations = new ArrayList<>();
-    private ArrayList<Marker> resourceLocations = new ArrayList<>();
+//    private final ArrayList<Marker> userLocationMarkers = new ArrayList<>();
+    private final ArrayList<Marker> parkingLotMarkers = new ArrayList<>();
+    private final ArrayList<Marker> classroomLocations = new ArrayList<>();
+    private final ArrayList<Marker> foodLocations = new ArrayList<>();
+    private final ArrayList<Marker> athleticLocations = new ArrayList<>();
+    private final ArrayList<Marker> resourceLocations = new ArrayList<>();
 
     // Booleans for determining the visibility of markers
     public boolean showParkingLots = false;
@@ -114,16 +107,19 @@ public class MapsFragment extends Fragment implements LocationListener {
     private Location userLocation;
     private double currentLat;
     private double currentLong;
-    private final int REQUEST_CODE = 101;
     public GoogleMap mMap;
+    boolean locationIsEnabled = false;
 
     // GPS Related
     private Circle previousCircle;
-    private LocationRequest mLocationRequest;
     public static boolean enableCircleFilter = false;
 
     // Icons for markers
     BitmapDescriptor parkingMarkerIcon, classroomMarkerIcon, foodMarkerIcon, athleticsMarkerIcon, resourceMarkerIcon;
+
+    // Checkboxes
+    MenuItem lots, classes, studentRes, food, athletics;
+
     // Temporary
     BitmapDescriptor markerIcon;
     ImageButton centerMapButton;
@@ -131,29 +127,60 @@ public class MapsFragment extends Fragment implements LocationListener {
     View view;
     SearchView searchView;
 
+    int currentNightMode;
+
     // Handles map manipulation once the map is ready
     // Replaces onMapReady()
+    @SuppressLint({"ClickableViewAccessibility"})
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
-        moveMapCamera(googleMap, AVC_COORDS);
+        moveMapCamera(googleMap, AVC_COORDS, INITIAL_ZOOM);
 
-        mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) requireActivity();
 
         mMap = googleMap;
 
+        // Setting Marker Icons
         markerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker);
         parkingMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_parking);
         classroomMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_classroom);
         foodMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_food);
         resourceMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_resources);
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
-        centerMapButton = getActivity().findViewById(R.id.center_map);
-        centerUserButton = getActivity().findViewById(R.id.centerUserButton);
-       // searchView = view.findViewById(R.id.searchView);
+
+        // Determines whether in light or dark mode
+        currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        // Setting Map Button Icons
+        centerMapButton = requireActivity().findViewById(R.id.center_map);
+        centerUserButton = requireActivity().findViewById(R.id.centerUserButton);
+
+        // START TO RECIEVE LOCATION UPDATES ON MAP CREATION
+        // (if this isn't here, location updates will only start
+        // happening when a location related button is pressed)
+        getCurrentLocation();
+
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // Night mode is not active on device
+                centerMapButton.setBackgroundResource(R.drawable.icon_center_map_light);
+                centerUserButton.setBackgroundResource(R.drawable.icon_center_user_light);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                centerMapButton.setBackgroundResource(R.drawable.icon_center_map_dark);
+                centerUserButton.setBackgroundResource(R.drawable.icon_center_user_dark);
+                break;
+        }
+
+        // Setting Nav View Items (Checkboxes)
+        lots = mainActivity.nav.getMenu().findItem(R.id.lots);
+        classes = mainActivity.nav.getMenu().findItem(R.id.classrooms);
+        studentRes = mainActivity.nav.getMenu().findItem(R.id.studentResources);
+        food = mainActivity.nav.getMenu().findItem(R.id.food);
+        athletics = mainActivity.nav.getMenu().findItem(R.id.athletics);
 
         parseJson(googleMap);
-
 
         // Handles marker title clicks
         googleMap.setOnInfoWindowClickListener(marker -> {
@@ -173,15 +200,19 @@ public class MapsFragment extends Fragment implements LocationListener {
             startActivity(intent);
         });
 
+        // TODO: Setup Custom Info Windows for Markers
+        CustomInfoWindowAdapter infoWindowAdapter = new CustomInfoWindowAdapter(getActivity());
+        mMap.setInfoWindowAdapter(infoWindowAdapter);
+
         // Set the search view to be visible
         searchView.setVisibility(View.VISIBLE);
-        searchView.setQueryHint("Search Locations");
+        searchView.setQueryHint("Search Campus Locations");
         searchView.clearFocus();
         // adding on query listener for our search view.
         searchView.setOnQueryTextListener(new SearchBar(locations, mMap));
 
-        // Handles map clicks (was used for the old version of the nearest lot calculator)
-        googleMap.setOnMapClickListener(latLng -> {});
+        // Handles map clicks
+        googleMap.setOnMapClickListener(latLng -> SearchBar.hideKeyboard(searchView, requireActivity()));
 
         // Handle map camera movement
         googleMap.setOnCameraMoveListener(() -> {
@@ -190,49 +221,110 @@ public class MapsFragment extends Fragment implements LocationListener {
             // Ensures that the user doesn't go over the max zoom amount
             if (position.zoom > MAX_ZOOM) googleMap.setMinZoomPreference(MAX_ZOOM);
 
-            SearchBar.hideKeyboard(searchView, getActivity());
+            SearchBar.hideKeyboard(searchView, requireActivity());
 
         });
 
-
         // TODO: Hide keyboard on marker click
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(@NonNull Marker marker) {
-                SearchBar.hideKeyboard(searchView, getActivity());
-                return false;
-            }
+        mMap.setOnMarkerClickListener(marker -> {
+            SearchBar.hideKeyboard(searchView, requireActivity());
+
+            // Zoom into the marker
+            moveMapCamera(googleMap, marker.getPosition(), MARKER_ZOOM);
+
+            // Show info window
+            marker.showInfoWindow();
+            return true;
         });
 
         // Handles center map button clicks
-        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS));
+        centerMapButton.setOnClickListener(view -> moveMapCamera(googleMap, AVC_COORDS, INITIAL_ZOOM));
 
-        centerUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        centerMapButton.setOnTouchListener((v, event) -> {
 
-                moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    // Night mode is not active on device
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setBackgroundResource(R.drawable.icon_center_map_pressed_light);
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        v.setBackgroundResource(R.drawable.icon_center_map_light);
+                    }
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    // Night mode is active on device
+                    // Night mode is not active on device
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setBackgroundResource(R.drawable.icon_center_map_pressed_dark);
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        v.setBackgroundResource(R.drawable.icon_center_map_dark);
+                    }
+                    break;
+            }
+            return false;
+
+        });
+
+        centerUserButton.setOnClickListener(v -> {
+            // Goes through 3 checks, each with its own informational message (prevents dead button)
+            // 1: Are permissions enabled on the device
+            if (mainActivity.hasLocationPermission()) {
+                // 2: Does the user's location exist
+                if(getCurrentLocation() != null) {
+                    // 3: Is the user on campus (message handled by isUserInCampusBounds())
+                    if(isUserInCampusBounds()) {
+                        moveMapCamera(googleMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), MARKER_ZOOM);
+                    }
+                }
+                else if(locationIsEnabled) {
+                    Toast.makeText(this.getActivity(), "Oops! Something went wrong. Please wait a few seconds and try again.", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                EasyPermissions.requestPermissions(this, "Location services is disabled. Some features may not work properly", MainActivity.RC_PERMISSIONS, MainActivity.REQUIRED_PERMISSIONS);
             }
         });
 
+        centerUserButton.setOnTouchListener((v, event) -> {
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    // Night mode is not active on device
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setBackgroundResource(R.drawable.icon_center_user_pressed_light);
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        v.setBackgroundResource(R.drawable.icon_center_user_light);
+                    }
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    // Night mode is active on device
+                    // Night mode is not active on device
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setBackgroundResource(R.drawable.icon_center_user_pressed_dark);
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        v.setBackgroundResource(R.drawable.icon_center_user_dark);
+                    }
+                    break;
+            }
+            return false;
+        });
+
         // GPS Related
-        //fusedLocationProviderClient = getFusedLocationProviderClient(this.requireActivity());
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        getCurrentLocation();
+        locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
         // The uiSettings object removes default Google Maps hover buttons
         UiSettings uiSettings = googleMap.getUiSettings();
         // Removing the "Directions" and "Open in Maps" buttons
         uiSettings.setMapToolbarEnabled(false);
         uiSettings.setMyLocationButtonEnabled(false);
-
-        // Changes position of set my location button
-//        View locationButton = ((View)  getActivity().findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-//        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-//        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-//        rlp.setMargins(0, 180, 180, 0);
-
+        uiSettings.setCompassEnabled(false);
     };
 
     // Filter the markers based on the boolean values of each marker type's visibility
@@ -248,24 +340,12 @@ public class MapsFragment extends Fragment implements LocationListener {
         for (Marker marker : resourceLocations) marker.setVisible(showStudentResources);
         for (Marker marker : foodLocations) marker.setVisible(showFood);
         for (Marker marker : athleticLocations) marker.setVisible(showAthletics);
-        for (Marker marker : userLocationMarkers) marker.setVisible(true);
+       // for (Marker marker : userLocationMarkers) marker.setVisible(true);
     }
 
     // Helper method that toggles all markers to be visible
     public void showAllMarkers() {
         for (Marker marker : locations.keySet()) marker.setVisible(true);
-    }
-
-    // Toggles all markers to be invisible
-    public void disableAllMarkers() {
-        for (Marker marker : locations.keySet()) marker.setVisible(false);
-    }
-
-    // Show specific markers
-    public void showSpecificMarkers(ArrayList<Marker> markers) {
-        for(Marker marker : markers) {
-            marker.setVisible(true);
-        }
     }
 
     // Helper method that checks if all the filters are set to false (unchecked)
@@ -277,17 +357,20 @@ public class MapsFragment extends Fragment implements LocationListener {
         return !showAthletics;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
+        mMap.setMyLocationEnabled(true);
         // Set the current lat and long
+        userLocation = location;
         currentLat = location.getLatitude();
         currentLong = location.getLongitude();
 
         // For circle filter. If active and user is in bounds, create the circle
         // Circle is created here in order to remove the previously created circle more quickly.
         // Without this, the circle will not update properly
-        if(enableCircleFilter && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))){
+        if (enableCircleFilter && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))) {
             createCircle(location);
         }
     }
@@ -296,16 +379,18 @@ public class MapsFragment extends Fragment implements LocationListener {
     public void onResume() {
         super.onResume();
 
+        // Not sure why this try catch was here, keeping just in case
+
         // Try-catch purpose: Should be catching an exception on app re-entry where MainActivity is not yet visible
         //                    Should only be catching this exception once for every re-entry
         // Overall purpose: Disable all GPS related features on resuming MapsFragment (i.e., app was minimized/navigated away from)
-        try{
-            // Disable all GPS related features
-            disableCircleFilter();
-        } catch(NullPointerException e) {
-            // Expected Exception
-            e.printStackTrace();
-        }
+//        try {
+//            // Disable all GPS related features
+//            disableCircleFilter();
+//        } catch (NullPointerException e) {
+//            // Expected Exception
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -324,80 +409,125 @@ public class MapsFragment extends Fragment implements LocationListener {
         // Stop displaying location
         mMap.setMyLocationEnabled(false);
 
+        // Set location to null
+        userLocation = null;
+
         // Turn off all GPS related features when location is disabled
         if(enableCircleFilter){
             disableCircleFilter();
         }
 
+        // Reset all filters
+        disableAllFilters();
+        showAllMarkers();
+
+    }
+
+    // Disables all locations types and their checkboxes (filters)
+    public void disableAllFilters() {
+        // Disable checkboxes
+        lots.setChecked(false);
+        classes.setChecked(false);
+        studentRes.setChecked(false);
+        food.setChecked(false);
+        athletics.setChecked(false);
+
+        // Disable location types
+        showParkingLots = false;
+        showClassrooms = false;
+        showFood = false;
+        showAthletics = false;
+        showStudentResources = false;
+    }
+
+    boolean isUserInCampusBounds() {
+        LatLng currentUserCoords = new LatLng(currentLat, currentLong);
+        if (!AVC_BOUNDS.contains(currentUserCoords)) {
+            Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     public boolean enableCircleFilter() {
-        // Checks if GPS is enabled
-        if(!mainActivity.isMapsEnabled()){
-            // GPS is disabled, return false
-            return false;
+        // Check 1: Is Location Enabled
+        if (getCurrentLocation() != null) {
+
+            // Check 2: Is User at AVC
+            if(!isUserInCampusBounds()) {
+                return enableCircleFilter;
+            }
+
+            // Continue with circle filter logic
+            enableCircleFilter = !enableCircleFilter;
+            circleFilterHandler();
         }
 
-        enableCircleFilter = !enableCircleFilter;
-        getCurrentLocation();
-        circleFilterHandler();
         return enableCircleFilter;
     }
 
     public void disableCircleFilter(){
         enableCircleFilter = false;
-        getCurrentLocation();
+        //getCurrentLocation();
         circleFilterHandler();
         mainActivity.toggleOffCircleFilterSwitch();
 
     }
 
-    // TODO: Disable nearest lot calculator when circle filter is active
-    public boolean enableParkingCalculator() {
+    public void enableParkingCalculator() {
         // Update the current user's location
         getCurrentLocation();
 
-        // Check if the current location exists. If it doesn't, return false
-        if (currentLong == 0.0 && currentLat == 0.0) return false;
+        // Disable if the user's location doesn't exist
+        // Error message handled by hasLocationServicesEnabled()
+        if (userLocation == null) return;
+
+        // Disable if circle filter is in use
+        if(enableCircleFilter) {
+            Toast.makeText(this.getActivity(), "Unavailable. Please turn off other tools before using this one.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Disable if user is not at AVC
+        if(!isUserInCampusBounds()) return;
 
         // Convert current user's location into a marker
-        Marker userLocation = mMap.addMarker(new MarkerOptions()
+        Marker userMarker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(currentLat, currentLong)));
 
         // Calculate the nearest lot to the user then grab the lot marker
-        Pair<Integer, Double> nearestLot = calculateNearestLot(userLocation);
+        Pair<Integer, Double> nearestLot = calculateNearestLot(userMarker);
         Marker nearestLotMarker = parkingLotMarkers.get(nearestLot.first);
 
         // Remove the temporary marker
-        userLocation.remove();
+        if (userMarker != null) userMarker.remove();
 
         // Get the lot's coordinates
         LatLng nearestLotCoords = nearestLotMarker.getPosition();
 
         // Move the map camera to the coords
-        moveMapCamera(mMap, nearestLotCoords);
+        moveMapCamera(mMap, nearestLotCoords, MARKER_ZOOM);
 
         // Check if the marker is visible, if it isn't, make it visible
-        if (!nearestLotMarker.isVisible() && userLocationMarkers.size() == 0) {
-            userLocationMarkers.add(nearestLotMarker);
+        if (!nearestLotMarker.isVisible() /*&& userLocationMarkers.size() == 0*/) {
+            //userLocationMarkers.add(nearestLotMarker);
             nearestLotMarker.setVisible(true);
         }
-        else if(userLocationMarkers.size() >= 1 ){
-            if(showParkingLots) {
-                userLocationMarkers.clear();
-                userLocationMarkers.add(nearestLotMarker);
-            }
-            else{
-                userLocationMarkers.get(0).setVisible(false);
-                userLocationMarkers.clear();
-                userLocationMarkers.add(nearestLotMarker);
-                nearestLotMarker.setVisible(true);
-            }
-        }
+//        else if(userLocationMarkers.size() >= 1 ){
+//            if(showParkingLots) {
+//                userLocationMarkers.clear();
+//                userLocationMarkers.add(nearestLotMarker);
+//            }
+//            else{
+//                userLocationMarkers.get(0).setVisible(false);
+//                userLocationMarkers.clear();
+//                userLocationMarkers.add(nearestLotMarker);
+//                nearestLotMarker.setVisible(true);
+//            }
+//        }
 
         // Show the marker title
         nearestLotMarker.showInfoWindow();
-        return true;
     }
 
     // Creates circle around user and contains logic for circle filter
@@ -412,7 +542,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         CircleOptions circleOptions = new CircleOptions()
                 .center(new LatLng(location.getLatitude(), location.getLongitude()))
                 .radius(100)  // radius in meters
-                .fillColor(getResources().getColor(R.color.light_blue))
+                .fillColor(getResources().getColor(R.color.circle_filter_blue))
                 .strokeColor(Color.TRANSPARENT)
                 .strokeWidth(2);
 
@@ -454,25 +584,16 @@ public class MapsFragment extends Fragment implements LocationListener {
                 previousCircle.remove();
             }
 
-            showAllMarkers();
-            // NOTE: not sure why this logic is here or what it does. using show all markers
-            //       instead since it makes more sense
             // If the marker is already visible, keep it visible, if not, ensure it's not
-            /*for (Marker marker : locations.keySet()) {
+            // This logic is needed to "save" marker states whenever this activity is resumed
+            // (i.e., filtering a location, entering a location description, and returning to
+            // the fragment activity will have the filtered marker states "saved")
+            for (Marker marker : locations.keySet()) {
                 if(!marker.isVisible()){
                     marker.setVisible(false);
                 }
-            }*/
+            }
 
-            return;
-        }
-
-        // Get the last known location from the network provider
-        LatLng currentUserCoords = new LatLng(currentLat, currentLong);
-
-        // Checks if user is not within map bounds. If they aren't, show toast and return.
-        if (!AVC_BOUNDS.contains(currentUserCoords)) {
-            Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -486,67 +607,65 @@ public class MapsFragment extends Fragment implements LocationListener {
         createCircle(userLocation);
 
         // Center on user
-        moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+        moveMapCamera(mMap, new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), INITIAL_ZOOM);
     }
 
-    // Locations API required logic for GPS. Tutorial used for getting current location: https://javapapers.com/android/get-current-location-in-android/
-    private void getCurrentLocation() {
+    boolean hasLocationServicesEnabled(){
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Location Services");
+            builder.setMessage("Enable location services to use certain features of this app.");
+            builder.setPositiveButton("OK", (dialog, which) -> {});
 
-        // Checks if permission is not granted, evaluates to true when permissions are not granted
-        if (ActivityCompat.checkSelfPermission(
-                this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Request for location permission
-            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
+            // Create and show the alert dialog
+            builder.create().show();
+            locationIsEnabled = false;
+            return false;
         }
+        locationIsEnabled = true;
+        return true;
+    }
 
-        Location location;
-        // Requests location updates. Second parameter determines how quickly the user's location is updated
-        // The quicker the location is updated the more quickly the battery drains
-        // Currently using 2500 which is the highest it can be without causing any bugs
-        // Also, GPS Provider is more accurate but consumes more battery. Good rule of thumb is to always
-        // use Network Provider when accuracy is not the priority
-        if(enableCircleFilter){
-            // Use GPS Provider
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
-            // Get the last known location from the network provider
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-        else{
-            // Use Network Provider
+    // TODO: figure out a way to not use SuppressLint
+    // Is only called when a Location related feature is trying to be used and on map creation
+    // i.e., whenever that location related feature's button is pressed (center user,
+    // nearest lot, circle filter)
+    // Both starts to request location updates and returns user's position
+    @SuppressLint("MissingPermission")
+    private Location getCurrentLocation() {
+        // Checks if location permissions are enabled
+        if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            // Checks if location is enabled
+            if(!hasLocationServicesEnabled()) return null;
+
+            // Initiates location updates. Causes location related methods to be called
+            // (i.e., onLocationChanged())
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
-            // Get the last known location from the network provider
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            return userLocation;
         }
-
-        if (location == null) return;
-
-        // Makes user's current location visible
-        mMap.setMyLocationEnabled(true);
-
-        // Update private fields
-        userLocation = location;
-        currentLat = location.getLatitude();
-        currentLong = location.getLongitude();
+        return null;
     }
 
     // Permission Request for GPS
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
-            }
-        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
@@ -561,15 +680,24 @@ public class MapsFragment extends Fragment implements LocationListener {
 
         if (mapFragment == null) return;
 
-        searchView = getActivity().findViewById(R.id.searchView);
+        searchView = requireActivity().findViewById(R.id.searchView);
         mapFragment.getMapAsync(callback);
     }
 
     private void setMapStyle(@NonNull GoogleMap googleMap) {
          // Adds custom JSON file which uses AVC colors for Google Maps
-         try {
-             googleMap.setMapStyle(
-                     MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.custom_avc_map));
+        currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        try {
+
+             switch (currentNightMode) {
+                 case Configuration.UI_MODE_NIGHT_NO:
+                     // Night mode is not active on device
+                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_light));
+                     break;
+                 case Configuration.UI_MODE_NIGHT_YES:
+                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_dark));
+                     break;
+             }
          } catch(Resources.NotFoundException e){
              Log.e("JSON", "Can't find style. Error: ", e);
          }
@@ -581,10 +709,10 @@ public class MapsFragment extends Fragment implements LocationListener {
         googleMap.setLatLngBoundsForCameraTarget(AVC_BOUNDS);
     }
 
-    public void moveMapCamera(GoogleMap googleMap, LatLng coords) {
+    public void moveMapCamera(GoogleMap googleMap, LatLng coords, float zoomLevel) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(coords)
-                .zoom(INITIAL_ZOOM)
+                .zoom(zoomLevel)
                 .bearing(0)
                 .build();
 
@@ -623,6 +751,8 @@ public class MapsFragment extends Fragment implements LocationListener {
 
                 // All markers are stored in the locations hashmap with a MapLocation object.
                 locations.put(tmpMarker, new MapLocation(title, description, coords, locationImages));
+
+                if (tmpMarker == null) return;
 
                 // Location types are sorted into their respective ArrayLists
                 if (locationType.equals("parking")) {
@@ -698,6 +828,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
 
         // below line is use to set bounds to our vector drawable.
+        if (vectorDrawable == null) return null;
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
 
         // below line is use to create a bitmap for our

@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SearchBar implements SearchView.OnQueryTextListener {
-    private HashMap<Marker, MapLocation> locations;
-    private GoogleMap mMap;
-    private MapsFragment fragment;
+    private final HashMap<Marker, MapLocation> locations;
+    private final GoogleMap mMap;
+    private final MapsFragment fragment;
 
     public SearchBar(HashMap<Marker, MapLocation> locations, GoogleMap mMap) {
         this.locations = locations;
@@ -35,7 +35,7 @@ public class SearchBar implements SearchView.OnQueryTextListener {
 
             // If matches, move camera and show marker title
             if (locationTitle.contains(query)) {
-                fragment.moveMapCamera(mMap, entry.getValue().getLocationCoords());
+                fragment.moveMapCamera(mMap, entry.getValue().getLocationCoords(), fragment.MARKER_ZOOM);
                 entry.getKey().showInfoWindow();
             }
         }
@@ -49,6 +49,7 @@ public class SearchBar implements SearchView.OnQueryTextListener {
 
         // Hide the keyboard for the SearchView
         imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+        searchView.clearFocus();
     }
     @Override
     public boolean onQueryTextChange(String newText) {

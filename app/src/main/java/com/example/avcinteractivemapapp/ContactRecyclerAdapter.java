@@ -3,8 +3,6 @@ package com.example.avcinteractivemapapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,11 +16,10 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
 
     public ContactRecyclerAdapter(ArrayList<ContactItems> contactItems) { this.contactItems = contactItems; }
 
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView contactName;
-        private TextView contactDescription;
-        private TextView contactNumber;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        private final TextView contactName;
+        private final TextView contactDescription;
+        private final TextView contactNumber;
 
         public MyViewHolder(final View view){
             super(view);
@@ -30,7 +27,6 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
             contactDescription = view.findViewById(R.id.contact_description);
             contactNumber = view.findViewById(R.id.contact_number);
         }
-
     }
 
     @NonNull
@@ -55,5 +51,4 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
     public int getItemCount() {
         return contactItems.size();
     }
-
 }

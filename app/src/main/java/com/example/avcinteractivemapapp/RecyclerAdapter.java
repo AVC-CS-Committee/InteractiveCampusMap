@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     //Holds all help items
-    private ArrayList<HelpItems> helpItems;
+    private final ArrayList<HelpItems> helpItems;
 
     //Listener for when a help item is clicked
-    private RecyclerViewClickListener listener;
+    private final RecyclerViewClickListener listener;
 
     //When we want to create an instance of the recycler adapter, we need to pass it a list of users
     public RecyclerAdapter(ArrayList<HelpItems> helpItems, RecyclerViewClickListener listener){
@@ -25,7 +25,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView nameTxt;
+        private final TextView nameTxt;
 
         public MyViewHolder(final View view){
             super(view);

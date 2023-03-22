@@ -7,8 +7,13 @@
         <item name="colorOnPrimary">@color/grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/pink_200</item>
-        <item name="colorSecondaryVariant">@color/pink_700</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">#474747</item>
+        <item name="colorOnSecondary">#C23764</item>
+        <item name="colorOnTertiary">@color/white</item>
+
+        <!--Changes color of nav menu items-->
+        <!--        <item name="colorOnSurface">#FFBA74</item>-->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
