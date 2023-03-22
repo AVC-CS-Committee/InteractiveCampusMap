@@ -42,19 +42,23 @@
 <!--        android:layout_marginTop="1dp"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/location_title_textView" />-->
 
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:elevation="4dp"
+        android:background="@drawable/toolbar_dropshadow"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        />
 
     <ViewFlipper
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintHeight_max="200dp"
         android:autoStart="false"
-        android:background="@drawable/description_border"
         android:id="@+id/imageScroller"
-        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
     </ViewFlipper>
@@ -65,15 +69,22 @@
 
     <!-- Divider View 2 -->
 
-<!--    <View-->
-<!--        android:id="@+id/divider2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_marginRight="20dp"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_height="2dp"-->
-<!--        android:background="@color/avc_light_red"-->
-<!--        android:layout_marginTop="1dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/description_title" />-->
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:elevation="5dp"
+        android:background="@color/avc_light_red"
+        app:layout_constraintTop_toBottomOf="@id/imageScroller" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:elevation="4dp"
+        android:background="@drawable/toolbar_dropshadow"
+        app:layout_constraintTop_toBottomOf="@id/divider2"
+        />
 
 
     <!-- Scrollable Description TextView -->
@@ -82,10 +93,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="3dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="25dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/location_description_title_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +116,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
             <View
-                android:id="@+id/divider2"
+                android:id="@+id/divider3"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="?colorOnSecondary"
@@ -123,7 +131,7 @@
             android:scrollbarThumbVertical="@drawable/custom_scrollbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider2"
+            app:layout_constraintTop_toBottomOf="@id/divider3"
             android:paddingBottom="60dp">
 
             <TextView
