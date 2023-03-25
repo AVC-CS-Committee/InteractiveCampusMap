@@ -349,7 +349,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     // Helper method that checks if all the filters are set to false (unchecked)
-    private boolean isFiltersDisabled() {
+    public boolean isFiltersDisabled() {
         if (showParkingLots) return false;
         if (showClassrooms) return false;
         if (showStudentResources) return false;
@@ -642,7 +642,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Initiates location updates. Causes location related methods to be called
             // (i.e., onLocationChanged())
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
 
             //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 

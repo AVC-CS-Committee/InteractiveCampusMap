@@ -37,6 +37,11 @@ public class SearchBar implements SearchView.OnQueryTextListener {
             fragment.filterMarkers();
         }
 
+        if (!fragment.isFiltersDisabled()) {
+            fragment.disableAllFilters();
+            fragment.filterMarkers();
+        }
+
         // Iterate through each entry in the HashMap
         for (Map.Entry<Marker, MapLocation> entry : locations.entrySet()) {
             String locationTitle = entry.getValue().getLocationTitle().toLowerCase().replaceAll("\\s+", "");
