@@ -135,7 +135,13 @@ public class MapsFragment extends Fragment implements LocationListener {
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
-        moveMapCamera(googleMap, AVC_COORDS, INITIAL_ZOOM);
+        
+        // Initialize map camera
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                .target(AVC_COORDS)
+                .zoom(INITIAL_ZOOM)
+                .bearing(0)
+                .build()));
 
         mainActivity = (MainActivity) requireActivity();
 
@@ -716,7 +722,7 @@ public class MapsFragment extends Fragment implements LocationListener {
                 .bearing(0)
                 .build();
 
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private void parseJson(GoogleMap googleMap) {
