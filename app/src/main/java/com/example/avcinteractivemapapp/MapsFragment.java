@@ -716,7 +716,7 @@ public class MapsFragment extends Fragment implements LocationListener {
                 .bearing(0)
                 .build();
 
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private void parseJson(GoogleMap googleMap) {
