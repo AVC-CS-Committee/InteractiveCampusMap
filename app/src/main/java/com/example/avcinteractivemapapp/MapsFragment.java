@@ -112,7 +112,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // GPS Related
     private Circle previousCircle;
-    public static boolean enableCircleFilter = false;
+    public boolean isCircleFilterOn = false;
 
     // Icons for markers
     BitmapDescriptor parkingMarkerIcon, classroomMarkerIcon, foodMarkerIcon, athleticsMarkerIcon, resourceMarkerIcon;
@@ -150,7 +150,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         athleticsMarkerIcon = BitmapFromVector(getActivity(), R.drawable.icon_marker_athletics);
 
         // Determines whether in light or dark mode
-        currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        currentNightMode = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         // Setting Map Button Icons
         centerMapButton = requireActivity().findViewById(R.id.center_map);
@@ -209,7 +209,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         searchView.setQueryHint("Search Campus Locations");
         searchView.clearFocus();
         // adding on query listener for our search view.
-        searchView.setOnQueryTextListener(new SearchBar(locations, mMap));
+        searchView.setOnQueryTextListener(new SearchBar(locations, mMap, this));
 
         // Handles map clicks
         googleMap.setOnMapClickListener(latLng -> SearchBar.hideKeyboard(searchView, requireActivity()));
@@ -349,7 +349,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     // Helper method that checks if all the filters are set to false (unchecked)
-    private boolean isFiltersDisabled() {
+    public boolean isFiltersDisabled() {
         if (showParkingLots) return false;
         if (showClassrooms) return false;
         if (showStudentResources) return false;
@@ -370,7 +370,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         // For circle filter. If active and user is in bounds, create the circle
         // Circle is created here in order to remove the previously created circle more quickly.
         // Without this, the circle will not update properly
-        if (enableCircleFilter && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))) {
+        if (isCircleFilterOn && AVC_BOUNDS.contains(new LatLng(location.getLatitude(), location.getLongitude()))) {
             createCircle(location);
         }
     }
@@ -413,7 +413,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         userLocation = null;
 
         // Turn off all GPS related features when location is disabled
-        if(enableCircleFilter){
+        if(isCircleFilterOn){
             disableCircleFilter();
         }
 
@@ -455,19 +455,19 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Check 2: Is User at AVC
             if(!isUserInCampusBounds()) {
-                return enableCircleFilter;
+                return isCircleFilterOn;
             }
 
             // Continue with circle filter logic
-            enableCircleFilter = !enableCircleFilter;
+            isCircleFilterOn = !isCircleFilterOn;
             circleFilterHandler();
         }
 
-        return enableCircleFilter;
+        return isCircleFilterOn;
     }
 
     public void disableCircleFilter(){
-        enableCircleFilter = false;
+        isCircleFilterOn = false;
         //getCurrentLocation();
         circleFilterHandler();
         mainActivity.toggleOffCircleFilterSwitch();
@@ -483,7 +483,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         if (userLocation == null) return;
 
         // Disable if circle filter is in use
-        if(enableCircleFilter) {
+        if(isCircleFilterOn) {
             Toast.makeText(this.getActivity(), "Unavailable. Please turn off other tools before using this one.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -578,7 +578,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     private void circleFilterHandler() {
         // Handle turning off the circle filter
-        if (!enableCircleFilter) {
+        if (!isCircleFilterOn) {
             // Remove circle
             if (previousCircle != null) {
                 previousCircle.remove();
@@ -642,7 +642,7 @@ public class MapsFragment extends Fragment implements LocationListener {
 
             // Initiates location updates. Causes location related methods to be called
             // (i.e., onLocationChanged())
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2500, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
 
             //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
