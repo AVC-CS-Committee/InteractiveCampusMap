@@ -31,7 +31,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  *  This class is where the entire program starts, more specifically
  *  in the onCreate() function which sort of acts as the main method.
  */
-//yo
+// Test Push
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
                                                                EasyPermissions.PermissionCallbacks {
     private static final String TAG = "MainActivity";
