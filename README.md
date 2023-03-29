@@ -15,6 +15,12 @@ as well as allow opportunities to explore resources available at AVC.
 
 ---
 
+## Preview
+
+![](../assets/demo0.jpg?raw=true)  |  ![](../assets/demo1.jpg?raw=true)   | ![](../assets/demo2.jpg?raw=true) | ![](../assets/demo3.jpg?raw=true)
+
+---
+
 ### Features
 
 * Map markers for important campus locations
