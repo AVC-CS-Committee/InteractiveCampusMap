@@ -17,7 +17,17 @@ as well as allow opportunities to explore resources available at AVC.
 
 ## Preview
 
-![](../assets/demo0.jpg?raw=true)    ![](../assets/demo1.jpg?raw=true)    ![](../assets/demo2.jpg?raw=true)  ![](../assets/demo3.jpg?raw=true)
+<div align="left">
+  <img src="../assets/demo0.jpg?raw=true" width="30%">
+  &nbsp; &nbsp;
+  <img src="../assets/demo1.jpg?raw=true" width="30%">
+</div>
+&nbsp; &nbsp;
+<div>
+  <img src="../assets/demo2.jpg?raw=true" width="30%">
+  &nbsp; &nbsp;
+  <img src="../assets/demo3.jpg?raw=true" width="30%">
+</div>
 
 ---
 
