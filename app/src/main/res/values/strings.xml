@@ -17,9 +17,44 @@
     <string name="criminal_prevention_detection_description">The Antelope valley College safety and security department is a pro-active department. Our officers are constantly on alert to guard against criminal activity. High visibility and 24 hour patrols ensure all who come onto our campus have a great learning environment.</string>
 
     <!--About Us Activity-->
+
+    <!--About Us -->
     <string name="about_us_description">Our interactive campus map provides a virtual tour of our campus and its facilities. This user-friendly tool is designed to help students, faculty, and visitors navigate and explore our campus. With features like building information, points of interest, and more, this map is your go-to resource for all things related to our campus.</string>
-    <string name="about_us_email">Email: <a href="mailto:info@avc.edu">info@avc.edu</a></string>
-    <string name="about_us_phone">Phone: <a href="tel:661-722-6300">661.722.6300</a></string>
+    <string name="about_us_title">About Us</string>
+
+    <string name="about_us_phone">phone</string>
+    <string name="about_us_email">email</string>
+
+    <!--Contributors -->
+    <string name="contributors_title">Contributors</string>
+
+    <string name="contributor_projectmanager_name">Project Manager: Peter Kallos</string>
+    <string name="contributor_projectmanager_email">pkallos@avc.edu</string>
+    <string name="contributor_chair_name">Chair: Tyler Carter-Mills</string>
+    <string name="contributor_chair_email">tcartermills@avc.edu</string>
+    <string name="contributor_cochair_name">Co-chair: Nasif Hossain</string>
+    <string name="contributor_cochair_email">nhossain@avc.edu</string>
+
+    <string name="contributor_ryan_name">Ryan</string>
+    <string name="contributor_ryan_email">ryan@avc.edu</string>
+
+    <string name="contributor_conan_name">Conan Nguyen</string>
+    <string name="contributor_conan_email">cnguyen17@avc.edu</string>
+
+    <string name="contributor_cristian_name">Cristian Herrera</string>
+    <string name="contributor_cristian_email">cherrera@avc.edu</string>
+
+    <string name="contributor_harvey_name">Harvey Freeman</string>
+    <string name="contributor_harvey_email">hfreeman@avc.edu</string>
+
+    <string name="contributor_sebastian_name">Sebastian Ala Torre</string>
+    <string name="contributor_sebastian_email">salatorre1@avc.edu</string>
+
+    <string name="contributor_nick_name">Nick</string>
+    <string name="contributor_nick_email">nick@avc.edu</string>
+
+    <string name="contributor_logan_name">Logan</string>
+    <string name="contributor_logan_email">logan@avc.edu</string>
 
     <string name="center_gps_button">Center map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
