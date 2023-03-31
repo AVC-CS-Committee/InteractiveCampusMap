@@ -28,12 +28,26 @@
             android:padding="20dp">
 
             <!-- About Us -->
+            <!-- About Us -->
             <TextView
+                android:id="@+id/about_us_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/about_us_title"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?colorOnSecondary"
+                android:paddingTop="10dp"
+                android:background="@drawable/location_description_title_background"/>
+
+            <!-- Divider -->
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?colorOnSecondary"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toBottomOf="@id/about_us_title" />
 
             <!-- About Us description -->
             <TextView
@@ -43,7 +57,8 @@
                 android:padding="8dp"
                 android:text="@string/about_us_description"
                 android:textSize="16sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:background="@drawable/location_description_title_background"/>
 
             <!-- Contributors -->
             <TextView
@@ -52,210 +67,221 @@
                 android:layout_height="wrap_content"
                 android:text="@string/contributors_title"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?colorOnSecondary"
+                android:paddingTop="10dp"
+                android:background="@drawable/location_description_title_background"/>
 
-                <!-- Key App Contributors -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?colorOnSecondary"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toBottomOf="@id/contributors_title"/>
 
-                    <!-- Project Manager: Peter Kallos -->
+            <!-- Key App Contributors -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Project Manager-->
+                <TextView
+                    android:id="@+id/contributor_projectmanager_name"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/contributor_projectmanager_name"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/contributor_projectmanager_email"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/contributor_projectmanager_name"
+                    android:paddingLeft="30dp"
+                    android:text="@string/contributor_projectmanager_email"
+                    android:layout_centerHorizontal="true"/>
+
+
+                <!-- Chair -->
+                <TextView
+                    android:id="@+id/contributor_chair_name"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/contributor_chair_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/contributor_projectmanager_email"/>
+
+                <TextView
+                    android:id="@+id/contributor_chair_email"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="30dp"
+                    android:text="@string/contributor_chair_email"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/contributor_chair_name"/>
+
+                <!-- Co-chair -->
+                <TextView
+                    android:id="@+id/contributor_cochair_name"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/contributor_cochair_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/contributor_chair_email"/>
+
+                <TextView
+                    android:id="@+id/contributor_cochair_email"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="30dp"
+                    android:text="@string/contributor_cochair_email"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/contributor_cochair_name"/>
+
+            </RelativeLayout>
+
+            <!-- Other contributors -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Other contributors - Aligned Left -->
+                <LinearLayout
+                    android:id="@+id/contributors_leftaligned"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Contributor: Ryan  -->
                     <TextView
-                        android:id="@+id/contributor_peter_name"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="10dp"
-                        android:text="Project Manager: Peter Kallos"
-                        android:layout_centerHorizontal="true"/>
-
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_ryan_name"/>
                     <TextView
-                        android:id="@+id/contributor_peter_email"
-                        android:layout_width="250dp"
-                        android:layout_height="40dp"
-                        android:layout_below="@+id/contributor_peter_name"
-                        android:paddingLeft="30dp"
-                        android:text="pkallos@avc.edu"
-                        android:layout_centerHorizontal="true"/>
-
-
-                    <!-- Chair: Tyler Carter-Mills -->
-                    <TextView
-                        android:id="@+id/contributor_tyler_name"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="10dp"
-                        android:text="Chair: Tyler Carter-Mills"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/contributor_peter_email"/>
+                        android:text="@string/contributor_ryan_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
+
+
+                    <!-- Contributor: Conan Nguyen -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_conan_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_conan_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
+
+
+                    <!-- Contributor: Cristian Herrera -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_cristian_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_cristian_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
+
+                    <!-- Contributor: Nick -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_nick_name"/>
 
                     <TextView
-                        android:id="@+id/contributor_tyler_email"
-                        android:layout_width="250dp"
-                        android:layout_height="40dp"
-                        android:paddingLeft="30dp"
-                        android:text="tcartermills@avc.edu"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/contributor_tyler_name"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_nick_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
 
-                    <!-- Co-chair: Nasif Hossain -->
+                </LinearLayout>
+
+                <!-- Other contributors - Aligned Right-->
+                <LinearLayout
+                    android:id="@+id/contributors_rightaligned"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/contributors_leftaligned"
+                    android:orientation="vertical">
+
+                    <!-- Contributor: Sebastian Ala Torre-->
                     <TextView
-                        android:id="@+id/contributor_nasif_name"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="10dp"
-                        android:text="Co-chair: Nasif Hossain"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/contributor_tyler_email"/>
-
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_sebastian_name"/>
                     <TextView
-                        android:id="@+id/contributor_nasif_email"
-                        android:layout_width="250dp"
-                        android:layout_height="40dp"
-                        android:paddingLeft="30dp"
-                        android:text="tcartermills@avc.edu"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/contributor_nasif_name"/>
-
-                </RelativeLayout>
-
-                <!-- Other contributors -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <!-- Other contributors - Aligned Left -->
-                    <LinearLayout
-                        android:id="@+id/contributors_leftaligned"
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <!-- Contributor: Ryan  -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Ryan"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="ryan@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
+                        android:text="@string/contributor_sebastian_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
 
 
-                        <!-- Contributor: Conan Nguyen -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Conan Nguyen"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="cnguyen17@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
-
-
-                        <!-- Contributor: Cristian Herrera -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Cristian Herrera"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="cherrera@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
-
-                        <!-- Contributor: Nick -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Harvey Freeman"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="hfreeman@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
-
-                    </LinearLayout>
-
-                    <!-- Other contributors - Aligned Right-->
-                    <LinearLayout
-                        android:id="@+id/contributors_rightaligned"
-                        android:layout_width="200dp"
+                    <!-- Contributor: Nick -->
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/contributors_leftaligned"
-                        android:orientation="vertical">
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_nick_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_nick_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
 
-                        <!-- Contributor: Sebastian Ala Torre-->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Sebastian Ala Torre"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="salatorre1@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
-
-
-                        <!-- Contributor: Nick -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Nick"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="nick@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
-
-                        <!-- Contributor: Logan -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="Logan"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="logan@avc.edu"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="15dp"/>
+                    <!-- Contributor: Logan -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_logan_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_logan_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
 
 
-                    </LinearLayout>
+                </LinearLayout>
 
-                </RelativeLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>
