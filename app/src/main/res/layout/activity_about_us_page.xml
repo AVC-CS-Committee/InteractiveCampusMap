@@ -28,7 +28,6 @@
             android:padding="20dp">
 
             <!-- About Us -->
-            <!-- About Us -->
             <TextView
                 android:id="@+id/about_us_title"
                 android:layout_width="wrap_content"
@@ -37,8 +36,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="?colorOnSecondary"
-                android:paddingTop="10dp"
-                android:background="@drawable/location_description_title_background"/>
+                android:paddingTop="10dp" />
 
             <!-- Divider -->
             <View
@@ -56,9 +54,7 @@
                 android:lineSpacingExtra="10dp"
                 android:padding="8dp"
                 android:text="@string/about_us_description"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                android:background="@drawable/location_description_title_background"/>
+                android:textSize="16sp" />
 
             <!-- Contributors -->
             <TextView
@@ -69,8 +65,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="?colorOnSecondary"
-                android:paddingTop="10dp"
-                android:background="@drawable/location_description_title_background"/>
+                android:paddingTop="10dp" />
 
             <View
                 android:id="@+id/divider2"
