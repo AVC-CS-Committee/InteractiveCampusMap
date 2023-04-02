@@ -4,7 +4,7 @@
     "latitude": 34.68055821978821,
     "longitude": -118.18743605625858,
     "description": "Facilities Services (FS) supports Antelope Valley College’s mission by maintaining and enhancing buildings, grounds and the physical infrastructure in a cost-effective, safe and environmentally responsible manner. The S3 logo represents the ongoing goals of the department and defines the meaning of safety, service, and sustainability. Facilities Services prioritizes safety through preventative maintenance and hazard mitigation, offers excellent customer service in maintenance and operations, and strives for long-term sustainability in controlling usage and reducing waste.",
-    "images": [],
+    "images": ["facilitiesservices", "facilitiesservices2"],
     "type": "resource"
   },
   {
@@ -12,7 +12,23 @@
     "latitude": 34.680353586506165,
     "longitude": -118.18506976951421,
     "description": "California State University, Bakersfield operates a branch campus in the Antelope Valley on the northeast corner of Antelope Valley College. The campus provides the residents of the Greater Antelope Valley academic degree programs leading to a Bachelor degree in a small number of disciplines, and the ability to obtain a Master’s degree in a few areas, without leaving the community. This cooperative arrangement between two segments of California’s public higher education system enables students who complete an Associate of Arts or Associate of Science program at a community college to continue their academic studies at state resident rates. All programs offered at CSUB AV are fully accredited by the Western Association of Schools and Colleges and are an integral part of the curricula of California State University, Bakersfield.",
-    "images": [],
+    "images": ["bakersfield"],
+    "type": "classroom"
+  },
+  {
+    "title": "Child Development Center",
+    "latitude": 34.67969441342744,
+    "longitude": -118.18539476561865,
+    "description": "The Child Development Center offers both state preschool and tuition-based programs. Our state preschool program runs for half a day and provides a nurturing environment to prepare children for academic success. Our tuition-based programs offer flexible half and full-day options with various payment options including tuition, CCRC, Student Equity, and other programs. Our center provides a safe and stimulating environment that fosters children's social, emotional, and cognitive development. We are committed to providing high-quality care and education to all children in our community.",
+    "images": ["cdc"],
+    "type": "resource"
+  },
+  {
+    "title": "Discovery Lab",
+    "latitude": 34.680452828358916,
+    "longitude": -118.18656003661856,
+    "description": "We are proud to offer a state-of-the-art facility to support our students in their pursuit of education and career goals. Our 35,466 square-foot building provides dedicated spaces for programs in electronics, avionics, welding, and fire technology, as well as our Aircraft Fabrication and Assembly program (AFAB). Whether students are inexperienced or experienced, AFAB offers entry-level and upgraded skills to prepare them for success in the aerospace industry. Additionally, we are one of the few community colleges in the United States offering composites fabrication and repair, providing our students with unique and valuable skills for their futures.",
+    "images": ["discoverylab", "discoverylab2"],
     "type": "classroom"
   },
   {
@@ -124,7 +140,7 @@
     "latitude": 34.67538350196646,
     "longitude": -118.18461596643002,
     "description": "The Administration Building facilitates the efficient application of Antelope Valley College resources to support student success and the District's mission. Administrative Services works proactively with all college components to integrate our professional knowledge and skills amongst Business Services, Facilities, and Information Technology to conquer operational and academic challenges. Strives to meet students, faculty, staff, and community members' needs while empowering their goal achievements in an evolving environment.",
-    "images": ["admissions"],
+    "images": ["admin", "admin2"],
     "type": "resource"
   },
   {
@@ -212,7 +228,7 @@
     "latitude": 34.67648676160919,
     "longitude": -118.18738628333938,
     "description": "The Fine Arts building is a hub for creativity and artistic expression on campus. This stunning building houses a range of classrooms designed for students pursuing a major in the arts. Whether you are interested in painting, drawing, sculpture, or any other medium, this building provides you with the resources you need to hone your craft and unleash your artistic potential. From large, open studios to smaller, more intimate workspaces, the Fine Arts Building offers a supportive and inspiring environment for students to explore their passions and develop their skills. Whether you're an aspiring artist, a seasoned veteran, or simply curious about the arts, the Fine Arts Building is the place to be.",
-    "images": ["fa"],
+    "images": ["finearts"],
     "type": "classroom"
   },
   {
@@ -224,11 +240,11 @@
     "type": "classroom"
   },
   {
-    "title": "Technical Education Technology",
+    "title": "Enterprise Lab",
     "latitude": 34.67973186506707,
     "longitude": -118.18654794631942,
-    "description": "The Technical Education Technology building is home to the Career Technical Education Division. Here, students have the opportunity to gain hands-on experience in preparing for entry-level positions and professionals can enhance their skills in today's competitive workplace. The building is equipped with modern classrooms, computer labs and other resources that provide students with the tools they need to succeed. Whether you are a beginner or an experienced professional, the Technical Education Technology Building has the resources and instruction you need to achieve your career goals.",
-    "images": ["tet"],
+    "description": "Welcome to the Enterprise Lab, the hub of the Career Technical Education Division, formerly known as the Technical Education Technology building. Our cutting-edge facility provides students with hands-on experience to prepare them for entry-level positions and professionals with the tools to enhance their skills in a competitive workplace. With modern classrooms, computer labs, and other essential resources, the Enterprise Lab is the perfect place for both beginners and experienced professionals to achieve their career goals.",
+    "images": ["enterpriselab"],
     "type": "classroom"
   },
   {
