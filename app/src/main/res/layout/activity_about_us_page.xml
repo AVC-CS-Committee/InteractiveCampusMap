@@ -206,19 +206,19 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="15dp"/>
 
-                    <!-- Contributor: Nick -->
+                    <!-- Contributor: Harvey -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/contributor_nick_name"/>
+                        android:text="@string/contributor_harvey_name"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/contributor_nick_email"
+                        android:text="@string/contributor_harvey_email"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="15dp"/>
 
@@ -277,6 +277,22 @@
                         android:text="@string/contributor_logan_email"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="15dp"/>
+
+                    <!-- Contributor: Samuel -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_samuel_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_samuel_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
+
 
 
                 </LinearLayout>

@@ -29,7 +29,7 @@
     <string name="contributors_title">Contributors</string>
 
     <string name="contributor_projectmanager_name">Project Manager: Peter Kallos</string>
-    <string name="contributor_projectmanager_email">pkallos@avc.edu</string>
+    <string name="contributor_projectmanager_email">pkallos19@gmail.com</string>
     <string name="contributor_chair_name">Chair: Tyler Carter-Mills</string>
     <string name="contributor_chair_email">tcartermills@avc.edu</string>
     <string name="contributor_cochair_name">Co-chair: Nasif Hossain</string>
@@ -55,6 +55,9 @@
 
     <string name="contributor_logan_name">Logan</string>
     <string name="contributor_logan_email">logan@avc.edu</string>
+
+    <string name="contributor_samuel_name">Samuel</string>
+    <string name="contributor_samuel_email">ssegovia2@avc.edu</string>
 
     <string name="center_gps_button">Center map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
