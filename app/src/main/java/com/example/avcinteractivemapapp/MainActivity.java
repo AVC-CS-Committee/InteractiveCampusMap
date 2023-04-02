@@ -32,6 +32,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  *  in the onCreate() function which sort of acts as the main method.
  */
 //yo
+    //Test
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
                                                                EasyPermissions.PermissionCallbacks {
     private static final String TAG = "MainActivity";

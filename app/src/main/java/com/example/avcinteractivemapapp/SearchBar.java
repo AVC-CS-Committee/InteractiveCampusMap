@@ -1,6 +1,7 @@
 package com.example.avcinteractivemapapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
@@ -15,10 +16,10 @@ public class SearchBar implements SearchView.OnQueryTextListener {
     private final GoogleMap mMap;
     private final MapsFragment fragment;
 
-    public SearchBar(HashMap<Marker, MapLocation> locations, GoogleMap mMap) {
+    public SearchBar(HashMap<Marker, MapLocation> locations, GoogleMap mMap, MapsFragment fragment) {
         this.locations = locations;
         this.mMap = mMap;
-        this.fragment = new MapsFragment();
+        this.fragment = fragment;
     }
 
     @Override
@@ -28,6 +29,18 @@ public class SearchBar implements SearchView.OnQueryTextListener {
 
         // Remove capital letters from query and remove whitespace
         query = query.toLowerCase().replaceAll("\\s+", "");
+
+        Log.i("searchbar", String.valueOf(fragment.isCircleFilterOn));
+
+        if (fragment.isCircleFilterOn) {
+            fragment.disableCircleFilter();
+            fragment.filterMarkers();
+        }
+
+        if (!fragment.isFiltersDisabled()) {
+            fragment.disableAllFilters();
+            fragment.filterMarkers();
+        }
 
         // Iterate through each entry in the HashMap
         for (Map.Entry<Marker, MapLocation> entry : locations.entrySet()) {
