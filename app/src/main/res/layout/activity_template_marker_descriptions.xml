@@ -144,7 +144,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/campus_safety_escort_description"
+                android:text="Description"
                 android:textColor="?colorOnTertiary"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
