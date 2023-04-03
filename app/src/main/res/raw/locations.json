@@ -68,7 +68,7 @@
     "latitude": 34.6788359665366,
     "longitude": -118.18640225876932,
     "description": "Uhazy Hall (UH) hosts lectures related to health and sciences. It’s two stories of classrooms, laboratory spaces, and professor offices.\n\nOn the first floor, there is a Subway and food court to cater to students' dining needs. The second floor houses the S.T.E.M. center, which is available to all students and faculty with an AVC ID card. It's equipped with all the essentials, including computers, a WEPA printer, whiteboards, and plenty of study spaces to support student learning and academic pursuits.",
-    "images": ["uhazyhall", "ssv", "yh"],
+    "images": ["uhazyhall"],
     "type": "classroom"
   },
   {
@@ -84,7 +84,7 @@
     "latitude": 34.67899187744454,
     "longitude": -118.18548358738202,
     "description": "Yoshida Hall (YH) is the main location for applied arts and also includes lectures related to math and science. The first and second floors house classrooms, offices, and coffee, food, and drink vending machines.\n\nYoshida Hall is also where the STEM office (YH 121A) and STEM lab (YH 115) are located. The classrooms are designed with the latest technology and tools to provide students with a comfortable and productive learning environment, while the STEM office and lab offer centralized support and hands-on learning opportunities for students in STEM fields. Whether students are pursuing a degree in the arts or in STEM fields, Yoshida Hall is a vital resource for their academic success at Antelope Valley College.",
-    "images": ["yh","yoshidahall","yoshidahall1"],
+    "images": ["yoshidahall","yoshidahall1"],
     "type": "classroom"
   },
   {
@@ -108,7 +108,7 @@
     "latitude": 34.67804292141216,
     "longitude": -118.18734085519353,
     "description": "The Gymnasium is a dynamic sports facility, hosting games for basketball, volleyball, and more. The gym provides students with an optimal playing surface, as well as all the necessary equipment and facilities to play at their best. The Gymnasium serves as an important part of AVC's athletics program, allowing students to hone their skills and perform on the court in front of their peers and community.",
-    "images": ["gym"],
+    "images": ["gym", "gym2"],
     "type": "athletic"
   },
   {
@@ -132,7 +132,15 @@
     "latitude": 34.676203764577544,
     "longitude": -118.18697930907051,
     "description": "AVC Art Gallery programs leverage the unique ability of the visual arts to create deep personal connections, to express diverse perspectives, and to challenge previously held ideas.\n\nWe provide opportunities for learning in the arts, and afford a public connection to the college environment and faculty research to enhance critical thinking and expand creative expression in our community.",
-    "images": ["gallery"],
+    "images": ["artgallery", "artgallery2"],
+    "type": "classroom"
+  },
+  {
+    "title": "Black Box",
+    "latitude": 34.675832701065104,
+    "longitude": -118.18737862660834,
+    "description": "The Performing Arts Theatre at Antelope Valley College, where we strive to provide world-class entertainment to our campus and community. Our mission is to showcase the amazing local talent in our area, while also providing an unparalleled entertainment experience. From music and dance to theater and more, the Performing Arts Theatre has something for everyone. Come join us for an unforgettable evening of entertainment!",
+    "images": ["blackbox", "blackbox2"],
     "type": "classroom"
   },
   {
@@ -164,7 +172,7 @@
     "latitude": 34.67725682725537,
     "longitude": -118.18531269317117,
     "description": "Not currently in use by AVC.",
-    "images": ["olc"],
+    "images": ["learningcenter", "learningcenter2"],
     "type": "resource"
   },
   {
@@ -196,7 +204,7 @@
     "latitude": 34.677011511466674,
     "longitude": -118.18741261041862,
     "description": "The Lecture Hall provides students with a space to attend lectures and learn in a traditional college room setting. The building houses classrooms that cater to a wide range of subjects and are designed to facilitate learning through presentations, discussions, and other interactive methods. With its spacious auditorium-style layout, students can enjoy an immersive educational experience as they delve into new topics and ideas.",
-    "images": [""],
+    "images": ["lh", "lh2", "lh3"],
     "type": "classroom"
   },
   {
@@ -204,7 +212,7 @@
     "latitude": 34.67714651488922,
     "longitude": -118.18709120662562,
     "description": "Sage Hall is a hub for student success and academic support. It's the new home for the learning center and includes classroom space. Whether you're looking for extra help in a particular class, want to reinforce what you learned, or simply need a quiet study space, the Sage Hall has everything you need to make the most of your college experience. It offers a variety of services, including live online front-counter access on Zoom, small group and individual drop-in tutoring, supplemental instruction, tutoring appointments, and faculty-led math, reading, writing, and study skills workshops. In addition to these academic support services, Sage Hall also features an open computer lab, study space, and various resources available for check-out, such as laptops, media, textbooks, and study supplies. With the help of the friendly and knowledgeable staff, students can feel confident and prepared as they work towards their academic goals.",
-    "images": ["lh"],
+    "images": ["sh", "sh2", "sh3"],
     "type": "classroom"
   },
   {
@@ -212,7 +220,7 @@
     "latitude": 34.67775573632852,
     "longitude": -118.18589961736947,
     "description": "The Math and Engineering building (ME) is designed for students pursuing degrees in engineering, mathematics, and computer science. It features a spacious computer lab equipped with the latest technology, as well as traditional classrooms that are optimized for learning. The building is the center of excellence for students who are interested in these fields, offering lectures, hands-on experience, and ample opportunities for growth and exploration. Whether you're an aspiring engineer, mathematician, or computer scientist, the Math and Engineering building provides the ideal environment for you to succeed.",
-    "images": ["me","me1","me2"],
+    "images": ["me","me2","me1"],
     "type": "classroom"
   },
   {
@@ -220,7 +228,7 @@
     "latitude": 34.67672471757968,
     "longitude": -118.18439631632184,
     "description": "The OSD program provides support services, specialized instruction, and educational accommodations to students with disabilities so that they can participate as fully and benefit as equitably from the college experience as their non-disabled peers. An Academic Accommodation Plan (AAP) is developed for each student which links student’s goals, curriculum program, and academic adjustments, auxiliary aids, services and/or instruction to his/her disability related educational limitation.\n\nThe mission of the Office for Students With Disabilities (OSD) Program is to provide students with disabilities equal access to education by offering quality support services that directly relate to a student’s limitations as a result of their disability. The OSD Program assists students with their understanding and acceptance of their limitations as a result of their disability and also promotes and fosters independence by teaching students to articulate their needs to AVC instructors and staff. Moreover the OSD Program is committed to the academic success and personal growth of all students with disabilities at AVC.",
-    "images": ["osd"],
+    "images": ["osd2", "osd"],
     "type": "resource"
   },
   {
@@ -236,7 +244,7 @@
     "latitude": 34.67626532974614,
     "longitude": -118.18770778514867,
     "description": "The Fine Arts Music and Offices building is a vital space for aspiring musicians and artists at Antelope Valley College. With dedicated classrooms specifically designed for music and arts education, students can hone their skills and perfect their craft in a supportive environment. In addition to these classrooms, the building also features offices for arts professors, providing a centralized location for all things arts-related. Whether you're looking to take a music class, meet with your professor, or simply immerse yourself in the creative atmosphere, this building is the perfect destination.",
-    "images": ["fa"],
+    "images": [],
     "type": "classroom"
   },
   {
@@ -248,19 +256,19 @@
     "type": "classroom"
   },
   {
-    "title": "Technical Education Agriculture Lab",
+    "title": "Horticulture Lab",
     "latitude": 34.679898891625314,
     "longitude": -118.1870825677824,
-    "description": "The Technical Education Agriculture Lab provides students with hands-on learning opportunities in the field of agriculture. This state-of-the-art facility offers students access to labs where they can gain practical experience and develop their skills in agriculture-related subjects. The labs provide a unique and immersive learning environment that allows students to apply what they have learned in their courses to real-world scenarios. The Technical Education: Agriculture Lab is an essential resource for students looking to pursue a career in agriculture or related fields.",
-    "images": ["greenhouse"],
+    "description": "The Horticulture Lab provides students with hands-on learning opportunities in the field of agriculture. This state-of-the-art facility offers students access to labs where they can gain practical experience and develop their skills in agriculture-related subjects. The labs provide a unique and immersive learning environment that allows students to apply what they have learned in their courses to real-world scenarios. The Horticulture Lab is an essential resource for students looking to pursue a career in agriculture or related fields.",
+    "images": ["horticulture"],
     "type": "classroom"
   },
   {
-    "title": "Greenhouse",
-    "latitude": 34.67988988181543,
-    "longitude": -118.18754492181769,
+    "title": "Greenhouses",
+    "latitude": 34.679813863502766,
+    "longitude": -118.18775289064219,
     "description": "The greenhouses serve as a hands-on learning resource for biology students. These state-of-the-art facilities function as normal greenhouses, providing students with the opportunity to gain practical experience in plant growth and maintenance. The greenhouses offer a unique and immersive learning environment for students to further their understanding of the biological processes involved in plant growth and development.",
-    "images": ["greenhouse"],
+    "images": ["greenhouse", "greenhouse2"],
     "type": "classroom"
   },
   {
