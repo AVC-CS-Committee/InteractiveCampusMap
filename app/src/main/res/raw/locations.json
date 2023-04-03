@@ -180,7 +180,7 @@
     "latitude": 34.676153144936336,
     "longitude": -118.1860004428573,
     "description": "The Marauder Bookstore is a one-stop shop for all students' needs. It is the campus store for students and provides everything you need to make the most of your college experience. From course materials and textbooks to school apparel, computers and electronics, the Marauder Bookstore has it all. You can also find a variety of school supplies and essentials to help you study and live your best college life. Whether you need a diploma frame to display your achievements or bags to carry your books and supplies, the Marauder Bookstore has got you covered.",
-    "images": ["bookstore"],
+    "images": [],
     "type": "resource"
   },
   {
@@ -196,7 +196,7 @@
     "latitude": 34.67705751700522,
     "longitude": -118.18623111282814,
     "description": "The AVC Library is a two-story facility that provides a comprehensive range of resources and services to students and faculty. In addition to a wide selection of books and articles, the library offers a variety of databases, rentable library materials, reference services, interlibrary loans, free and open-access resources, library tutorials, and study rooms. With its commitment to helping students find information and access a range of resources, the AVC Library is an essential part of the academic experience at Antelope Valley College.",
-    "images": ["college"],
+    "images": [],
     "type": "resource"
   },
   {
