@@ -61,6 +61,7 @@ If you are interested in contributing to the project, check out the **[setting u
 - [Logan](https://github.com/Logsans)
 - [Harvey Freeman](https://github.com/Hjfreeman0623)
 - [Conan Nguyen](https://github.com/conan-nhat-nguyen)
+- [Samuel Segovia](https://github.com/SFalcon7)
 
 ---
 
