@@ -35,8 +35,8 @@
     <string name="contributor_cochair_name">Co-chair: Nasif Hossain</string>
     <string name="contributor_cochair_email">nhossain@avc.edu</string>
 
-    <string name="contributor_ryan_name">Ryan</string>
-    <string name="contributor_ryan_email">ryan@avc.edu</string>
+    <string name="contributor_ryan_name">Ryan Reeves</string>
+    <string name="contributor_ryan_email">rreeves5@avc.edu</string>
 
     <string name="contributor_conan_name">Conan Nguyen</string>
     <string name="contributor_conan_email">cnguyen17@avc.edu</string>
@@ -51,13 +51,19 @@
     <string name="contributor_sebastian_email">salatorre1@avc.edu</string>
 
     <string name="contributor_nick_name">Nick</string>
-    <string name="contributor_nick_email">nick@avc.edu</string>
+    <string name="contributor_nick_email">https://github.com/nickg309</string>
 
-    <string name="contributor_logan_name">Logan</string>
-    <string name="contributor_logan_email">logan@avc.edu</string>
+    <string name="contributor_logan_name">Logan Sanchez</string>
+    <string name="contributor_logan_email">lsanchez53@avc.edu</string>
 
-    <string name="contributor_samuel_name">Samuel</string>
+    <string name="contributor_samuel_name">Samuel Segovia</string>
     <string name="contributor_samuel_email">ssegovia2@avc.edu</string>
+
+    <string name="contributor_bao_name">Bao</string>
+    <string name="contributor_bao_email">https://github.com/baodao2002</string>
+
+    <string name="contributor_shane_name">Shane Powell</string>
+    <string name="contributor_shane_email">spowell31@avc.edu</string>
 
     <string name="center_gps_button">Center map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

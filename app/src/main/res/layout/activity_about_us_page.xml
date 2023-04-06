@@ -217,6 +217,21 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="15dp"/>
 
+                    <!-- Contributor: Bao -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_shane_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_shane_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
+
                 </LinearLayout>
 
                 <!-- Other contributors - Aligned Right-->
@@ -285,6 +300,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contributor_samuel_email"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"/>
+
+                    <!-- Contributor: Bao -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/contributor_bao_name"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contributor_bao_email"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="15dp"/>
 
