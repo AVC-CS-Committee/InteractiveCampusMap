@@ -15,6 +15,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -31,6 +32,12 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -104,6 +111,9 @@ public class MapsFragment extends Fragment implements LocationListener {
 
     // Locations API Related (GPS Feature)
     private LocationManager locationManager;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
+
     private Location userLocation;
     private double currentLat;
     private double currentLong;
@@ -135,7 +145,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     private final OnMapReadyCallback callback = googleMap -> {
         setMapStyle(googleMap);
         setMapBounds(googleMap);
-        
+
         // Initialize map camera
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
                 .target(AVC_COORDS)
@@ -346,7 +356,7 @@ public class MapsFragment extends Fragment implements LocationListener {
         for (Marker marker : resourceLocations) marker.setVisible(showStudentResources);
         for (Marker marker : foodLocations) marker.setVisible(showFood);
         for (Marker marker : athleticLocations) marker.setVisible(showAthletics);
-       // for (Marker marker : userLocationMarkers) marker.setVisible(true);
+        // for (Marker marker : userLocationMarkers) marker.setVisible(true);
     }
 
     // Helper method that toggles all markers to be visible
@@ -641,14 +651,29 @@ public class MapsFragment extends Fragment implements LocationListener {
     private Location getCurrentLocation() {
         // Checks if location permissions are enabled
         if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(5000);
+            locationRequest.setFastestInterval(3000);
+
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mainActivity);
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull LocationResult locationResult) {
+                    super.onLocationResult(locationResult);
+                    userLocation = locationResult.getLastLocation();
+                    mMap.setMyLocationEnabled(true);
+                }
+            }, Looper.getMainLooper());
 
             // Checks if location is enabled
             if(!hasLocationServicesEnabled()) return null;
 
             // Initiates location updates. Causes location related methods to be called
             // (i.e., onLocationChanged())
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
+            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2500, 0, this);
 
             //userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -691,22 +716,22 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     private void setMapStyle(@NonNull GoogleMap googleMap) {
-         // Adds custom JSON file which uses AVC colors for Google Maps
+        // Adds custom JSON file which uses AVC colors for Google Maps
         currentNightMode = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         try {
 
-             switch (currentNightMode) {
-                 case Configuration.UI_MODE_NIGHT_NO:
-                     // Night mode is not active on device
-                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_light));
-                     break;
-                 case Configuration.UI_MODE_NIGHT_YES:
-                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_dark));
-                     break;
-             }
-         } catch(Resources.NotFoundException e){
-             Log.e("JSON", "Can't find style. Error: ", e);
-         }
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    // Night mode is not active on device
+                    googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_light));
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.custom_avc_map_dark));
+                    break;
+            }
+        } catch(Resources.NotFoundException e){
+            Log.e("JSON", "Can't find style. Error: ", e);
+        }
     }
 
     private void setMapBounds(@NonNull GoogleMap googleMap) {
