@@ -517,7 +517,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         }
 
         // Disable if user is not at AVC
-        if(!isUserInCampusBounds()) return;
+        // FIXME: Returning true even when in campus bounds
+        //if(!isUserInCampusBounds()) return;
 
         // Convert current user's location into a marker
         Marker userMarker = mMap.addMarker(new MarkerOptions()
