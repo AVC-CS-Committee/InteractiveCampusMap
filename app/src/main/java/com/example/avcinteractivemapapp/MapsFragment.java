@@ -113,6 +113,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     private LocationManager locationManager;
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
+    LocationCallback locationCallback;
 
     private Location userLocation;
     private double currentLat;
@@ -175,7 +176,16 @@ public class MapsFragment extends Fragment implements LocationListener {
         // START TO RECIEVE LOCATION UPDATES ON MAP CREATION
         // (if this isn't here, location updates will only start
         // happening when a location related button is pressed)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mainActivity);
         getCurrentLocation();
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Log.d("inMain", locationResult.toString());
+            }
+        };
 
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
@@ -383,6 +393,8 @@ public class MapsFragment extends Fragment implements LocationListener {
         currentLat = location.getLatitude();
         currentLong = location.getLongitude();
 
+        Log.d("TEST", "Lat: " + currentLat + "\nLong: " + currentLong);
+
         // For circle filter. If active and user is in bounds, create the circle
         // Circle is created here in order to remove the previously created circle more quickly.
         // Without this, the circle will not update properly
@@ -457,7 +469,7 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     boolean isUserInCampusBounds() {
-        LatLng currentUserCoords = new LatLng(currentLat, currentLong);
+        LatLng currentUserCoords = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
         if (!AVC_BOUNDS.contains(currentUserCoords)) {
             Toast.makeText(this.getActivity(), "Unavailable. You are not at Antelope Valley College!", Toast.LENGTH_SHORT).show();
             return false;
@@ -658,12 +670,13 @@ public class MapsFragment extends Fragment implements LocationListener {
             locationRequest.setFastestInterval(3000);
 
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mainActivity);
+//            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mainActivity);
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
                     super.onLocationResult(locationResult);
                     userLocation = locationResult.getLastLocation();
+                    Log.d("WITHIN", "userLocation within: " + userLocation);
                     mMap.setMyLocationEnabled(true);
                 }
             }, Looper.getMainLooper());
